@@ -24,7 +24,8 @@ namespace WebApplication4.Controllers
             var project_DesmodusDBContext = _context.TbUsuarios.Include(t => t.IdEmpresaNavigation);
             return View(await project_DesmodusDBContext.ToListAsync());
         }
-
+    
+       
         // GET: TbUsuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {

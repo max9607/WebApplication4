@@ -17,7 +17,18 @@ namespace WebApplication4.Controllers
         {
             return View();
         }
-
+        public IActionResult Usuarios()
+        {
+            return View();
+        }
+        public IActionResult Empresas()
+        {
+            return View();
+        }
+        public IActionResult Permisos()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

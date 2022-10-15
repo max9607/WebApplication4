@@ -24,6 +24,12 @@ namespace WebApplication4.Controllers
             var project_DesmodusDBContext = _context.TbAccesos.Include(t => t.IdPermisoNavigation).Include(t => t.IdUsuarioNavigation);
             return View(await project_DesmodusDBContext.ToListAsync());
         }
+        // VALIDAR USUARIOS
+       /* public TbAcceso ValidarUsuarios(string _correo, string _clave) 
+        {
+            var datosUsuario = _context.TbAccesos.Single(t => t.Correo == _correo && t.Clave == _clave);
+            return datosUsuario;
+        }*/
 
         // GET: TbAccesoes/Details/5
         public async Task<IActionResult> Details(int? id)
