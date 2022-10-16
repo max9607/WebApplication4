@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApplication4.Models;
-
+using Microsoft.AspNetCore.Authorization;
 namespace WebApplication4.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -17,22 +18,12 @@ namespace WebApplication4.Controllers
         {
             return View();
         }
-        public IActionResult Usuarios()
+        
+ 
+        /*public IActionResult Privacy()
         {
             return View();
-        }
-        public IActionResult Empresas()
-        {
-            return View();
-        }
-        public IActionResult Permisos()
-        {
-            return View();
-        }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        }*/
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

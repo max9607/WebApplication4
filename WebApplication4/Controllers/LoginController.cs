@@ -3,7 +3,9 @@ using WebApplication4.Models;
 using WebApplication4.Controllers;
 using WebApplication4.Logica_Login;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 namespace WebApplication4.Controllers
 {
     public class LoginController : Controller
@@ -19,21 +21,57 @@ namespace WebApplication4.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Index(TbAcceso _tbAcceso)
+        public async Task<IActionResult> Index(TbAcceso _tbAcceso)
         {
             LoginLogica _da_login = new LoginLogica(_context);
             //TbAccesoesController _da_login = new TbAccesoesController(context: Project_DesmodusDBContext);
-            var usuario = _da_login.ValidarUsuarios(_tbAcceso.Correo, _tbAcceso.Clave);
-
-            if(usuario != null)
+            var Acceso_usuario = _da_login.ValidarAcceso(_tbAcceso.Correo, _tbAcceso.Clave);
+            
+            if (Acceso_usuario != null)
             {
-                return RedirectToAction("Index","TbUsuarios");
+                var Datos_usuario = _da_login.ValidarUsuario((int)Acceso_usuario.IdUsuario);
+                var Permiso_usuario = _da_login.ValidarPermiso((int)Acceso_usuario.IdPermiso);
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, Datos_usuario.Nombre),
+                    new Claim("Correo", Acceso_usuario.Correo),
+                    new Claim(ClaimTypes.Role, Permiso_usuario.Nombre)
+                };
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                /*
+                    Aqui pasamos todo el esquema del usuario, nombre, correo y rol
+                 */
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+                return RedirectToAction("Index","Home");
             }
             else
             {
                 return View();
             }
            
+        }
+        /*public async Task LogoutAction()
+        {
+            // SomeOtherPage is where we redirect to after signout
+            await MyCustomSignOut("Index");
+        }
+        public async Task MyCustomSignOut(string redirectUri)
+        {
+            // inject the HttpContextAccessor to get "context"
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var prop = new AuthenticationProperties()
+            {
+                RedirectUri = redirectUri
+            };
+            // after signout this will redirect to your provided target
+            await HttpContext.SignOutAsync("Login", prop);
+        }*/
+        public async Task<IActionResult> Salir()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            Response.Cookies.Delete(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Login");
         }
     }
 }

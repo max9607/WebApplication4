@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication4.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<Project_DesmodusDBContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(option =>
+    {
+        option.LoginPath = "/Login/Index";
+        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        option.AccessDeniedPath = "/Login/Index";
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,6 +29,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
