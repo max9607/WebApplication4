@@ -41,6 +41,8 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre)
+                    @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido1)
+                        @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido2)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdAcceso">Edit</a> |
