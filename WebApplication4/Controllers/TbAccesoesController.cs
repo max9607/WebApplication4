@@ -57,8 +57,8 @@ namespace WebApplication4.Controllers
         // GET: TbAccesoes/Create
         public IActionResult Create()
         {
-            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "IdPermiso");
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario");
+            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "Nombre");
+            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre");
             return View();
         }
 
@@ -75,8 +75,8 @@ namespace WebApplication4.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "IdPermiso", tbAcceso.IdPermiso);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario", tbAcceso.IdUsuario);
+            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
+            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre", tbAcceso.IdUsuario);
             return View(tbAcceso);
         }
 
@@ -93,8 +93,8 @@ namespace WebApplication4.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "IdPermiso", tbAcceso.IdPermiso);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario", tbAcceso.IdUsuario);
+            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
+            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre", tbAcceso.IdUsuario);
             return View(tbAcceso);
         }
 
@@ -130,8 +130,8 @@ namespace WebApplication4.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "IdPermiso", tbAcceso.IdPermiso);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario", tbAcceso.IdUsuario);
+            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
+            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre", tbAcceso.IdUsuario);
             return View(tbAcceso);
         }
 

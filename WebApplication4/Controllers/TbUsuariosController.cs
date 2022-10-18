@@ -51,7 +51,7 @@ namespace WebApplication4.Controllers
         // GET: TbUsuarios/Create
         public IActionResult Create()
         {
-            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "IdEmpresa");
+            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "Nombre");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace WebApplication4.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "IdEmpresa", tbUsuario.IdEmpresa);
+            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "Nombre", tbUsuario.IdEmpresa);
             return View(tbUsuario);
         }
 
@@ -85,7 +85,7 @@ namespace WebApplication4.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "IdEmpresa", tbUsuario.IdEmpresa);
+            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "Nombre", tbUsuario.IdEmpresa);
             return View(tbUsuario);
         }
 
@@ -121,7 +121,7 @@ namespace WebApplication4.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "IdEmpresa", tbUsuario.IdEmpresa);
+            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "Nombre", tbUsuario.IdEmpresa);
             return View(tbUsuario);
         }
 

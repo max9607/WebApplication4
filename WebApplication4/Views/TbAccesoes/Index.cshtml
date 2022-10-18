@@ -37,10 +37,10 @@
                 @Html.DisplayFor(modelItem => item.Clave)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdPermisoNavigation.IdPermiso)
+                @Html.DisplayFor(modelItem => item.IdPermisoNavigation.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.IdUsuario)
+                @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdAcceso">Edit</a> |
