@@ -2,12 +2,16 @@
 
 @{
     ViewData["Title"] = "Index";
+    
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary btn-lg" asp-action="Create">Crear Nuevo</a>
+    <a class="btn btn-primary btn-lg" asp-controller="TbPermisoes" asp-action="Index">  Roles</a>
+    <a class="btn btn-primary btn-lg" asp-area="" asp-controller="TbAccesoes" asp-action="Index">Accesos</a>
+    <a class="btn btn-primary btn-lg" asp-area="" asp-controller="TbEmpresas" asp-action="Index">Empresas</a>
 </p>
 <table class="table">
     <thead>
