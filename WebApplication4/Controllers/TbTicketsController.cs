@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication4.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebApplication4.Controllers
 {
@@ -14,6 +15,7 @@ namespace WebApplication4.Controllers
     public class TbTicketsController : Controller
     {
         private readonly Project_DesmodusDBContext _context;
+
 
         public TbTicketsController(Project_DesmodusDBContext context)
         {
@@ -57,7 +59,7 @@ namespace WebApplication4.Controllers
             ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha");
             ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "IdPrioridad");
             ViewData["IdProblema"] = new SelectList(_context.TbCategoria, "IdProblema", "IdProblema");
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario");
+            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre");
             return View();
         }
 
@@ -180,14 +182,16 @@ namespace WebApplication4.Controllers
             {
                 _context.TbTickets.Remove(tbTicket);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TbTicketExists(int id)
         {
-          return _context.TbTickets.Any(e => e.IdTicket == id);
+            return _context.TbTickets.Any(e => e.IdTicket == id);
         }
+
+
     }
 }
