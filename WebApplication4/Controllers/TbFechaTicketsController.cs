@@ -65,7 +65,35 @@ namespace WebApplication4.Controllers
             }
             return View(tbFechaTicket);
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public TbFechaTicket AbrirTicket(TbFechaTicket oticket)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(oticket);
+                _context.SaveChanges();
+                return oticket;
+            }
+            return null;
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public bool CancelarTicket(int id)
+        {
+            var a = _context.TbFechaTickets.Where(m => m.IdFecha == id).FirstOrDefault();
+            if (a != null)
+            {
+                Console.WriteLine(id);
+                _context.Remove(a);
+                _context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return true;
+            }
+        }
         // GET: TbFechaTickets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

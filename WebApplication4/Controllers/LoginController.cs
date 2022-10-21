@@ -36,7 +36,8 @@ namespace WebApplication4.Controllers
                     new Claim(ClaimTypes.Name, Datos_usuario.Nombre),
                     new Claim("Correo", Acceso_usuario.Correo),
                     new Claim(ClaimTypes.Role, Permiso_usuario.Nombre),
-                    
+                    new Claim("IdUsuario", Datos_usuario.IdUsuario.ToString())
+
                 };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 /*

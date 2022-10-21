@@ -1,5 +1,5 @@
 ﻿@model WebApplication4.Models.TbTicket
-@inject WebApplication4.Controllers.LoginController item
+
 @{
     ViewData["Title"] = "Create";
 }
@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdUsuario" class="control-label"></label>
-                <select asp-for="IdUsuario" class ="form-control" asp-items="ViewBag.IdUsuario" disabled></select>
+                <input type="text" asp-for="IdUsuario" class="form-control" value="@(ViewBag.IdUsuario)" readonly/>
             </div>
             <div class="form-group">
                 <label asp-for="IdEstado" class="control-label"></label>
@@ -46,7 +46,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdFecha" class="control-label"></label>
-                <select asp-for="IdFecha" class ="form-control" asp-items="ViewBag.IdFecha"></select>
+                <input type="text" asp-for="IdFecha" class="form-control" value="@(ViewBag.IdFecha)" readonly/>
+                
             </div>
             <div class="form-group">
                 <label asp-for="IdProblema" class="control-label"></label>
@@ -60,7 +61,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="TbTickets" asp-action="Volver">Back to List</a>
 </div>
 
 @section Scripts {
