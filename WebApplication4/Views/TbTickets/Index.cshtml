@@ -24,21 +24,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Adjunto)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdEstadoNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdFechaNavigation)
-            </th>
+           
+            
             <th>
                 @Html.DisplayNameFor(model => model.IdPrioridadNavigation)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdProblemaNavigation)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUsuarioNavigation)
-            </th>
+           
             <th></th>
         </tr>
     </thead>
@@ -57,21 +51,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Adjunto)
             </td>
+           
+           
             <td>
-                @Html.DisplayFor(modelItem => item.IdEstadoNavigation.IdEstado)
+                @Html.DisplayFor(modelItem => item.IdPrioridadNavigation.Prioridad)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdFechaNavigation.IdFecha)
+                @Html.DisplayFor(modelItem => item.IdProblemaNavigation.Problema)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdPrioridadNavigation.IdPrioridad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdProblemaNavigation.IdProblema)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.IdUsuario)
-            </td>
+           
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdTicket">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.IdTicket">Details</a> |

@@ -71,13 +71,15 @@ namespace WebApplication4.Controllers
             var fechaT = _con_ft.AbrirTicket(f);
             Actual = fechaT.IdFecha;
 
-            ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "EstadoTicket");
+            var estado = _context.TbEstadoTickets.Single(f => f.EstadoTicket=="nuevo");
+            //ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "EstadoTicket");
             ViewData["IdFecha"] = fechaT.IdFecha;
             ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "Prioridad");
             ViewData["IdProblema"] = new SelectList(_context.TbCategoria, "IdProblema", "Problema");
             // ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre");
             var a = User.FindFirst("IdUsuario");
             var usuario = _context.TbUsuarios.Single(i => i.IdUsuario == int.Parse(a.Value));
+            ViewData["IdEstado"] = estado.IdEstado;
             ViewData["IdUsuario"] = usuario.IdUsuario;
             //Console.WriteLine(usuario.Nombre);
             return View();
@@ -96,6 +98,7 @@ namespace WebApplication4.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
             ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);
             ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "IdPrioridad", tbTicket.IdPrioridad);

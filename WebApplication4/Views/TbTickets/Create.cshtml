@@ -37,16 +37,16 @@
                 <select asp-for="IdPrioridad" class ="form-control" asp-items="ViewBag.IdPrioridad"></select>
             </div>
             <div class="form-group">
-                <label asp-for="IdUsuario" class="control-label"></label>
-                <input type="text" asp-for="IdUsuario" class="form-control" value="@(ViewBag.IdUsuario)" readonly/>
+
+                <input type="hidden" asp-for="IdUsuario" class="form-control" value="@(ViewBag.IdUsuario)" readonly/>
             </div>
             <div class="form-group">
-                <label asp-for="IdEstado" class="control-label"></label>
-                <select asp-for="IdEstado" class ="form-control" asp-items="ViewBag.IdEstado"></select>
+                
+                <input type="hidden" asp-for="IdEstado" class ="form-control" value="@(ViewBag.IdEstado)" readonly/>
             </div>
             <div class="form-group">
-                <label asp-for="IdFecha" class="control-label"></label>
-                <input type="text" asp-for="IdFecha" class="form-control" value="@(ViewBag.IdFecha)" readonly/>
+
+                <input type="hidden" asp-for="IdFecha" class="form-control" value="@(ViewBag.IdFecha)" readonly/>
                 
             </div>
             <div class="form-group">
