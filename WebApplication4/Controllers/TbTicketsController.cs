@@ -27,12 +27,14 @@ namespace WebApplication4.Controllers
         }
 
         // GET: TbTickets
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Index()
         {
             var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
             return View(await project_DesmodusDBContext.ToListAsync());
         }
         //GET: Tickets del usuario logueado
+        
         public async Task<IActionResult> UserTickets()
         {
             var a = User.FindFirst("IdUsuario");    //obtenemos el claim IdUsuario y lo almacenamos en una variable a
