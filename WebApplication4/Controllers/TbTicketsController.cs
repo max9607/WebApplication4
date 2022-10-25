@@ -19,6 +19,7 @@ namespace WebApplication4.Controllers
         private readonly Project_DesmodusDBContext _context;
 
         public static int Actual { get; set; }
+        
 
         public TbTicketsController(Project_DesmodusDBContext context)
         {
@@ -31,7 +32,29 @@ namespace WebApplication4.Controllers
             var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
             return View(await project_DesmodusDBContext.ToListAsync());
         }
+        //GET: Tickets del usuario logueado
+        public async Task<IActionResult> UserTickets()
+        {
+            var a = User.FindFirst("IdUsuario");    //obtenemos el claim IdUsuario y lo almacenamos en una variable a
+            var userid = int.Parse(a.Value);        //guardamos el valor de a convertido a entero
+            if (_context.TbTickets == null)
+            {
+                return NotFound();
+            }
+            var tbTicket = await _context.TbTickets
+                .Include(t => t.IdEstadoNavigation)
+                .Include(t => t.IdFechaNavigation)
+                .Include(t => t.IdPrioridadNavigation)
+                .Include(t => t.IdProblemaNavigation)
+                .Include(t => t.IdUsuarioNavigation)
+                .Where(m => m.IdUsuario == userid).ToListAsync();
+            if (tbTicket == null)
+            {
+                return NotFound();
+            }
 
+            return View(tbTicket);
+        }
         // GET: TbTickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -96,7 +119,7 @@ namespace WebApplication4.Controllers
             {
                 _context.Add(tbTicket);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("UserTickets", "TbTickets");
             }
 
             ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);

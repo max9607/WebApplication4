@@ -1,0 +1,34 @@
+﻿@model IEnumerable<WebApplication4.Models.TbTicket>
+@{
+    ViewData["Title"] = "UserTickets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>UserTickets</h1>
+
+<table class="table">
+    <thead class="thead-dark">
+        <th scope="col">#</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Prioridad</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Asunto</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Adjunto</th>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+                <th scope="row">@Html.DisplayFor(modelItem => item.IdTicket)</th>
+                <td>@Html.DisplayFor(modelItem => item.IdEstadoNavigation.EstadoTicket)</td>
+                <td>@Html.DisplayFor(modelItem => item.IdPrioridadNavigation.Prioridad)</td>
+                <td>@Html.DisplayFor(modelItem => item.IdProblemaNavigation.Problema)</td>
+                <td>@Html.DisplayFor(modelItem => item.IdFechaNavigation.FechaCreado)</td>
+                <td>@Html.DisplayFor(modelItem => item.DespricionP)</td>
+                <td>@Html.DisplayFor(modelItem => item.DescripionDetallada)</td>
+                <td>@Html.DisplayFor(modelItem => item.Adjunto)</td>
+        </tr>
+        }
+    </tbody>
+</table>
