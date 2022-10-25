@@ -28,8 +28,8 @@
                     }
                    
                     @if(User.IsInRole("Administrador")){
-                        <a href="#">Hacks</a>
-                        <a href="#">Nopor</a>
+                        <a asp-controller="TbUsuarios" asp-action="Index">Usuarios</a>
+                        <a asp-controller="TbTickets" asp-action="Index">Tickets</a>
                         <a href="#">Negras</a>
                         <a href="#">Culos</a>
                     }             

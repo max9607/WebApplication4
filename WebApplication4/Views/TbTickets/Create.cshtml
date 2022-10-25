@@ -4,6 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
+
 <h1>Create</h1>
 
 <h4>TbTicket</h4>
@@ -29,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Adjunto" class="control-label"></label>
-                <input asp-for="Adjunto" class="form-control" />
+                <input type="file" asp-for="Adjunto" class="form-control" />
                 <span asp-validation-for="Adjunto" class="text-danger"></span>
             </div>
             <div class="form-group">
