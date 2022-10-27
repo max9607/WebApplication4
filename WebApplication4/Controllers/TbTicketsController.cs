@@ -274,6 +274,12 @@ namespace WebApplication4.Controllers
 
             
         }
+        //GET: Obtener imaganes
+        public ActionResult Obtener(int id)
+        {
+            var img = _context.TbTickets.Where(i => i.IdTicket == id).FirstOrDefault();
+            return File(img.Adjunto, "image/jpeg");
+        }
 
     }
 }
