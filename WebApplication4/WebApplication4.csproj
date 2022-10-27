@@ -19,4 +19,8 @@
     <Folder Include="wwwroot\icofont\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\css\LoginIndex.css" />
+  </ItemGroup>
+
 </Project>

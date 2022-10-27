@@ -10,7 +10,12 @@ namespace WebApplication4.Logica_Ticket
         {
             _context = context;
         }
+        public TbTicket ValidarCerrado(int idE)
+        {
+            var DatosC = _context.TbTickets.Where(t => t.IdEstado == 4).FirstOrDefault();
+            return DatosC;
+        }
 
-       
+
     }
 }
