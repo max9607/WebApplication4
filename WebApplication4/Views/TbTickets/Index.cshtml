@@ -22,6 +22,7 @@
     <th scope="col">Adjunto</th>
     <th scope="col">Correo</th>
     <th scope="col">Nombre</th>
+    <th scope="col">Opciones</th>
     </thead>
     <tbody>
 @foreach (var item in Model) {
@@ -47,7 +48,7 @@
                 <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Correo)</td>
                 <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre) @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido1)</td>
                 
-            <td>
+            <td >
                 <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.IdTicket">Edit</a> 
                 <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.IdTicket">Details</a> 
                  <a class="btn btn-danger"  asp-action="Delete" asp-route-id="@item.IdTicket">Delete</a>

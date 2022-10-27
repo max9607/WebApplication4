@@ -85,7 +85,14 @@ namespace WebApplication4.Controllers
         {
             TbFechaTicketsController _con_ft = new TbFechaTicketsController(_context);
              _con_ft.CancelarTicket(Actual);
-            return RedirectToAction("Index", "Home");
+            var roles = ((ClaimsIdentity)User.Identity).Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
+
+            if (roles.FirstOrDefault() == "Administrador")
+                return RedirectToAction(nameof(Index));
+            if (roles.FirstOrDefault() == "Usuario")
+                return RedirectToAction(nameof(UserTickets));
+            else
+                return RedirectToAction("Index", "Login");
         }
         // GET: TbTickets/Create
         public IActionResult Create()
