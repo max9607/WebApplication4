@@ -25,17 +25,35 @@
             @foreach (var item in Model)
             {
             <tr>
-                <th scope="row">@Html.DisplayFor(modelItem => item.IdTicket)</th>
-                <td>@Html.DisplayFor(modelItem => item.IdEstadoNavigation.EstadoTicket)</td>
-                <td>@Html.DisplayFor(modelItem => item.IdPrioridadNavigation.Prioridad)</td>
-                <td>@Html.DisplayFor(modelItem => item.IdProblemaNavigation.Problema)</td>
-                <td>@Html.DisplayFor(modelItem => item.IdFechaNavigation.FechaCreado)</td>
-                <td>@Html.DisplayFor(modelItem => item.DespricionP)</td>
-                <td>@Html.DisplayFor(modelItem => item.DescripionDetallada)</td>
-                <td>@Html.DisplayFor(modelItem => item.Adjunto)</td>
-                <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Correo)</td>
-                <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre) @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido1)</td>
+                @if(item.IdEstadoNavigation.IdEstado == 4){
 
+                    <th scope="row">@Html.DisplayFor(modelItem => item.IdTicket)</th>
+                    <td>@Html.DisplayFor(modelItem => item.IdEstadoNavigation.EstadoTicket)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IdPrioridadNavigation.Prioridad)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IdProblemaNavigation.Problema)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IdFechaNavigation.FechaCreado)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DespricionP)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DescripionDetallada)</td>
+                        @if (item.Adjunto != null)
+                        {
+
+                        <td>
+                            <img src="@Url.Action("Obtener","TbTickets",new{id = item.IdTicket} )" width="50px" height="50px">
+                        </td>
+                        }
+                        else
+                        {
+                        <td>Ninguno</td>
+                        }
+                    <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Correo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre) @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido1)</td>
+
+                   
+                
+                }
+                else {
+                    <td>Ninguno</td>
+                }
                 <td>
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.IdTicket">Edit</a> |
                     <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.IdTicket">Details</a> |

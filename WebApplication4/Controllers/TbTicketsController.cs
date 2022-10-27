@@ -19,7 +19,7 @@ namespace WebApplication4.Controllers
         private readonly Project_DesmodusDBContext _context;
 
         public static int Actual { get; set; }
-
+        
 
         public TbTicketsController(Project_DesmodusDBContext context)
         {
@@ -209,11 +209,7 @@ namespace WebApplication4.Controllers
                         throw;
                     }
                 }
-                var roles = ((ClaimsIdentity)User.Identity).Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
-                if(roles.FirstOrDefault() == "Administrador")
-                    return RedirectToAction(nameof(Index));
-                if (roles.FirstOrDefault() == "Usuario")
-                    return RedirectToAction(nameof(UserTickets));
+                return RedirectToAction(nameof(UserTickets));
             }
             ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
             ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);
@@ -269,14 +265,15 @@ namespace WebApplication4.Controllers
         {
             return _context.TbTickets.Any(e => e.IdTicket == id);
         }
-        [Authorize(Roles = "Administrador")]
+     
         public async Task<IActionResult> Cerrados()
         {
-           
-            var project_DesmodusDBContext = _context.TbTickets.Where(t => t.IdEstado == 4).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
+
+
+            var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
             return View(await project_DesmodusDBContext.ToListAsync());
 
-            
+
         }
         //GET: Obtener imaganes
         public ActionResult Obtener(int id)
