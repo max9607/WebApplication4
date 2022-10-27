@@ -161,6 +161,9 @@ namespace WebApplication4.Models
                     .HasMaxLength(150)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Adjunto)
+                .GetType();
+                
                 entity.HasOne(d => d.IdEstadoNavigation)
                     .WithMany(p => p.TbTickets)
                     .HasForeignKey(d => d.IdEstado)
