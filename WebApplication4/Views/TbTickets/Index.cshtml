@@ -33,7 +33,17 @@
                 <td>@Html.DisplayFor(modelItem => item.IdFechaNavigation.FechaCreado)</td>
                 <td>@Html.DisplayFor(modelItem => item.DespricionP)</td>
                 <td>@Html.DisplayFor(modelItem => item.DescripionDetallada)</td>
-                <td><img src="@Url.Action("Obtener","TbTickets",new{id = item.IdTicket} )" width="50px" height="50px"></td>
+                    @if (item.Adjunto != null)
+                    {
+
+                    <td>
+                        <img src="@Url.Action("Obtener","TbTickets",new{id = item.IdTicket} )" width="50px" height="50px">
+                    </td>
+                    }
+                    else
+                    {
+                    <td>Ninguno</td>
+                    }
                 <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Correo)</td>
                 <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre) @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido1)</td>
                 
