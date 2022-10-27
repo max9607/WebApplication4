@@ -66,15 +66,14 @@
 </div>
 
 <div>
-    @if (User.IsInRole("Usuario"))
-    {
+    @if(User.IsInRole("Usuario")){
         <a asp-action="UserTickets">Back to List</a>
     }
 
-    @if (User.IsInRole("Administrador"))
-    {
+    @if(User.IsInRole("Administrador")){
         <a asp-action="Index">Back to List</a>
     }
+
 </div>
 
 @section Scripts {

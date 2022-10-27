@@ -84,7 +84,7 @@ namespace WebApplication4.Controllers
         public IActionResult Volver()
         {
             TbFechaTicketsController _con_ft = new TbFechaTicketsController(_context);
-            _con_ft.CancelarTicket(Actual);
+             _con_ft.CancelarTicket(Actual);
             var roles = ((ClaimsIdentity)User.Identity).Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
 
             if (roles.FirstOrDefault() == "Administrador")
