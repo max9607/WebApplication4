@@ -19,7 +19,7 @@ namespace WebApplication4.Controllers
         private readonly Project_DesmodusDBContext _context;
 
         public static int Actual { get; set; }
-        
+        public static byte[] EditImagen { get; set; }
 
         public TbTicketsController(Project_DesmodusDBContext context)
         {
@@ -128,6 +128,7 @@ namespace WebApplication4.Controllers
             
             if (ModelState.IsValid)
             {
+
                 foreach (var file in Request.Form.Files)
                 {
                     //Leer la imagen
@@ -138,9 +139,10 @@ namespace WebApplication4.Controllers
                     ms.Close();
                     ms.Dispose();
 
-                    _context.Add(tbTicket);
-                    await _context.SaveChangesAsync();
+
                 }
+                _context.Add(tbTicket);
+                await _context.SaveChangesAsync();
                 return RedirectToAction("UserTickets", "TbTickets");
 
             }
@@ -162,12 +164,18 @@ namespace WebApplication4.Controllers
             }
 
             var tbTicket = await _context.TbTickets.FindAsync(id);
+            if(tbTicket.Adjunto != null)
+            {
+                EditImagen = tbTicket.Adjunto;
+            }
+                
+
             if (tbTicket == null)
             {
                 return NotFound();
             }
             ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
-            ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);
+            ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "FechaCreado", tbTicket.IdFecha);
             ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "IdPrioridad", tbTicket.IdPrioridad);
             ViewData["IdProblema"] = new SelectList(_context.TbCategoria, "IdProblema", "IdProblema", tbTicket.IdProblema);
             ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario");
@@ -188,22 +196,34 @@ namespace WebApplication4.Controllers
 
             if (ModelState.IsValid)
             {
+                if(tbTicket.Adjunto != null)
+                {
+                    Console.WriteLine("Tiene la IMAGEEEEN");
+                }
                 try
                 {
-                    foreach (var file in Request.Form.Files)
+                    if(Request.Form.Files.Count() > 0)
                     {
-                        //Leer la imagen
-                        MemoryStream ms = new MemoryStream();
-                        file.CopyTo(ms);
-                        tbTicket.Adjunto = ms.ToArray();
+                        foreach (var file in Request.Form.Files)
+                        {
+                            //Leer la imagen
 
-                        ms.Close();
-                        ms.Dispose();
+                            MemoryStream ms = new MemoryStream();
+                            file.CopyTo(ms);
+                            tbTicket.Adjunto = ms.ToArray();
 
-                        _context.Update(tbTicket);
-                        await _context.SaveChangesAsync();
+                            ms.Close();
+                            ms.Dispose();
+
+
+                        }
                     }
-
+                    else
+                    {
+                        tbTicket.Adjunto = EditImagen;
+                    }
+                    _context.Update(tbTicket);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
