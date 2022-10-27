@@ -115,13 +115,26 @@ namespace WebApplication4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTicket,DespricionP,DescripionDetallada,Localizacion,Adjunto,IdPrioridad,IdUsuario,IdEstado,IdFecha,IdProblema")] TbTicket tbTicket)
+        public async Task<IActionResult> Create([Bind("IdTicket,DespricionP,DescripionDetallada,Localizacion,IdPrioridad,IdUsuario,IdEstado,IdFecha,IdProblema")] TbTicket tbTicket)
         {
+            
             if (ModelState.IsValid)
             {
-                _context.Add(tbTicket);
-                await _context.SaveChangesAsync();
+                foreach (var file in Request.Form.Files)
+                {
+                    //Leer la imagen
+                    MemoryStream ms = new MemoryStream();
+                    file.CopyTo(ms);
+                    tbTicket.Adjunto = ms.ToArray();
+
+                    ms.Close();
+                    ms.Dispose();
+
+                    _context.Add(tbTicket);
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction("UserTickets", "TbTickets");
+
             }
 
             ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
@@ -158,7 +171,7 @@ namespace WebApplication4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTicket,DespricionP,DescripionDetallada,Localizacion,Adjunto,IdPrioridad,IdUsuario,IdEstado,IdFecha,IdProblema")] TbTicket tbTicket)
+        public async Task<IActionResult> Edit(int id, [Bind("IdTicket,DespricionP,DescripionDetallada,Localizacion,IdPrioridad,IdUsuario,IdEstado,IdFecha,IdProblema")] TbTicket tbTicket)
         {
             if (id != tbTicket.IdTicket)
             {
@@ -169,8 +182,20 @@ namespace WebApplication4.Controllers
             {
                 try
                 {
-                    _context.Update(tbTicket);
-                    await _context.SaveChangesAsync();
+                    foreach (var file in Request.Form.Files)
+                    {
+                        //Leer la imagen
+                        MemoryStream ms = new MemoryStream();
+                        file.CopyTo(ms);
+                        tbTicket.Adjunto = ms.ToArray();
+
+                        ms.Close();
+                        ms.Dispose();
+
+                        _context.Update(tbTicket);
+                        await _context.SaveChangesAsync();
+                    }
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -183,7 +208,7 @@ namespace WebApplication4.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(UserTickets));
             }
             ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
             ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);
@@ -238,6 +263,12 @@ namespace WebApplication4.Controllers
         private bool TbTicketExists(int id)
         {
             return _context.TbTickets.Any(e => e.IdTicket == id);
+        }
+        //GET: Obtener imaganes
+        public ActionResult Obtener(int id)
+        {
+            var img = _context.TbTickets.Where(i => i.IdTicket == id).FirstOrDefault();
+            return File(img.Adjunto, "image/jpeg");
         }
 
 

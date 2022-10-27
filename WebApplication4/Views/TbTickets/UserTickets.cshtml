@@ -16,18 +16,48 @@
         <th scope="col">Asunto</th>
         <th scope="col">Descripcion</th>
         <th scope="col">Adjunto</th>
+        <th scope="col">Opciones</th>
     </thead>
     <tbody>
         @foreach (var item in Model) {
         <tr>
                 <th scope="row">@Html.DisplayFor(modelItem => item.IdTicket)</th>
-                <td>@Html.DisplayFor(modelItem => item.IdEstadoNavigation.EstadoTicket)</td>
+                
+                @if (item.IdEstadoNavigation.EstadoTicket == "Nuevo"){
+                    <td class="bg-info">@Html.DisplayFor(modelItem => item.IdEstadoNavigation.EstadoTicket)</td>
+                }
+                @if (item.IdEstadoNavigation.EstadoTicket == "Abierto"){
+                    <td class="bg-primary text-white">@Html.DisplayFor(modelItem => item.IdEstadoNavigation.EstadoTicket)</td>
+                }
+                @if (item.IdEstadoNavigation.EstadoTicket == "Pendiente")
+                {
+                    <td class="bg-warning">@Html.DisplayFor(modelItem => item.IdEstadoNavigation.EstadoTicket)</td>
+
+                }
+                @if (item.IdEstadoNavigation.EstadoTicket == "Resuelto")
+                {
+                    <td class="bg-success text-white">@Html.DisplayFor(modelItem => item.IdEstadoNavigation.EstadoTicket)</td>
+
+                }
                 <td>@Html.DisplayFor(modelItem => item.IdPrioridadNavigation.Prioridad)</td>
                 <td>@Html.DisplayFor(modelItem => item.IdProblemaNavigation.Problema)</td>
                 <td>@Html.DisplayFor(modelItem => item.IdFechaNavigation.FechaCreado)</td>
                 <td>@Html.DisplayFor(modelItem => item.DespricionP)</td>
                 <td>@Html.DisplayFor(modelItem => item.DescripionDetallada)</td>
-                <td>@Html.DisplayFor(modelItem => item.Adjunto)</td>
+
+                    @if (item.Adjunto != null)
+                    {
+
+                        <td>
+                        <img src="@Url.Action("Obtener","TbTickets",new{id = item.IdTicket} )" width="50px" height="50px">
+                        </td>
+                    }
+                    else
+                        {
+                    <td>Ninguno</td>
+                    }
+                <td><a asp-action="Edit" asp-route-id="@item.IdTicket" class="btn btn-warning">Edit</a> </td>
+
         </tr>
         }
     </tbody>
