@@ -19,7 +19,7 @@ namespace WebApplication4.Controllers
         private readonly Project_DesmodusDBContext _context;
 
         public static int Actual { get; set; }
-        
+
 
         public TbTicketsController(Project_DesmodusDBContext context)
         {
@@ -209,7 +209,11 @@ namespace WebApplication4.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(UserTickets));
+                var roles = ((ClaimsIdentity)User.Identity).Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
+                if(roles.FirstOrDefault() == "Administrador")
+                    return RedirectToAction(nameof(Index));
+                if (roles.FirstOrDefault() == "Usuario")
+                    return RedirectToAction(nameof(UserTickets));
             }
             ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
             ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);
