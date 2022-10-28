@@ -4,56 +4,112 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-<h1 class="display-4">Bienvenido! @User.Identity.Name</h1>
-<p>
-    <a class="btn btn-success"  asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-    <thead class="thead-dark">
-    <th scope="col">#</th>
-    <th scope="col">Estado</th>
-    <th scope="col">Prioridad</th>
-    <th scope="col">Categoria</th>
-    <th scope="col">Fecha</th>
-    <th scope="col">Asunto</th>
-    <th scope="col">Descripcion</th>
-    <th scope="col">Adjunto</th>
-    <th scope="col">Correo</th>
-    <th scope="col">Nombre</th>
-    <th scope="col">Opciones</th>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-                <th scope="row">@Html.DisplayFor(modelItem => item.IdTicket)</th>
-                <td>@Html.DisplayFor(modelItem => item.IdEstadoNavigation.EstadoTicket)</td>
-                <td>@Html.DisplayFor(modelItem => item.IdPrioridadNavigation.Prioridad)</td>
-                <td>@Html.DisplayFor(modelItem => item.IdProblemaNavigation.Problema)</td>
-                <td>@Html.DisplayFor(modelItem => item.IdFechaNavigation.FechaCreado)</td>
-                <td>@Html.DisplayFor(modelItem => item.DespricionP)</td>
-                <td>@Html.DisplayFor(modelItem => item.DescripionDetallada)</td>
-                    @if (item.Adjunto != null)
-                    {
+<h1>Tickets</h1>
 
-                    <td>
-                        <img src="@Url.Action("Obtener","TbTickets",new{id = item.IdTicket} )" width="50px" height="50px">
-                    </td>
-                    }
-                    else
-                    {
-                    <td>Ninguno</td>
-                    }
-                <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Correo)</td>
-                <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre) @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido1)</td>
-                
-            <td >
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.IdTicket">Edit</a> 
-                <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.IdTicket">Details</a> 
-                 <a class="btn btn-danger"  asp-action="Delete" asp-route-id="@item.IdTicket">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container text-center">
+    <div class="row row-cols-4">
+        <div class="col">
+            <h5>Nuevos</h5>
+            <hr class="border border-dark border-1" />
+        </div>
+        <div class="col">
+            <h5>Abiertos</h5>
+            <hr class="border border-dark border-1" />
+        </div>
+        <div class="col">
+            <h5>Pendientes</h5>
+            <hr class="border border-dark border-1" />
+        </div>
+        <div class="col">
+            <h5>Cerrados</h5>
+            <hr class="border border-dark border-1" />
+        </div>
+    </div>
+    <div class="row row-cols-4">
+        <div class="col col-tickets">
+            @foreach (var item in Model) {
+                if(item.IdEstado == 1){
+                    var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();                   
+                        <a asp-action="Details" asp-route-id="@item.IdTicket">
+                            <div class="ticket btn btn-info">
+                                <div class="row">
+                                    <p id="Id" class="col-lg-2">@Html.DisplayFor(modelItem => item.IdTicket)</p>
+                                    <p id="Fecha" class="col-8">@Html.DisplayFor(modelItem => fecha)</p>
+                                </div>
+                                <div class="row">
+                                    <p id="Asunto" class="col">@Html.DisplayFor(modelItem => item.DespricionP)</p>
+                                </div>
+                            </div>
+                        </a>
+                   
+                }
+            }
+        </div>
+
+        <div class="col col-tickets">
+            @foreach (var item in Model) {
+                if (item.IdEstado == 2)
+                {
+                    var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
+                     <a asp-action="Details" asp-route-id="@item.IdTicket">
+                        <div class="ticket btn btn-primary">
+                            <div class="row">
+                                <p id="Id" class="col-lg-2">@Html.DisplayFor(modelItem => item.IdTicket)</p>
+                                <p id="Fecha" class="col-8">@Html.DisplayFor(modelItem => fecha)</p>
+                            </div>
+                            <div class="row">
+                                <p id="Asunto" class="col">@Html.DisplayFor(modelItem => item.DespricionP)</p>
+                            </div>
+
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+        <div class="col col-tickets">
+            @foreach (var item in Model)
+            {
+                if (item.IdEstado == 3)
+                {
+                    var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
+                    <a asp-action="Details" asp-route-id="@item.IdTicket">
+                        <div class="ticket btn btn-warning">
+                            <div class="row">
+                                <p id="Id" class="col-lg-2">@Html.DisplayFor(modelItem => item.IdTicket)</p>
+                                <p id="Fecha" class="col-8">@Html.DisplayFor(modelItem => fecha)</p>
+                            </div>
+                            <div class="row">
+                                <p id="Asunto" class="col">@Html.DisplayFor(modelItem => item.DespricionP)</p>
+                            </div>
+
+
+                        </div>
+                    </a>
+
+                }
+            }
+        </div>
+        <div class="col col-tickets">
+            @foreach (var item in Model)
+            {
+                if (item.IdEstado == 4)
+                {
+                    var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
+                    <a asp-action="Details" asp-route-id="@item.IdTicket">
+                        <div class="ticket btn btn-success">
+                            <div class="row">
+                                <p id="Id" class="col-lg-2">@Html.DisplayFor(modelItem => item.IdTicket)</p>
+                                <p id="Fecha" class="col-8">@Html.DisplayFor(modelItem => fecha)</p>
+                            </div>
+                            <div class="row">
+                                <p id="Asunto" class="col">@Html.DisplayFor(modelItem => item.DespricionP)</p>
+                            </div>
+                        </div>
+                    </a>
+ 
+                }
+            }
+        </div>
+    </div>
+</div>
+
