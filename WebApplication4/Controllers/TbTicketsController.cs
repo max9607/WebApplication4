@@ -143,7 +143,18 @@ namespace WebApplication4.Controllers
                 }
                 _context.Add(tbTicket);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("UserTickets", "TbTickets");
+                if (User.IsInRole("Administrador"))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                if (User.IsInRole("Usuario"))
+                {
+                    return RedirectToAction(nameof(UserTickets));
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
 
             }
 
@@ -236,7 +247,18 @@ namespace WebApplication4.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(UserTickets));
+                if (User.IsInRole("Administrador"))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                if (User.IsInRole("Usuario"))
+                {
+                    return RedirectToAction(nameof(UserTickets));
+                }
+                else{
+                    return RedirectToAction("Index", "Login");
+                }
+                
             }
             ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
             ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);

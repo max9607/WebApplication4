@@ -8,6 +8,7 @@ namespace WebApplication4.Models
         public TbUsuario()
         {
             TbAccesos = new HashSet<TbAcceso>();
+            TbDerivados = new HashSet<TbDerivado>();
             TbTickets = new HashSet<TbTicket>();
         }
 
@@ -21,6 +22,7 @@ namespace WebApplication4.Models
 
         public virtual TbEmpresa? IdEmpresaNavigation { get; set; }
         public virtual ICollection<TbAcceso> TbAccesos { get; set; }
+        public virtual ICollection<TbDerivado> TbDerivados { get; set; }
         public virtual ICollection<TbTicket> TbTickets { get; set; }
     }
 }

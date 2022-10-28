@@ -5,6 +5,11 @@ namespace WebApplication4.Models
 {
     public partial class TbTicket
     {
+        public TbTicket()
+        {
+            TbDerivados = new HashSet<TbDerivado>();
+        }
+
         public int IdTicket { get; set; }
         public string? DespricionP { get; set; }
         public string? DescripionDetallada { get; set; }
@@ -21,5 +26,6 @@ namespace WebApplication4.Models
         public virtual TbPrioridadTicket? IdPrioridadNavigation { get; set; }
         public virtual TbCategorium? IdProblemaNavigation { get; set; }
         public virtual TbUsuario? IdUsuarioNavigation { get; set; }
+        public virtual ICollection<TbDerivado> TbDerivados { get; set; }
     }
 }
