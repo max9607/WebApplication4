@@ -169,5 +169,30 @@ namespace WebApplication4.Controllers
         {
           return _context.TbDerivados.Any(e => e.IdDerivado == id);
         }
+
+        //-----------------------------------------------------------
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Derivar(int Vuser, int Vticket)
+        {
+            TbDerivado tbDerivado = new TbDerivado();
+            /*
+                Para que se tome el valor de un input de la vista este debe etner el atributo {name=""}
+                el valor de ese atributo debe ser igual al de los parametros de la funcion en este caso
+                'Vuser' y 'Vticket'
+             */
+            tbDerivado.IdTicket = Vticket;
+            tbDerivado.IdUsuario = Vuser;
+
+            //Console.WriteLine(Vuser + "--------------" + Vticket);
+            if (ModelState.IsValid)
+            {
+                _context.Add(tbDerivado);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction("Index", "TbTickets");
+        }
     }
 }

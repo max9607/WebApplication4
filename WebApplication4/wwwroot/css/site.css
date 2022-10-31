@@ -29,12 +29,13 @@ h5{
     top:10px
 }
 .ticket {
-    margin:0 auto;
+    margin: 0 auto;
     width: 90%;
-    height:60px;
-    margin:10px 0 10px 0;
-    padding:0;
+    height: 60px;
+    margin: 10px 0 10px 0;
+    padding: 0;
     position: relative;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 #Id {
     font-size: small;

@@ -10,6 +10,12 @@
     <h4>TbTicket</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            I.D
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdTicket)
+        </dd>
         <dt class = "col-sm-2">
             Asunto
         </dt>
@@ -79,6 +85,13 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdTicket">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.IdTicket" class="btn btn-warning">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Volver</a> |
+    <form asp-controller="TbDerivadoes" asp-action="Derivar" method="post">
+        
+        <select class="form-control" asp-items="ViewBag.IdUsuario" id="Vuser" name="Vuser"></select>
+        <input type="text" class="btn btn-primary" id="Vticket" value="@Model.IdTicket" name="Vticket">
+        <input type="submit" class="btn btn-primary" value="Derivar">
+    </form>
+    
 </div>

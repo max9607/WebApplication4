@@ -67,7 +67,7 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbCategorium>(entity =>
             {
                 entity.HasKey(e => e.IdProblema)
-                    .HasName("PK__tb_Categ__0FDB5F4AA41314AA");
+                    .HasName("PK__tb_Categ__0FDB5F4A188DEFD0");
 
                 entity.ToTable("tb_Categoria");
 
@@ -76,28 +76,10 @@ namespace WebApplication4.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TbDerivado>(entity =>
-            {
-                entity.HasKey(e => e.IdDerivado)
-                    .HasName("PK__tb_Deriv__91186DFA631C9159");
-
-                entity.ToTable("tb_Derivado");
-
-                entity.HasOne(d => d.IdTicketNavigation)
-                    .WithMany(p => p.TbDerivados)
-                    .HasForeignKey(d => d.IdTicket)
-                    .HasConstraintName("FK__tb_Deriva__IdTic__4AB81AF0");
-
-                entity.HasOne(d => d.IdUsuarioNavigation)
-                    .WithMany(p => p.TbDerivados)
-                    .HasForeignKey(d => d.IdUsuario)
-                    .HasConstraintName("FK__tb_Deriva__IdUsu__49C3F6B7");
-            });
-
             modelBuilder.Entity<TbEmpresa>(entity =>
             {
                 entity.HasKey(e => e.IdEmpresa)
-                    .HasName("PK__tb_Empre__5EF4033E096EDF8A");
+                    .HasName("PK__tb_Empre__5EF4033EA8619F96");
 
                 entity.ToTable("tb_Empresa");
 
@@ -117,7 +99,7 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbEstadoTicket>(entity =>
             {
                 entity.HasKey(e => e.IdEstado)
-                    .HasName("PK__tb_Estad__FBB0EDC1D2963AAB");
+                    .HasName("PK__tb_Estad__FBB0EDC1ABF769E3");
 
                 entity.ToTable("tb_EstadoTicket");
 
@@ -129,7 +111,7 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbFechaTicket>(entity =>
             {
                 entity.HasKey(e => e.IdFecha)
-                    .HasName("PK__tb_Fecha__8D0F205AC58090FF");
+                    .HasName("PK__tb_Fecha__8D0F205A4C8383F0");
 
                 entity.ToTable("tb_FechaTicket");
 
@@ -141,7 +123,7 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbPermiso>(entity =>
             {
                 entity.HasKey(e => e.IdPermiso)
-                    .HasName("PK__tb_Permi__0D626EC8659BB50A");
+                    .HasName("PK__tb_Permi__0D626EC81DB16237");
 
                 entity.ToTable("tb_Permiso");
 
@@ -153,7 +135,7 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbPrioridadTicket>(entity =>
             {
                 entity.HasKey(e => e.IdPrioridad)
-                    .HasName("PK__tb_Prior__0FC70DD5A383A030");
+                    .HasName("PK__tb_Prior__0FC70DD509F60752");
 
                 entity.ToTable("tb_PrioridadTicket");
 
@@ -165,7 +147,7 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbTicket>(entity =>
             {
                 entity.HasKey(e => e.IdTicket)
-                    .HasName("PK__tb_Ticke__4B93C7E79D9D8719");
+                    .HasName("PK__tb_Ticke__4B93C7E72AC23AFD");
 
                 entity.ToTable("tb_Ticket");
 
@@ -184,33 +166,33 @@ namespace WebApplication4.Models
                 entity.HasOne(d => d.IdEstadoNavigation)
                     .WithMany(p => p.TbTickets)
                     .HasForeignKey(d => d.IdEstado)
-                    .HasConstraintName("FK__tb_Ticket__IdEst__38996AB5");
+                    .HasConstraintName("FK__tb_Ticket__IdEst__5070F446");
 
                 entity.HasOne(d => d.IdFechaNavigation)
                     .WithMany(p => p.TbTickets)
                     .HasForeignKey(d => d.IdFecha)
-                    .HasConstraintName("FK__tb_Ticket__IdFec__398D8EEE");
+                    .HasConstraintName("FK__tb_Ticket__IdFec__5165187F");
 
                 entity.HasOne(d => d.IdPrioridadNavigation)
                     .WithMany(p => p.TbTickets)
                     .HasForeignKey(d => d.IdPrioridad)
-                    .HasConstraintName("FK__tb_Ticket__IdPri__37A5467C");
+                    .HasConstraintName("FK__tb_Ticket__IdPri__4F7CD00D");
 
                 entity.HasOne(d => d.IdProblemaNavigation)
                     .WithMany(p => p.TbTickets)
                     .HasForeignKey(d => d.IdProblema)
-                    .HasConstraintName("FK__tb_Ticket__IdPro__3A81B327");
+                    .HasConstraintName("FK__tb_Ticket__IdPro__52593CB8");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.TbTickets)
                     .HasForeignKey(d => d.IdUsuario)
-                    .HasConstraintName("FK__tb_Ticket__IdUsu__36B12243");
+                    .HasConstraintName("FK__tb_Ticket__IdUsu__4E88ABD4");
             });
 
             modelBuilder.Entity<TbUsuario>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__tb_Usuar__5B65BF97907B1255");
+                    .HasName("PK__tb_Usuar__5B65BF973DC080F2");
 
                 entity.ToTable("tb_Usuario");
 

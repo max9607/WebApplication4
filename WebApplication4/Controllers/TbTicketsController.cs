@@ -77,7 +77,7 @@ namespace WebApplication4.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["IdUsuario"] = new SelectList(_context.TbAccesos.Where(i => i.IdPermiso == 3), "IdUsuario", "Correo");
             return View(tbTicket);
         }
         //GET TbTickets/Volver
