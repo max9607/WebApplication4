@@ -10,6 +10,7 @@ using WebApplication4.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System.Dynamic;
+using System.Data;
 
 namespace WebApplication4.Controllers
 {
@@ -27,12 +28,34 @@ namespace WebApplication4.Controllers
         }
 
         // GET: TbTickets
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador,Técnico" )]
         public async Task<IActionResult> Index()
         {
             
-            var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
-            return View(await project_DesmodusDBContext.ToListAsync());
+
+            if (User.IsInRole("Técnico"))
+            {
+                /*
+                 En 'iduser' se toma el id del usuario que accedió EJ: 1003 
+                'lista_derivados obtiene todos los tickets del usuario de como una lista de entidades EJ: {1003,2002}{1003,2006}'
+                'id_drivados' obtiene todos los id's de los tickets de 'lista_derivados' {2002,2006}
+                'lista_tickets' obtiene las entidades las cuales sus id's estén dentro de la lista 'id_derivados'
+                 */
+                var iduser = User.FindFirst("IdUsuario"); //1003
+                var lista_derivados = _context.TbDerivados.Include(t => t.IdTicketNavigation).Include(t => t.IdUsuarioNavigation).Where(i => i.IdUsuario == int.Parse(iduser.Value)).ToList(); //{1003,2002}{1003,2006}
+                var id_derivados = lista_derivados.Select(x => x.IdTicket).ToList();//2002,2006,2008
+                var lista_tickets = _context.TbTickets.Include(t => t.IdEstadoNavigation)
+                                                      .Include(t => t.IdFechaNavigation)
+                                                      .Include(t => t.IdPrioridadNavigation)
+                                                      .Include(t => t.IdProblemaNavigation)
+                                                      .Include(t => t.IdUsuarioNavigation).Where(i => id_derivados.Contains(i.IdTicket));
+                return View(await lista_tickets.ToListAsync());
+            }
+            else
+            {
+               var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
+                return View(await project_DesmodusDBContext.ToListAsync());
+            }
         }
         //GET: Tickets del usuario logueado
         
@@ -315,20 +338,20 @@ namespace WebApplication4.Controllers
             return _context.TbTickets.Any(e => e.IdTicket == id);
         }
      
-        public async Task<IActionResult> Cerrados()
-        {
 
+        //----------------------------------------------------------------------------------
 
-            var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
-            return View(await project_DesmodusDBContext.ToListAsync());
-
-
-        }
         //GET: Obtener imaganes
         public ActionResult Obtener(int id)
         {
             var img = _context.TbTickets.Where(i => i.IdTicket == id).FirstOrDefault();
             return File(img.Adjunto, "image/jpeg");
+        }
+        //GET: Obtiene los tickets cerrados
+        public async Task<IActionResult> Cerrados()
+        {
+            var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
+            return View(await project_DesmodusDBContext.ToListAsync());
         }
 
     }

@@ -90,7 +90,7 @@
     <form asp-controller="TbDerivadoes" asp-action="Derivar" method="post">
         
         <select class="form-control" asp-items="ViewBag.IdUsuario" id="Vuser" name="Vuser"></select>
-        <input type="text" class="btn btn-primary" id="Vticket" value="@Model.IdTicket" name="Vticket">
+        <input type="text" class="btn btn-primary" id="Vticket" value="@Model.IdTicket" name="Vticket" hidden>
         <input type="submit" class="btn btn-primary" value="Derivar">
     </form>
     

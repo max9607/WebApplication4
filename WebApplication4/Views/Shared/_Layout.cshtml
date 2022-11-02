@@ -27,11 +27,11 @@
                         <a asp-controller="TbTickets" asp-action="UserTickets">Tickets</a>
                     }
                    
-                    @if(User.IsInRole("Administrador")){
+                    @if (User.IsInRole("Administrador") || User.IsInRole("Técnico")){
                         <a asp-controller="TbUsuarios" asp-action="Index">Usuarios</a>
                         <a asp-controller="TbTickets" asp-action="Index">Tickets</a>
                      
-                        <a href="#">Culos</a>
+                        <a href="#">Null</a>
                     }             
                 </div>
                 

@@ -190,7 +190,8 @@ namespace WebApplication4.Controllers
             {
                 _context.Add(tbDerivado);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                
+                return RedirectToAction("Index", "TbTickets");
             }
             return RedirectToAction("Index", "TbTickets");
         }
