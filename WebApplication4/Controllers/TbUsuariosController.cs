@@ -25,10 +25,11 @@ namespace WebApplication4.Controllers
         public async Task<IActionResult> Index(string buscar)
         {
             
-            var user = from m in _context.TbUsuarios.Include(t=>t.IdEmpresaNavigation) select m;
+           var user = from m in _context.TbUsuarios.Include(t=>t.IdEmpresaNavigation) select m;
             if (!string.IsNullOrEmpty(buscar))
             {
-                user = user.Where(s => s.Nombre!.Contains(buscar)||s.Apellido1.Contains(buscar) || s.Apellido2.Contains(buscar) || s.Correo.Contains(buscar) || s.Telefono.Contains(buscar)||s.IdEmpresaNavigation.Nombre.Contains(buscar));
+                user = user.Where(s => s.Nombre!.Contains(buscar)|| s.Apellido1!.Contains(buscar) || s.Apellido2!.Contains(buscar) || s.Correo!.Contains(buscar) || s.Telefono!.Contains(buscar)||s.IdEmpresaNavigation!.Nombre.Contains(buscar)
+                ||(s.Nombre+" "+s.Apellido1+" "+s.Apellido2+" "+s.Correo).ToLower().Contains(buscar));
             }
             var project_DesmodusDBContext = _context.TbUsuarios.Include(t => t.IdEmpresaNavigation);
             return View(await user.ToListAsync());
@@ -177,7 +178,8 @@ namespace WebApplication4.Controllers
         public  IActionResult Test()
         {
             var name = HttpContext.Request.Query["term"].ToString();
-            var name2 = _context.TbUsuarios.Where(c => c.Nombre.Contains(name)).Select(c => c.Apellido1).ToList();
+            var name2 = _context.TbUsuarios.Where(c => c.Nombre.Contains(name)|| c.Apellido1.Contains(name) || c.Apellido2.Contains(name) || c.Correo.Contains(name)).Select(c=>c.Nombre+" "+c.Apellido1+" "+c.Apellido2+" "+c.Correo).ToList();
+           
             return Ok(name2);
         }
     }
