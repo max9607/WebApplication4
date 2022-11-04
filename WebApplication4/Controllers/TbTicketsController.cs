@@ -232,7 +232,7 @@ namespace WebApplication4.Controllers
             {
                 if(tbTicket.Adjunto != null)
                 {
-                    Console.WriteLine("Tiene la IMAGEEEEN");
+                    //Console.WriteLine("Tiene la IMAGEEEEN");
                 }
                 try
                 {
@@ -270,7 +270,7 @@ namespace WebApplication4.Controllers
                         throw;
                     }
                 }
-                if (User.IsInRole("Administrador"))
+                if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
                 {
                     return RedirectToAction(nameof(Index));
                 }
