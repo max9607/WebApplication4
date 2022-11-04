@@ -2,12 +2,18 @@
 @model IEnumerable<WebApplication4.Models.TbTicket>
 
 @{
-    ViewData["Title"] = "Cerrados";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "BuscarTicket";
 }
 
-<h1>Cerrados</h1>
+<h1>Buscar tickets </h1>
 <h1 class="display-4">Bienvenido! @User.Identity.Name</h1>
+
+<form asp-controller="TbTickets" asp-action="BuscarTicket">
+    <p>
+        buscar: <input type="text" name="buscar" class="form-text" id="Persona" />
+        <input type="submit" value="Buscar" class="btn btn-dark" />
+    </p>
+</form>
 <table class="table">
     <thead>
     <thead class="thead-dark">
@@ -26,7 +32,7 @@
             @foreach (var item in Model)
             {
             <tr>
-                @if(item.IdEstadoNavigation.IdEstado == 4){
+               
 
                     <th scope="row">@Html.DisplayFor(modelItem => item.IdTicket)</th>
                     <td>@Html.DisplayFor(modelItem => item.IdEstadoNavigation.EstadoTicket)</td>
@@ -55,7 +61,7 @@
                         <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdTicket">Delete</a>
                     </td>
                 
-                }
+                
                
                 
             </tr>

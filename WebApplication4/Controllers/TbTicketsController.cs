@@ -348,10 +348,16 @@ namespace WebApplication4.Controllers
             return File(img.Adjunto, "image/jpeg");
         }
         //GET: Obtiene los tickets cerrados
-        public async Task<IActionResult> Cerrados()
+        
+        public async Task<IActionResult> BuscarTicket(string buscar)
         {
+            var user = from m in _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation) select m;
+            if (!string.IsNullOrEmpty(buscar))
+            {
+                user = user.Where(s => s.DespricionP!.Contains(buscar));
+            }
             var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
-            return View(await project_DesmodusDBContext.ToListAsync());
+            return View(await user.ToListAsync());
         }
 
     }
