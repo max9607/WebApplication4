@@ -1,6 +1,10 @@
 ﻿@model WebApplication4.Models.TbTicket
+@using WebApplication4.Controllers
+@inject WebApplication4.Controllers.TbDerivadoesController oDerivados
+
 
 @{
+    
     ViewData["Title"] = "Details";
 }
 
@@ -90,8 +94,12 @@
                 </dl>
             </div>
             <div class="col">
+                
+                @if (oDerivados.ExisteDerivado(Model.IdTicket)){
+                    <label>Derivado a: </label> 
+                    @oDerivados.NombreDerivado(Model.IdTicket)
+                }
                 <dl class="row">
-
                     <form asp-controller="TbDerivadoes" asp-action="Derivar" method="post">
 
                         <select class="form-control" asp-items="ViewBag.IdUsuario" id="Vuser" name="Vuser"></select>

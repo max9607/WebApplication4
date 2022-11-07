@@ -165,7 +165,7 @@ namespace WebApplication4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TbDerivadoExists(int id)
+        public bool TbDerivadoExists(int id)
         {
           return _context.TbDerivados.Any(e => e.IdDerivado == id);
         }
@@ -195,5 +195,25 @@ namespace WebApplication4.Controllers
             }
             return RedirectToAction("Index", "TbTickets");
         }
+
+        public bool ExisteDerivado(int id)
+        {
+            return _context.TbDerivados.Any(e => e.IdTicket == id);
+        }
+
+        public string NombreDerivado(int idT)
+        {
+            /*
+             * Primero se obtiene el objeto buscado por el ticket el cual se quiere saber a quien está derivado
+             * luego buscamos el objeto usuario con el id del resultado anterior
+             * 
+             * se devuelve una cadena concatenada con el nombre completo
+             */
+            var oDerivado = _context.TbDerivados.FirstOrDefault(e => e.IdTicket == idT);
+            var oUsuario = _context.TbUsuarios.FirstOrDefault(e => e.IdUsuario == oDerivado.IdUsuario);
+
+            return (oUsuario.Nombre + " " + oUsuario.Apellido1 + " " + oUsuario.Apellido2);
+        }
+
     }
 }

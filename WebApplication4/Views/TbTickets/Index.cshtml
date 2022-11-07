@@ -50,6 +50,8 @@
             @foreach (var item in Model) {
                 if (item.IdEstado == 2)
                 {
+                    
+
                     var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
                      <a asp-action="Details" asp-route-id="@item.IdTicket">
                         <div class="ticket btn btn-primary">
@@ -58,6 +60,11 @@
                                 <p id="Fecha" class="col-8">@Html.DisplayFor(modelItem => fecha)</p>
                             </div>
                             <div class="row">
+
+
+                                
+                                
+
                                 <p id="Asunto" class="col">@Html.DisplayFor(modelItem => item.DespricionP)</p>
                             </div>
 

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication4.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using WebApplication4.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         option.AccessDeniedPath = "/Login/Index";
     });
+builder.Services.AddMvc();
+builder.Services.AddTransient<TbDerivadoesController>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -29,7 +29,7 @@
                    
                     @if (User.IsInRole("Administrador") || User.IsInRole("Técnico")){
                         <a asp-controller="TbTickets" asp-action="Index">Tickets</a>
-                        <a href="#">Null</a>
+                        
                     }
                     @if(User.IsInRole("Administrador")){
                         <a asp-controller="TbUsuarios" asp-action="Index">Usuarios</a>
