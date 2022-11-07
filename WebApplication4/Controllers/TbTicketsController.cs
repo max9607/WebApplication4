@@ -354,10 +354,20 @@ namespace WebApplication4.Controllers
             var user = from m in _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation) select m;
             if (!string.IsNullOrEmpty(buscar))
             {
-                user = user.Where(s => s.DespricionP!.Contains(buscar));
+                user = user.Where(s=> s.IdTicket.ToString().Contains(buscar)||s.DespricionP!.Contains(buscar)||s.DescripionDetallada!.Contains(buscar)||s.IdUsuarioNavigation!.Nombre.Contains(buscar)
+                || (s.IdTicket + " " + s.DespricionP + " " + s.DescripionDetallada + " " + s.IdUsuarioNavigation.Nombre).ToLower().Contains(buscar));
             }
             var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
             return View(await user.ToListAsync());
+        }
+
+        [HttpGet]
+        public IActionResult Test()
+        {
+            var name = HttpContext.Request.Query["term"].ToString();
+            var name2 = _context.TbTickets.Where(c => c.IdTicket.ToString().Contains(name) || c.DespricionP!.Contains(name) || c.IdUsuarioNavigation!.Nombre.Contains(name)).Select(c => c.IdTicket + " " + c.DespricionP + " " + c.DescripionDetallada + " " + c.IdUsuarioNavigation.Nombre).ToList();
+
+            return Ok(name2);
         }
 
     }
