@@ -52,6 +52,7 @@
                         <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.IdTicket">Edit</a> |
                         <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.IdTicket">Details</a> |
                         <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdTicket">Delete</a>
+                        <a class="btn btn-danger" id="btnPrint">ImprimirReporte</a>
                     </td>
                 
                 }
@@ -61,3 +62,20 @@
             }
     </tbody>
 </table>
+@section Scripts{
+    <script src="~/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document) ).ready(function () {
+            $.getSON("./TbTickets/Index", function (TbTickets) {
+                $.map((TbTickets, function (emp) {
+                    $("#TbTickets tbody").append("<tr><td>" + emp.id + "</td><td>"+emp.Descripcion +);
+                     });
+            });
+            $("#btnPrint").click(function ()){
+                window.print();
+            });
+
+             });
+
+    </script>
+}
