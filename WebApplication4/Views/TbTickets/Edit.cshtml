@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Editar Información</h1>
 
-<h4>TbTicket</h4>
+<h4>Ticket n°  @Html.DisplayFor(model => model.IdTicket)</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,18 +14,18 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdTicket" />
             <div class="form-group">
-                <label asp-for="DespricionP" class="control-label"></label>
+                <label class="control-label">Asunto</label>
                 <input asp-for="DespricionP" class="form-control" />
                 <span asp-validation-for="DespricionP" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DescripionDetallada" class="control-label"></label>
-                <input asp-for="DescripionDetallada" class="form-control" />
+                <textarea asp-for="DescripionDetallada" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="DescripionDetallada" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Localizacion" class="control-label"></label>
-                <input asp-for="Localizacion" class="form-control" />
+                <input asp-for="Localizacion" class="form-control" readonly />
                 <span asp-validation-for="Localizacion" class="text-danger"></span>
             </div>
             <div class="form-group image-upload">
@@ -45,11 +45,12 @@
                 <span asp-validation-for="Adjunto" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdPrioridad" class="control-label"></label>
-                <select asp-for="IdPrioridad" class="form-control" asp-items="ViewBag.IdPrioridad"></select>
+                <label class="control-label">Prioridad</label>
+                <input asp-for="IdPrioridad" class="form-control" />
+                <!-- <select asp-for="IdPrioridad" class="form-control" asp-items="ViewBag.IdPrioridad"></select> -->
                 <span asp-validation-for="IdPrioridad" class="text-danger"></span>
             </div>
-            <div class="form-group">
+           <div class="form-group">
                 <label asp-for="IdUsuario" class="control-label"></label>
                 <select asp-for="IdUsuario" class="form-control" asp-items="ViewBag.IdUsuario"></select>
                 <span asp-validation-for="IdUsuario" class="text-danger"></span>
@@ -69,23 +70,27 @@
                 <select asp-for="IdProblema" class="form-control" asp-items="ViewBag.IdProblema"></select>
                 <span asp-validation-for="IdProblema" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div>
+                <h5 style="padding-bottom:10px;">Opciones</h5>
+
+                <hr />
+                <dd>
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                    @if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
+                    {
+                        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                    }
+                    @if (User.IsInRole("Usuario"))
+                    {
+                        <a asp-action="UserTickets" class="btn btn-secondary">Volver</a>
+                    }
+                </dd>
             </div>
+
         </form>
     </div>
 </div>
 
-<div>
-    @if(User.IsInRole("Usuario")){
-        <a asp-action="UserTickets">Back to List</a>
-    }
-
-    @if(User.IsInRole("Administrador")){
-        <a asp-action="Index">Back to List</a>
-    }
-
-</div>
 <style>
 
 </style>

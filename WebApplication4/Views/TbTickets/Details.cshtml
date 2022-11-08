@@ -89,25 +89,34 @@
                     <hr />
                     <dd>
                         <a asp-action="Edit" asp-route-id="@Model?.IdTicket" class="btn btn-warning">Editar</a>
-                        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                        @if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
+                        {
+                            <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                        }
+                        @if (User.IsInRole("Usuario")){
+                            <a asp-action="UserTickets" class="btn btn-secondary">Volver</a>
+                        }
                     </dd>
                 </dl>
             </div>
             <div class="col">
-                
-                @if (oDerivados.ExisteDerivado(Model.IdTicket)){
-                    <label>Derivado a: </label> 
-                    @oDerivados.NombreDerivado(Model.IdTicket)
+                @if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
+                {
+                    @if (oDerivados.ExisteDerivado(Model.IdTicket))
+                    {
+                        <label>Derivado a: </label> 
+                        @oDerivados.NombreDerivado(Model.IdTicket)
+                    }
+                    <dl class="row">
+                        <form asp-controller="TbDerivadoes" asp-action="Derivar" method="post">
+
+                            <select class="form-control" asp-items="ViewBag.IdUsuario" id="Vuser" name="Vuser"></select>
+                            <input type="text" class="btn btn-primary" id="Vticket" value="@Model.IdTicket" name="Vticket" hidden>
+                            <input type="submit" class="btn btn-primary" value="Derivar">
+                        </form>
+
+                    </dl>
                 }
-                <dl class="row">
-                    <form asp-controller="TbDerivadoes" asp-action="Derivar" method="post">
-
-                        <select class="form-control" asp-items="ViewBag.IdUsuario" id="Vuser" name="Vuser"></select>
-                        <input type="text" class="btn btn-primary" id="Vticket" value="@Model.IdTicket" name="Vticket" hidden>
-                        <input type="submit" class="btn btn-primary" value="Derivar">
-                    </form>
-
-                </dl>
             </div>
         </div>
     </div>
