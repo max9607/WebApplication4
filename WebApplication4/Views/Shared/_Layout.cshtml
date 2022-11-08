@@ -28,6 +28,7 @@
                     }
                    
                     @if (User.IsInRole("Administrador") || User.IsInRole("Técnico")){
+                        <a asp-controller="Home" asp-action="Index">Inicio</a>
                         <a asp-controller="TbTickets" asp-action="Index">Tickets</a>
                         
                     }

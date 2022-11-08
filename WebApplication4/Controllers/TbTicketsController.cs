@@ -180,7 +180,7 @@ namespace WebApplication4.Controllers
                 }
 
             }
-
+            
             ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
             ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);
             ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "IdPrioridad", tbTicket.IdPrioridad);
@@ -208,11 +208,11 @@ namespace WebApplication4.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
+            ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "EstadoTicket", tbTicket.IdEstado);
             ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "FechaCreado", tbTicket.IdFecha);
-            ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "IdPrioridad", tbTicket.IdPrioridad);
-            ViewData["IdProblema"] = new SelectList(_context.TbCategoria, "IdProblema", "IdProblema", tbTicket.IdProblema);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario");
+            ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "Prioridad", tbTicket.IdPrioridad);
+            ViewData["IdProblema"] = new SelectList(_context.TbCategoria, "IdProblema", "Problema", tbTicket.IdProblema);
+            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre");
             return View(tbTicket);
         }
 
