@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System.Dynamic;
 using System.Data;
+using SelectPdf;
 
 namespace WebApplication4.Controllers
 {
@@ -370,5 +371,31 @@ namespace WebApplication4.Controllers
             return Ok(name2);
         }
 
+        [Authorize(Roles = "Administrador,Técnico")]
+        public async Task<IActionResult> Cerrados()
+        {
+         var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
+         return View(await project_DesmodusDBContext.ToListAsync());
+            
+        }
+
+        [Authorize(Roles = "Administrador,Técnico")]
+        public async Task<IActionResult> GeneradorPdf(string html)
+        {
+            html = html.Replace("StrTag", "<").Replace("EndTag", ">");
+
+            HtmlToPdf oHtmlToPdf = new HtmlToPdf();
+            PdfDocument oPdfDocument = oHtmlToPdf.ConvertHtmlString(html);
+            byte[] pdf = oPdfDocument.Save();
+            oPdfDocument.Close();
+
+            return File(
+                pdf,
+                "application/pdf",
+                "CerradosReporte.pdf"
+                );
+
+        }
     }
+
 }
