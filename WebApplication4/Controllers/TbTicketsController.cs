@@ -408,5 +408,22 @@ namespace WebApplication4.Controllers
             }
 
         }
+        [Authorize(Roles = "Administrador,Técnico")]
+        public async Task<IActionResult> GeneradorPdf(string html)
+        {
+            html = html.Replace("StrTag", "<").Replace("EndTag", ">");
+
+            HtmlToPdf oHtmlToPdf = new HtmlToPdf();
+            PdfDocument oPdfDocument = oHtmlToPdf.ConvertHtmlString(html);
+            byte[] pdf = oPdfDocument.Save();
+            oPdfDocument.Close();
+
+            return File(
+                pdf,
+                "application/pdf",
+                "CerradosReporte.pdf"
+                );
+
+        }
     }
 }
