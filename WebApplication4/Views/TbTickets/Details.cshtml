@@ -120,7 +120,10 @@
 
                     </dl>
                     <dl class="row">
+                        <form asp-controller="TbDerivadoes" asp-action="Aceptar" asp-route-idTicket="@Model.IdTicket" asp-route-idUsuario="@User.FindFirst("IdUsuario").Value" method="post">
 
+                            <input type="submit" class="mt-2 mb-2 btn btn-primary" value="Aceptar">
+                        </form>
                     </dl>
                 }
             </div>

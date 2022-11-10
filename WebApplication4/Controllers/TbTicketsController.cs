@@ -408,6 +408,31 @@ namespace WebApplication4.Controllers
             }
 
         }
+        //Funcion que cambia el estado del ticket a pendiente
+        public async Task<bool> AceptarTicketAsync(int IdTicket)
+        {
+            var tbTicket = _context.TbTickets.Single(i => i.IdTicket == IdTicket);
+            if (tbTicket == null)
+            {
+                return false;
+            }
+            else
+            {
+                /*
+                    - 1 Nuevo
+                    - 2 Abierto
+                    - 3 Pendiente
+                    - 4 Cerrado
+                 */
+                tbTicket.IdEstado = 3;//pasa a estar abierto
+
+                _context.Update(tbTicket);
+                await _context.SaveChangesAsync();//guardamos
+
+                return true;
+            }
+
+        }
 
         [Authorize(Roles = "Administrador,Técnico")]
         public async Task<IActionResult> GeneradorPdf(string html)

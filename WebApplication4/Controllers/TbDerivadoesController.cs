@@ -218,6 +218,45 @@ namespace WebApplication4.Controllers
 
             return (oUsuario.Nombre + " " + oUsuario.Apellido1 + " " + oUsuario.Apellido2);
         }
+        //Aceptar Ticket, este puede estar derivado o no, se lo llama desde ticket/details
+        [HttpPost]
+        [Route("{idTicket:int}/{idUsuario:int}")]
+        public async Task<RedirectToActionResult> AceptarAsync(int idTicket, int idUsuario)
+        {
+            TbTicketsController oTicket = new TbTicketsController(_context);
+
+            if (!ExisteDerivado(idTicket))
+            {
+                //Derivar(idUsuario, idTicket);
+
+                TbDerivado tbDerivado = new TbDerivado();
+
+                tbDerivado.IdTicket = idTicket;
+                tbDerivado.IdUsuario = idUsuario;
+
+                //Console.WriteLine(Vuser + "--------------" + Vticket);
+                if (ModelState.IsValid)
+                {
+                    if (oTicket.AbrirTicketAsync(idTicket).Result)
+                    {
+                        _context.Add(tbDerivado);
+                        await _context.SaveChangesAsync();
+                        
+                    }
+
+                }
+
+                oTicket.AceptarTicketAsync(idTicket);
+                return RedirectToAction("Index", "TbTickets");
+            }
+            else
+            {
+                oTicket.AceptarTicketAsync(idTicket);
+
+                return RedirectToAction("Index", "TbTickets");
+            }
+
+        }
 
     }
 }
