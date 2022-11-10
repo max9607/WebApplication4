@@ -183,10 +183,17 @@ namespace WebApplication4.Controllers
                 el valor de ese atributo debe ser igual al de los parametros de la funcion en este caso
                 'Vuser' y 'Vticket'
              */
+            if (ExisteDerivado(Vticket))
+            {
+                var DerivadoAnterior = await _context.TbDerivados.FindAsync(Vticket);
+                _context.TbDerivados.Remove(DerivadoAnterior);
+                await _context.SaveChangesAsync();
+
+            }
             tbDerivado.IdTicket = Vticket;
             tbDerivado.IdUsuario = Vuser;
 
-            //Console.WriteLine(Vuser + "--------------" + Vticket);
+
             if (ModelState.IsValid)
             {
                 if (oTicket.AbrirTicketAsync(Vticket).Result)
@@ -251,6 +258,30 @@ namespace WebApplication4.Controllers
             }
             else
             {
+                var DerivadoAnterior = _context.TbDerivados.Single(i => i.IdTicket == idTicket);
+
+                if (DerivadoAnterior.IdUsuario != idUsuario)
+                {
+                    _context.TbDerivados.Remove(DerivadoAnterior);
+                    await _context.SaveChangesAsync();
+
+                    TbDerivado tbDerivado = new TbDerivado();
+
+                    tbDerivado.IdTicket = idTicket;
+                    tbDerivado.IdUsuario = idUsuario;
+
+                    //Console.WriteLine(Vuser + "--------------" + Vticket);
+                    if (ModelState.IsValid)
+                    {
+                        if (oTicket.AbrirTicketAsync(idTicket).Result)
+                        {
+                            _context.Add(tbDerivado);
+                            await _context.SaveChangesAsync();
+
+                        }
+
+                    }
+                }
                 oTicket.AceptarTicketAsync(idTicket);
 
                 return RedirectToAction("Index", "TbTickets");

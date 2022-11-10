@@ -40,9 +40,9 @@
                                     <p id="Id" class="col-lg-2">@Html.DisplayFor(modelItem => item.IdTicket)</p>
                                     <p id="Fecha" class="col-8">@Html.DisplayFor(modelItem => fecha)</p>
                                 </div>
-                                <div class="row">
+                                
                                     <p id="Asunto" class="col">@Html.DisplayFor(modelItem => item.DespricionP)</p>
-                                </div>
+                                
                             </div>
                         </a>
                    
@@ -63,14 +63,14 @@
                                 <p id="Id" class="col-lg-2">@Html.DisplayFor(modelItem => item.IdTicket)</p>
                                 <p id="Fecha" class="col-8">@Html.DisplayFor(modelItem => fecha)</p>
                             </div>
-                            <div class="row">
+                            
 
 
                                 
                                 
 
                                 <p id="Asunto" class="col">@Html.DisplayFor(modelItem => item.DespricionP)</p>
-                            </div>
+                            
 
                         </div>
                     </a>
@@ -84,14 +84,14 @@
                 {
                     var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
                     <a asp-action="Details" asp-route-id="@item.IdTicket">
-                        <div class="ticket btn btn-warning">
+                        <div class="col ticket btn btn-warning">
                             <div class="row">
                                 <p id="Id" class="col-lg-2">@Html.DisplayFor(modelItem => item.IdTicket)</p>
                                 <p id="Fecha" class="col-8">@Html.DisplayFor(modelItem => fecha)</p>
                             </div>
-                            <div class="row">
+
                                 <p id="Asunto" class="col">@Html.DisplayFor(modelItem => item.DespricionP)</p>
-                            </div>
+
 
 
                         </div>
@@ -112,9 +112,9 @@
                                 <p id="Id" class="col-lg-2">@Html.DisplayFor(modelItem => item.IdTicket)</p>
                                 <p id="Fecha" class="col-8">@Html.DisplayFor(modelItem => fecha)</p>
                             </div>
-                            <div class="row">
+                            
                                 <p id="Asunto" class="col">@Html.DisplayFor(modelItem => item.DespricionP)</p>
-                            </div>
+                            
                         </div>
                     </a>
  

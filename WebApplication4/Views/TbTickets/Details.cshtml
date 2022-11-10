@@ -110,21 +110,26 @@
                     else{
                         <label class="mb-2 text-danger fw-bold">Sin derivar</label>
                     }
-                    <dl class="row">
-                        <form asp-controller="TbDerivadoes" asp-action="Derivar" method="post">
 
-                            <select class="form-control" asp-items="ViewBag.Derivar" id="Vuser" name="Vuser"></select>
-                            <input type="text" class="btn btn-primary" id="Vticket" value="@Model.IdTicket" name="Vticket" hidden>
-                            <input type="submit" class="mt-2 mb-2 btn btn-primary" value="Derivar">
-                        </form>
+                    @if (Model.IdEstado == 1 || Model.IdEstado == 2)
+                    {
+                        <dl class="row">
+                            <form asp-controller="TbDerivadoes" asp-action="Derivar" method="post">
 
-                    </dl>
-                    <dl class="row">
-                        <form asp-controller="TbDerivadoes" asp-action="Aceptar" asp-route-idTicket="@Model.IdTicket" asp-route-idUsuario="@User.FindFirst("IdUsuario").Value" method="post">
+                                <select class="form-control" asp-items="ViewBag.Derivar" id="Vuser" name="Vuser"></select>
+                                <input type="text" class="btn btn-primary" id="Vticket" value="@Model.IdTicket" name="Vticket" hidden>
+                                <input type="submit" class="mt-2 mb-2 btn btn-primary" value="Derivar">
+                            </form>
 
-                            <input type="submit" class="mt-2 mb-2 btn btn-primary" value="Aceptar">
-                        </form>
-                    </dl>
+                        </dl>
+                        <dl class="row">
+                            <form asp-controller="TbDerivadoes" asp-action="Aceptar" asp-route-idTicket="@Model.IdTicket" asp-route-idUsuario="@User.FindFirst("IdUsuario").Value" method="post">
+
+                                <input type="submit" class="mt-2 mb-2 btn btn-primary" value="Aceptar">
+                            </form>
+                        </dl>
+                    }
+
                 }
             </div>
         </div>
