@@ -23,16 +23,17 @@ namespace WebApplication4.Controllers
         public static int Actual { get; set; }
         public static byte[] EditImagen { get; set; }
 
+        private static TbTicket EditTicket { get; set; }
         public TbTicketsController(Project_DesmodusDBContext context)
         {
             _context = context;
         }
 
         // GET: TbTickets
-        [Authorize(Roles = "Administrador,Técnico" )]
+        [Authorize(Roles = "Administrador,Técnico")]
         public async Task<IActionResult> Index()
         {
-            
+
 
             if (User.IsInRole("Técnico"))
             {
@@ -54,12 +55,12 @@ namespace WebApplication4.Controllers
             }
             else
             {
-               var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
+                var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
                 return View(await project_DesmodusDBContext.ToListAsync());
             }
         }
         //GET: Tickets del usuario logueado
-        
+
         public async Task<IActionResult> UserTickets()
         {
             var a = User.FindFirst("IdUsuario");    //obtenemos el claim IdUsuario y lo almacenamos en una variable a
@@ -101,14 +102,14 @@ namespace WebApplication4.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdUsuario"] = new SelectList(_context.TbAccesos.Where(i => i.IdPermiso == 3), "IdUsuario", "Correo");
+            ViewData["Derivar"] = new SelectList(_context.TbAccesos.Where(i => i.IdPermiso == 3), "IdUsuario", "Correo");
             return View(tbTicket);
         }
         //GET TbTickets/Volver
         public IActionResult Volver()
         {
             TbFechaTicketsController _con_ft = new TbFechaTicketsController(_context);
-             _con_ft.CancelarTicket(Actual);
+            _con_ft.CancelarTicket(Actual);
             var roles = ((ClaimsIdentity)User.Identity).Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
 
             if (roles.FirstOrDefault() == "Administrador")
@@ -128,7 +129,7 @@ namespace WebApplication4.Controllers
             var fechaT = _con_ft.AbrirTicket(f);
             Actual = fechaT.IdFecha;
 
-            var estado = _context.TbEstadoTickets.Single(f => f.EstadoTicket=="nuevo");
+            var estado = _context.TbEstadoTickets.Single(f => f.EstadoTicket == "nuevo");
             //ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "EstadoTicket");
             ViewData["IdFecha"] = fechaT.IdFecha;
             ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "Prioridad");
@@ -149,7 +150,7 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdTicket,DespricionP,DescripionDetallada,Localizacion,IdPrioridad,IdUsuario,IdEstado,IdFecha,IdProblema")] TbTicket tbTicket)
         {
-            
+
             if (ModelState.IsValid)
             {
 
@@ -181,7 +182,7 @@ namespace WebApplication4.Controllers
                 }
 
             }
-            
+
             ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
             ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);
             ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "IdPrioridad", tbTicket.IdPrioridad);
@@ -199,21 +200,26 @@ namespace WebApplication4.Controllers
             }
 
             var tbTicket = await _context.TbTickets.FindAsync(id);
-            if(tbTicket.Adjunto != null)
+
+            if (tbTicket.Adjunto != null)
             {
                 EditImagen = tbTicket.Adjunto;
             }
-                
+
 
             if (tbTicket == null)
             {
                 return NotFound();
             }
-            ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "EstadoTicket", tbTicket.IdEstado);
-            ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "FechaCreado", tbTicket.IdFecha);
+            //ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "EstadoTicket", tbTicket.IdEstado);
+            //ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "FechaCreado", tbTicket.IdFecha);
+
+            ViewData["Estado"] = _context.TbEstadoTickets.Single(i => i.IdEstado == tbTicket.IdEstado).EstadoTicket; //hice esto mas arriba pero aqui en una sola linea xdxd me da paja cambiarlo en el create
+            ViewData["Fecha"] = _context.TbFechaTickets.Single(i => i.IdFecha == tbTicket.IdFecha).FechaCreado;
             ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "Prioridad", tbTicket.IdPrioridad);
             ViewData["IdProblema"] = new SelectList(_context.TbCategoria, "IdProblema", "Problema", tbTicket.IdProblema);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre");
+            //ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre");
+            EditTicket = tbTicket; //Guardamos de forma temporal el ticket a editar
             return View(tbTicket);
         }
 
@@ -222,7 +228,7 @@ namespace WebApplication4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTicket,DespricionP,DescripionDetallada,Localizacion,IdPrioridad,IdUsuario,IdEstado,IdFecha,IdProblema")] TbTicket tbTicket)
+        public async Task<IActionResult> Edit(int id, [Bind("IdTicket,DespricionP,DescripionDetallada,IdPrioridad,IdProblema")] TbTicket tbTicket)
         {
             if (id != tbTicket.IdTicket)
             {
@@ -231,13 +237,13 @@ namespace WebApplication4.Controllers
 
             if (ModelState.IsValid)
             {
-                if(tbTicket.Adjunto != null)
+                if (tbTicket.Adjunto != null)
                 {
                     //Console.WriteLine("Tiene la IMAGEEEEN");
                 }
                 try
                 {
-                    if(Request.Form.Files.Count() > 0)
+                    if (Request.Form.Files.Count() > 0)
                     {
                         foreach (var file in Request.Form.Files)
                         {
@@ -257,6 +263,12 @@ namespace WebApplication4.Controllers
                     {
                         tbTicket.Adjunto = EditImagen;
                     }
+                    //Aqui va la informacion que no se podrá editar, la tomamos de EditTicket debe estar des-bindeado de los parametros de la funcion
+                    tbTicket.Localizacion = EditTicket.Localizacion;
+                    tbTicket.IdUsuario = EditTicket.IdUsuario;
+                    tbTicket.IdEstado = EditTicket.IdEstado;
+                    tbTicket.IdFecha = EditTicket.IdFecha;
+                    //----------------------------------------------------------------------
                     _context.Update(tbTicket);
                     await _context.SaveChangesAsync();
                 }
@@ -279,16 +291,17 @@ namespace WebApplication4.Controllers
                 {
                     return RedirectToAction(nameof(UserTickets));
                 }
-                else{
+                else
+                {
                     return RedirectToAction("Index", "Login");
                 }
-                
+
             }
-            ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
-            ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);
+            //ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
+            //ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);
             ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "IdPrioridad", tbTicket.IdPrioridad);
             ViewData["IdProblema"] = new SelectList(_context.TbCategoria, "IdProblema", "IdProblema", tbTicket.IdProblema);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario", tbTicket.IdUsuario);
+            //ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario", tbTicket.IdUsuario);
             return View(tbTicket);
         }
 
@@ -338,7 +351,7 @@ namespace WebApplication4.Controllers
         {
             return _context.TbTickets.Any(e => e.IdTicket == id);
         }
-     
+
 
         //----------------------------------------------------------------------------------
 
@@ -349,13 +362,13 @@ namespace WebApplication4.Controllers
             return File(img.Adjunto, "image/jpeg");
         }
         //GET: Obtiene los tickets cerrados
-        
+
         public async Task<IActionResult> BuscarTicket(string buscar)
         {
             var user = from m in _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation) select m;
             if (!string.IsNullOrEmpty(buscar))
             {
-                user = user.Where(s=> s.IdTicket.ToString().Contains(buscar)||s.DespricionP!.Contains(buscar)||s.DescripionDetallada!.Contains(buscar)||s.IdUsuarioNavigation!.Nombre.Contains(buscar)
+                user = user.Where(s => s.IdTicket.ToString().Contains(buscar) || s.DespricionP!.Contains(buscar) || s.DescripionDetallada!.Contains(buscar) || s.IdUsuarioNavigation!.Nombre.Contains(buscar)
                 || (s.IdTicket + " " + s.DespricionP + " " + s.DescripionDetallada + " " + s.IdUsuarioNavigation.Nombre).ToLower().Contains(buscar));
             }
             var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
@@ -370,32 +383,30 @@ namespace WebApplication4.Controllers
 
             return Ok(name2);
         }
-
-        [Authorize(Roles = "Administrador,Técnico")]
-        public async Task<IActionResult> Cerrados()
+        //Funcion que se activa al derivar el ticker cambia el estado a abierto
+        public async Task<bool> AbrirTicketAsync(int IdTicket)
         {
-         var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
-         return View(await project_DesmodusDBContext.ToListAsync());
-            
-        }
+            var tbTicket = _context.TbTickets.Single(i => i.IdTicket == IdTicket);
+            if (tbTicket == null)
+            {
+                return false;
+            }
+            else
+            {
+                /*
+                    - 1 Nuevo
+                    - 2 Abierto
+                    - 3 Pendiente
+                    - 4 Cerrado
+                 */
+                tbTicket.IdEstado = 2;//pasa a estar abierto
 
-        [Authorize(Roles = "Administrador,Técnico")]
-        public async Task<IActionResult> GeneradorPdf(string html)
-        {
-            html = html.Replace("StrTag", "<").Replace("EndTag", ">");
+                _context.Update(tbTicket);
+                await _context.SaveChangesAsync();//guardamos
 
-            HtmlToPdf oHtmlToPdf = new HtmlToPdf();
-            PdfDocument oPdfDocument = oHtmlToPdf.ConvertHtmlString(html);
-            byte[] pdf = oPdfDocument.Save();
-            oPdfDocument.Close();
-
-            return File(
-                pdf,
-                "application/pdf",
-                "CerradosReporte.pdf"
-                );
+                return true;
+            }
 
         }
     }
-
 }

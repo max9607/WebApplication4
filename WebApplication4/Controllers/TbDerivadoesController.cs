@@ -176,6 +176,7 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Derivar(int Vuser, int Vticket)
         {
+            TbTicketsController oTicket = new TbTicketsController(_context);
             TbDerivado tbDerivado = new TbDerivado();
             /*
                 Para que se tome el valor de un input de la vista este debe etner el atributo {name=""}
@@ -188,10 +189,13 @@ namespace WebApplication4.Controllers
             //Console.WriteLine(Vuser + "--------------" + Vticket);
             if (ModelState.IsValid)
             {
-                _context.Add(tbDerivado);
-                await _context.SaveChangesAsync();
-                
-                return RedirectToAction("Index", "TbTickets");
+                if (oTicket.AbrirTicketAsync(Vticket).Result)
+                {
+                    _context.Add(tbDerivado);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index", "TbTickets");
+                }
+
             }
             return RedirectToAction("Index", "TbTickets");
         }

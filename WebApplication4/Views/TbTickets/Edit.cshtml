@@ -19,14 +19,9 @@
                 <span asp-validation-for="DespricionP" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DescripionDetallada" class="control-label"></label>
+                <label class="control-label">Descripción</label>
                 <textarea asp-for="DescripionDetallada" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="DescripionDetallada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Localizacion" class="control-label"></label>
-                <input asp-for="Localizacion" class="form-control" readonly />
-                <span asp-validation-for="Localizacion" class="text-danger"></span>
             </div>
             <div class="form-group image-upload">
                 <label asp-for="Adjunto" class="control-label"></label>
@@ -44,31 +39,36 @@
                 
                 <span asp-validation-for="Adjunto" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label class="control-label">Prioridad</label>
-                <input asp-for="IdPrioridad" class="form-control" />
-                <!-- <select asp-for="IdPrioridad" class="form-control" asp-items="ViewBag.IdPrioridad"></select> -->
+
+                <select asp-for="IdPrioridad" class="form-control" asp-items="ViewBag.IdPrioridad"></select>
                 <span asp-validation-for="IdPrioridad" class="text-danger"></span>
             </div>
-           <div class="form-group">
-                <label asp-for="IdUsuario" class="control-label"></label>
-                <select asp-for="IdUsuario" class="form-control" asp-items="ViewBag.IdUsuario"></select>
-                <span asp-validation-for="IdUsuario" class="text-danger"></span>
+
+
+            <div class="form-group">
+                <label class="control-label">Categoria</label>
+                <select asp-for="IdProblema" class="form-control" asp-items="ViewBag.IdProblema"></select>
+                <span asp-validation-for="IdProblema" class="text-danger"></span>
+            </div>
+
+            <!--SECCION NO EDITABLE -->
+            <div class="form-group">
+                <label class="control-label">Localizacion</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.Localizacion)" readonly>
+                <span asp-validation-for="Localizacion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdEstado" class="control-label"></label>
-                <select asp-for="IdEstado" class="form-control" asp-items="ViewBag.IdEstado"></select>
+                <label class="control-label">Estado</label>
+                <input type="text" class="form-control" placeholder="@(ViewBag.Estado)" readonly>
                 <span asp-validation-for="IdEstado" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdFecha" class="control-label"></label>
-                <select asp-for="IdFecha" class="form-control" asp-items="ViewBag.IdFecha"></select>
+                <label class="control-label">Fecha</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.IdFechaNavigation.FechaCreado)" readonly>
                 <span asp-validation-for="IdFecha" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdProblema" class="control-label"></label>
-                <select asp-for="IdProblema" class="form-control" asp-items="ViewBag.IdProblema"></select>
-                <span asp-validation-for="IdProblema" class="text-danger"></span>
             </div>
             <div>
                 <h5 style="padding-bottom:10px;">Opciones</h5>
