@@ -7,8 +7,8 @@
 <h1>Tickets</h1>
 @if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
 {
-    <a class="btn btn-primary btn-lg" asp-action="BuscarTicket">Buscar</a>
-    <a class="btn btn-warning btn-lg" asp-action="Cerrados">Reportes</a>
+    <a class="btn btn-primary" asp-action="BuscarTicket">Buscar</a>
+    <a class="btn btn-primary" asp-action="Cerrados">Reportes</a>
 }
 <div class="container text-center">
     <div class="row row-cols-4">

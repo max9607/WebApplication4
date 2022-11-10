@@ -102,7 +102,7 @@ namespace WebApplication4.Controllers
             {
                 return NotFound();
             }
-            ViewData["Derivar"] = new SelectList(_context.TbAccesos.Where(i => i.IdPermiso == 3), "IdUsuario", "Correo");
+            ViewData["Derivar"] = new SelectList(_context.TbAccesos.Where(i => i.IdPermiso == 3 || i.IdPermisoNavigation.Nombre == "Técnico"), "IdUsuario", "Correo");
             return View(tbTicket);
         }
         //GET TbTickets/Volver
@@ -408,6 +408,7 @@ namespace WebApplication4.Controllers
             }
 
         }
+
         [Authorize(Roles = "Administrador,Técnico")]
         public async Task<IActionResult> GeneradorPdf(string html)
         {
@@ -425,6 +426,7 @@ namespace WebApplication4.Controllers
                 );
 
         }
+
         [Authorize(Roles = "Administrador,Técnico")]
         public async Task<IActionResult> Cerrados()
         {
@@ -432,5 +434,7 @@ namespace WebApplication4.Controllers
             return View(await project_DesmodusDBContext.ToListAsync());
 
         }
+
+
     }
 }
