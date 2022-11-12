@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Dynamic;
 using System.Data;
 using SelectPdf;
+using WebApplication4.Models.ViewModels;
 
 namespace WebApplication4.Controllers
 {
@@ -462,10 +463,9 @@ namespace WebApplication4.Controllers
        
         public IActionResult ResumenTickets()
         {
-            List<TbTicket> list = (from TbTicket in _context.TbTickets where TbTicket.IdEstado==1 ||TbTicket.IdEstado==2 || TbTicket.IdEstado == 3 || TbTicket.IdEstado == 4
+            List<VMTickets> list = (from TbTicket in _context.TbTickets where TbTicket.IdEstado==1 ||TbTicket.IdEstado==2 || TbTicket.IdEstado == 3 || TbTicket.IdEstado == 4 
                                    group TbTicket by TbTicket.IdEstadoNavigation.EstadoTicket  into grupo
-                                   orderby grupo.Count() descending
-                                   select new TbTicket
+                                   select new VMTickets
                                    {
                                        DespricionP = grupo.Key,
                                        IdEstado = grupo.Count(),
