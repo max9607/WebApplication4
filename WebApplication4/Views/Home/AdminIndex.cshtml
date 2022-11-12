@@ -6,49 +6,40 @@
 
 <div class="text-center">
     <h1 class="display-4">Bienvenido! @User.Identity.Name</h1>
-    <p>
-        <section class="about-us" ">
-            <div class="contenedor1">
-                
-                <div class="contenedor-articulo" >
-                    <div class="articulo" data-aos="zoom-in >
-                        <i class="fas fa-pen-fancy"></i>
-                        <h3>Administrar Usuarios</h3>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="TbUsuarios" asp-action="index">Usuario</a>
-                    </div>
-                    <div class="articulo" data-aos="zoom-in>
-                        <i class="fas fa-pen-fancy"></i>
-                        <h3>Graphic Desing</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, sequi!</p>
-                        <a href="#">Leer mas --></a>
-                    </div>
-                    <div class="articulo" data-aos="zoom-in>
-                        <i class="fas fa-pen-fancy"></i>
-                        <h3>Video Production</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, sequi!</p>
-                        <a href="#">Leer mas --></a>
-                    </div>
-                    <div class="articulo" data-aos="zoom-in>
-                        <i class="fas fa-pen-fancy"></i>
-                        <h3>SEO</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, sequi!</p>
-                        <a href="#">Leer mas --></a>
-                    </div>
-                    <div class="articulo" data-aos="zoom-in>
-                        <i class="fas fa-pen-fancy"></i>
-                        <h3>Digital Marketing</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, sequi!</p>
-                        <a href="#">Leer mas --></a>
-                    </div>
-                    <div class="articulo" data-aos="zoom-in>
-                        <i class="fas fa-pen-fancy"></i>
-                        <h3>Crypto Currency</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, sequi!</p>
-                        <a href="#">Leer mas --></a>
-                    </div>
-
-                </div>
+    
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">tickets</div>
+            <div class="card-body">
+                <canvas id="chartTickets" style="max-height:250px"></canvas>
             </div>
-        </section>
-</div>
+        </div>
+    </div>
+       
 
+</div>
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function ResumenTickets() {
+
+            fetch("/TbTickets/ResumenTickets")
+                .then((response) => {
+                    return response.ok ? response.json() : Promise.reject(response);
+                })
+                .then((dataJson) => {
+                    console.log(dataJson)
+                })
+
+
+        }
+
+        $(document).ready(() => {
+
+            ResumenTickets()
+           
+        })
+
+    </script>
+
+}

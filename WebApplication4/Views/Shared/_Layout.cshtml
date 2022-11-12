@@ -28,7 +28,7 @@
                     }
                    
                     @if (User.IsInRole("Administrador") || User.IsInRole("Técnico")){
-                        <a asp-controller="Home" asp-action="Index">Inicio</a>
+                        <a asp-controller="Home" asp-action="AdminIndex">Inicio</a>
                         <a asp-controller="TbTickets" asp-action="Index">Tickets</a>
                         
                     }
@@ -65,6 +65,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -459,6 +459,21 @@ namespace WebApplication4.Controllers
             return View(await project_DesmodusDBContext.ToListAsync());
 
         }
+       
+        public IActionResult ResumenTickets()
+        {
+            List<TbTicket> list = (from TbTicket in _context.TbTickets where TbTicket.IdEstado==1 ||TbTicket.IdEstado==2 || TbTicket.IdEstado == 3 || TbTicket.IdEstado == 4
+                                   group TbTicket by TbTicket.IdEstadoNavigation.EstadoTicket  into grupo
+                                   orderby grupo.Count() descending
+                                   select new TbTicket
+                                   {
+                                       DespricionP = grupo.Key,
+                                       IdEstado = grupo.Count(),
+                                   }).ToList();
+
+            return StatusCode(StatusCodes.Status200OK, list) ;
+            
+        }
 
 
     }
