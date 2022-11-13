@@ -31,7 +31,7 @@
                     return response.ok ? response.json() : Promise.reject(response);
                 })
                 .then((dataJson) => {
-                    console.log(dataJson)
+                    //console.log(dataJson)
 
                     const labels = dataJson.map((item) => { return item.despricionP })
                     const values = dataJson.map((item) => { return item.idEstado })
