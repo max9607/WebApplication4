@@ -129,6 +129,12 @@
                             </form>
                         </dl>
                     }
+                    @if (Model.IdEstado == 3)
+                    {
+                        <form class="form-control" asp-action="Cerrar" method="post">
+                            <input type="submit" class="mt-2 mb-2 btn btn-primary" value="Cerrar">
+                        </form>
+                    }
 
                 }
             </div>

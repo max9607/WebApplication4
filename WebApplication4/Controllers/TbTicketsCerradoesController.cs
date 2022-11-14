@@ -156,5 +156,31 @@ namespace WebApplication4.Controllers
         {
           return _context.TbTicketsCerrados.Any(e => e.IdCerrados == id);
         }
+
+        //----------------------------------------------------------------------------------------------
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CrearCerrado(int IdTicket, string Cliente,string Comentario,string DespricionP,DateTime FechaCreado, DateTime FechaCerrado,string Receptor)
+        {
+            //[Bind("IdCerrados,IdTicket,Cliente,Comentario,DespricionP,FechaCreado,FechaCerrado,Receptor")] TbTicketsCerrado tbTicketsCerrado
+
+            TbTicketsCerrado tbTicketsCerrado = new TbTicketsCerrado();
+
+            tbTicketsCerrado.IdTicket = IdTicket;
+            tbTicketsCerrado.Cliente = Cliente;
+            tbTicketsCerrado.Comentario = Comentario;
+            tbTicketsCerrado.DespricionP = DespricionP;
+            tbTicketsCerrado.FechaCreado = FechaCreado;
+            tbTicketsCerrado.FechaCerrado = FechaCerrado;
+            tbTicketsCerrado.Receptor = Receptor;
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(tbTicketsCerrado);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction("Index", "TbTickets");
+        }
     }
 }
