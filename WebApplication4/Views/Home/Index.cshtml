@@ -15,12 +15,144 @@
                     Nuevo Ticket
                 </a>
             </div>
-            <div class="col">
-                Column
+                             
+        </div>
+
+        <div class="row mt-2">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">tickets</div>
+                <div class="card-body">
+                    <canvas id="chartTickets" style="max-height:250px"></canvas>
+                </div>
             </div>
-            <div class="col">
-                Column
+        </div>
+
+
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">Tickets Asignados</div>
+                <div class="card-body">
+                    <canvas id="chartAsignados" style="max-height:250px"></canvas>
+                </div>
             </div>
+        </div>
+
         </div>
     </div>
 </div>
+
+
+@section Scripts{
+
+    <script>
+        function ResumenTickets() {
+
+            fetch("/TbTickets/ResumenTickets")
+                .then((response) => {
+                    return response.ok ? response.json() : Promise.reject(response);
+                })
+                .then((dataJson) => {
+                    //console.log(dataJson)
+
+                    const labels = dataJson.map((item) => { return item.despricionP })
+                    const values = dataJson.map((item) => { return item.idEstado })
+
+                    //console.log(labels)
+                    //console.log(values)
+
+                    const data = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Tickets',
+                            data: values,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 159, 64, 0.2)',
+                                'rgba(255, 205, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                            ],
+                            borderColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(255, 159, 64)',
+                                'rgb(255, 205, 86)',
+                                'rgb(75, 192, 192)',
+                            ],
+                            borderWidth: 1
+                        }]
+                    };
+
+                    const config = {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        },
+                    };
+
+                    const canvasBarras = document.getElementById("chartTickets");
+                    const graficoBarras = new Chart(canvasBarras, config);
+                })
+
+
+        }
+        function ResumenAsignados() {
+
+            fetch("/TbTickets/ResumeTicketsTecnicos")
+                .then((response) => {
+                    return response.ok ? response.json() : Promise.reject(response);
+                })
+                .then((dataJson) => {
+                    console.log(dataJson)
+
+                    const labels = dataJson.map((item) => { return item.nombreUsusario })
+                    const values = dataJson.map((item) => { return item.idTicket })
+
+                    console.log(labels)
+                    console.log(values)
+
+                    const data2 = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Tecnicos',
+                            data: values,
+                            backgroundColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(54, 162, 235)',
+                                'rgb(255, 205, 86)'
+                            ],
+                            hoverOffset: 4
+                        }]
+                    };
+
+                    const config = {
+                        type: 'doughnut',
+                        data: data2,
+                    };
+
+                    const canvasDona = document.getElementById("chartAsignados");
+                    const graficoDona = new Chart(canvasDona, config);
+
+
+                })
+
+
+
+
+
+        }
+
+        $(document).ready(() => {
+
+            ResumenTickets()
+            ResumenAsignados()
+
+        })
+
+    </script>
+
+}

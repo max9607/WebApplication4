@@ -463,7 +463,7 @@ namespace WebApplication4.Controllers
 
         public IActionResult ResumenTickets()
         {
-<<<<<<< HEAD
+            
             //este coso devuelve una lista de los ticktes con un estado asignado.
             List<VMTickets> list = (from TbTicket in _context.TbTickets where TbTicket.IdEstado==1 ||TbTicket.IdEstado==2 || TbTicket.IdEstado == 3 || TbTicket.IdEstado == 4 
                                    group TbTicket by TbTicket.IdEstadoNavigation.EstadoTicket  into grupo
@@ -472,30 +472,16 @@ namespace WebApplication4.Controllers
                                        DespricionP = grupo.Key,
                                        IdEstado = grupo.Count(),
                                    }).ToList();
-=======
-            List<VMTickets> list = (from TbTicket in _context.TbTickets where TbTicket.IdEstado == 1 || TbTicket.IdEstado == 2 || TbTicket.IdEstado == 3 || TbTicket.IdEstado == 4
-                                    group TbTicket by TbTicket.IdEstadoNavigation.EstadoTicket into grupo
-                                    select new VMTickets
-                                    {
-                                        DespricionP = grupo.Key,
-                                        IdEstado = grupo.Count(),
-                                    }).ToList();
+
 
             return StatusCode(StatusCodes.Status200OK, list);
->>>>>>> 133d529ae9d04d099f6fd1f9d1bc030ac88558c1
 
         }
 
         public IActionResult ResumeTicketsTecnicos() {
-<<<<<<< HEAD
             //este coso devuelve una lista de los ticktes asiganos a cada tecnico.
             List<VMAsignados> list = (from TbDerivado in _context.TbDerivados 
-                                      group TbDerivado by TbDerivado.IdUsuarioNavigation.Nombre into grupo 
-=======
-
-            List<VMAsignados> list = (from TbDerivado in _context.TbDerivados
-                                      group TbDerivado by TbDerivado.IdUsuarioNavigation.Nombre into grupo
->>>>>>> 133d529ae9d04d099f6fd1f9d1bc030ac88558c1
+                                      group TbDerivado by TbDerivado.IdUsuarioNavigation.Nombre into grupo    
                                       select new VMAsignados
                                       {
                                           NombreUsusario = grupo.Key,
