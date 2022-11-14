@@ -185,7 +185,7 @@ namespace WebApplication4.Controllers
              */
             if (ExisteDerivado(Vticket))
             {
-                var DerivadoAnterior = await _context.TbDerivados.FindAsync(Vticket);
+                var DerivadoAnterior = _context.TbDerivados.FirstOrDefault(i => i.IdTicket == Vticket);
                 _context.TbDerivados.Remove(DerivadoAnterior);
                 await _context.SaveChangesAsync();
 

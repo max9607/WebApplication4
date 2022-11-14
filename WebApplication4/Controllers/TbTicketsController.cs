@@ -460,36 +460,40 @@ namespace WebApplication4.Controllers
             return View(await project_DesmodusDBContext.ToListAsync());
 
         }
-       
+
         public IActionResult ResumenTickets()
         {
-            List<VMTickets> list = (from TbTicket in _context.TbTickets where TbTicket.IdEstado==1 ||TbTicket.IdEstado==2 || TbTicket.IdEstado == 3 || TbTicket.IdEstado == 4 
-                                   group TbTicket by TbTicket.IdEstadoNavigation.EstadoTicket  into grupo
-                                   select new VMTickets
-                                   {
-                                       DespricionP = grupo.Key,
-                                       IdEstado = grupo.Count(),
-                                   }).ToList();
+            List<VMTickets> list = (from TbTicket in _context.TbTickets where TbTicket.IdEstado == 1 || TbTicket.IdEstado == 2 || TbTicket.IdEstado == 3 || TbTicket.IdEstado == 4
+                                    group TbTicket by TbTicket.IdEstadoNavigation.EstadoTicket into grupo
+                                    select new VMTickets
+                                    {
+                                        DespricionP = grupo.Key,
+                                        IdEstado = grupo.Count(),
+                                    }).ToList();
 
-            return StatusCode(StatusCodes.Status200OK, list) ;
-            
+            return StatusCode(StatusCodes.Status200OK, list);
+
         }
 
         public IActionResult ResumeTicketsTecnicos() {
 
-            List<VMAsignados> list = (from TbDerivado in _context.TbDerivados 
-                                      group TbDerivado by TbDerivado.IdUsuarioNavigation.Nombre into grupo 
+            List<VMAsignados> list = (from TbDerivado in _context.TbDerivados
+                                      group TbDerivado by TbDerivado.IdUsuarioNavigation.Nombre into grupo
                                       select new VMAsignados
                                       {
                                           NombreUsusario = grupo.Key,
                                           IdTicket = grupo.Count(),
-                                      }).ToList() ;
+                                      }).ToList();
 
 
             return StatusCode(StatusCodes.Status200OK, list);
-        
+
         }
 
+   
+
+
+        
 
     }
 }
