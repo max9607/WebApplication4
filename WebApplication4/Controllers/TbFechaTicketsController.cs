@@ -65,18 +65,10 @@ namespace WebApplication4.Controllers
             }
             return View(tbFechaTicket);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public TbFechaTicket AbrirTicket(TbFechaTicket oticket)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(oticket);
-                _context.SaveChanges();
-                return oticket;
-            }
-            return null;
-        }
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public bool CancelarTicket(int id)
@@ -186,5 +178,35 @@ namespace WebApplication4.Controllers
         {
           return _context.TbFechaTickets.Any(e => e.IdFecha == id);
         }
+
+        //-----------------------------------------------------------------
+        //Funcion que establece una fecha de abierto
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public TbFechaTicket AbrirTicket(TbFechaTicket oticket)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(oticket);
+                _context.SaveChanges();
+                return oticket;
+            }
+            return null;
+        }
+
+        //Funcion que actualiza el registro de abierto del ticket y establece la fecha cerrada
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public TbFechaTicket CerrarTicket(TbFechaTicket oticket)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Update(oticket);
+                _context.SaveChangesAsync();
+                return oticket;
+            }
+            return null;
+        }
+
     }
 }
