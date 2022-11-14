@@ -4,8 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
+
+
+<div class="row mt-2">
     <h1 class="display-4">Bienvenido! @User.Identity.Name</h1>
+
     
     <div class="col-sm-6">
         <div class="card">
@@ -17,7 +20,18 @@
     </div>
        
 
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">Tickets Asignados</div>
+            <div class="card-body">
+                <canvas id="chartAsignados" style="max-height:250px"></canvas>
+            </div>
+        </div>
+    </div>
+
+
 </div>
+
 
 
 
@@ -78,10 +92,56 @@
 
 
         }
+        function ResumenAsignados() {
+
+            fetch("/TbTickets/ResumeTicketsTecnicos")
+                .then((response) => {
+                    return response.ok ? response.json() : Promise.reject(response);
+                })
+                .then((dataJson) => {
+                    console.log(dataJson)
+
+                    const labels = dataJson.map((item) => { return item.nombreUsusario })
+                    const values = dataJson.map((item) => { return item.idTicket })
+
+                    console.log(labels)
+                    console.log(values)
+
+                    const data2 = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Tecnicos',
+                            data: values,
+                            backgroundColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(54, 162, 235)',
+                                'rgb(255, 205, 86)'
+                            ],
+                            hoverOffset: 4
+                        }]
+                    };
+
+                    const config = {
+                        type: 'doughnut',
+                        data: data2,
+                    };
+
+                    const canvasDona = document.getElementById("chartAsignados");
+                    const graficoDona = new Chart(canvasDona, config);
+
+
+                })
+
+
+
+            
+
+        }
 
         $(document).ready(() => {
 
             ResumenTickets()
+            ResumenAsignados()
            
         })
 

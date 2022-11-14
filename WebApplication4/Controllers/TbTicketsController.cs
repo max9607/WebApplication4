@@ -475,6 +475,21 @@ namespace WebApplication4.Controllers
             
         }
 
+        public IActionResult ResumeTicketsTecnicos() {
+
+            List<VMAsignados> list = (from TbDerivado in _context.TbDerivados 
+                                      group TbDerivado by TbDerivado.IdUsuarioNavigation.Nombre into grupo 
+                                      select new VMAsignados
+                                      {
+                                          NombreUsusario = grupo.Key,
+                                          IdTicket = grupo.Count(),
+                                      }).ToList() ;
+
+
+            return StatusCode(StatusCodes.Status200OK, list);
+        
+        }
+
 
     }
 }
