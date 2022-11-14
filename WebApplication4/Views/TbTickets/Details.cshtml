@@ -131,9 +131,12 @@
                     }
                     @if (Model.IdEstado == 3)
                     {
-                        <form class="form-control" asp-action="Cerrar" method="post">
-                            <input type="submit" class="mt-2 mb-2 btn btn-primary" value="Cerrar">
-                        </form>
+                        <dl class="row">
+                            <form asp-controller="TbTickets" asp-action="CerrarTicket" asp-route-idTicket="@Model.IdTicket" method="post">
+                                <input type="submit" class="mt-2 mb-2 btn btn-primary" value="Cerrar">
+                                <textarea id="w3review" name="Comentario" rows="4" cols="50"></textarea>>
+                            </form>
+                        </dl>
                     }
 
                 }

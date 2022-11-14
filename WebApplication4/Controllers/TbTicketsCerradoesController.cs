@@ -160,7 +160,7 @@ namespace WebApplication4.Controllers
         //----------------------------------------------------------------------------------------------
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CrearCerrado(int IdTicket, string Cliente,string Comentario,string DespricionP,DateTime FechaCreado, DateTime FechaCerrado,string Receptor)
+        public async Task<bool> CrearCerrado(int IdTicket, string Cliente,string Comentario,string DespricionP,DateTime FechaCreado, DateTime FechaCerrado,string Receptor)
         {
             //[Bind("IdCerrados,IdTicket,Cliente,Comentario,DespricionP,FechaCreado,FechaCerrado,Receptor")] TbTicketsCerrado tbTicketsCerrado
 
@@ -178,9 +178,9 @@ namespace WebApplication4.Controllers
             {
                 _context.Add(tbTicketsCerrado);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return true;
             }
-            return RedirectToAction("Index", "TbTickets");
+            return false;
         }
     }
 }

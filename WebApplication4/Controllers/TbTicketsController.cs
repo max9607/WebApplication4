@@ -490,10 +490,34 @@ namespace WebApplication4.Controllers
 
         }
 
-   
+
+        public async Task<RedirectToActionResult> CerrarTicket(int IdTicket, string Comentario)
+        {
+            var tbTicket = _context.TbTickets.Single(i => i.IdTicket == IdTicket);
+            var tbCliente = _context.TbUsuarios.Single(i => i.IdUsuario == tbTicket.IdUsuario);
+            var tbFecha = _context.TbFechaTickets.Single(i => i.IdFecha == tbTicket.IdFecha);
+            var tbDerivado = _context.TbDerivados.Single(i => i.IdTicket == tbTicket.IdTicket);
+            var tbReceptor = _context.TbUsuarios.Single(i => i.IdUsuario == tbDerivado.IdUsuario);
+
+            TbTicketsCerradoesController oTCerrados = new TbTicketsCerradoesController(_context);
+            TbFechaTicketsController oFecha = new TbFechaTicketsController(_context);
+
+            tbFecha.FechaCerrado = DateTime.Now;
+            tbFecha = oFecha.CerrarTicket(tbFecha);
+
+            string Cliente = tbCliente.Nombre + " " + tbCliente.Apellido1 + " " + tbCliente.Apellido2;
+            string Receptor = tbReceptor.Nombre + " " + tbReceptor.Apellido1 + " " + tbReceptor.Apellido2;
+
+            await oTCerrados.CrearCerrado(IdTicket, Cliente, Comentario, tbTicket.DespricionP, (DateTime)tbFecha.FechaCreado, (DateTime)tbFecha.FechaCerrado, Receptor);
+
+            tbTicket.IdEstado = 4;//pasa a estar cerrado
+            _context.Update(tbTicket);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "TbTickets");
+        }
 
 
-        
 
     }
 }
