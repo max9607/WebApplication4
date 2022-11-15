@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +20,23 @@ namespace WebApplication4.Controllers
         }
 
         // GET: TbTicketsCerradoes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(DateTime? FechaInicio, DateTime? FechaFinal)
         {
-              return View(await _context.TbTicketsCerrados.ToListAsync());
+            var date = from m in _context.TbTicketsCerrados select m;
+            Console.WriteLine("FechaInicio "+FechaInicio.ToString());
+            Console.WriteLine("FechaFinal  "+FechaFinal.ToString());
+            
+            if (FechaInicio != null && FechaFinal != null)
+            {
+                date = date.Where(e => e.FechaCreado >= FechaInicio || e.FechaCerrado <= FechaFinal);
+ 
+                return View(await date.ToListAsync());
+            }
+            else
+            {
+                var data = _context.TbTicketsCerrados;
+                return View(await data.ToListAsync());
+            }
         }
 
         // GET: TbTicketsCerradoes/Details/5
@@ -183,10 +198,14 @@ namespace WebApplication4.Controllers
             return false;
         }
 
-        public async Task<IActionResult> BuscarPorMes()
+       /* public async Task<IActionResult> BuscarPorMes()
         {
-            //var data = (from fecha in _context.TbTicketsCerrados group f by )
+            DateTime FechaInicio = DateTime.Today.AddDays(-45);
+            DateTime FechaFinal = DateTime.Now;
+
+            var data = _context.TbTicketsCerrados.Where()
+
             return View();
-        }
+        }*/
     }
 }
