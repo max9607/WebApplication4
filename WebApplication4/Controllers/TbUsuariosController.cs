@@ -11,7 +11,7 @@ using WebApplication4.Models;
 
 namespace WebApplication4.Controllers
 {
-    [Authorize(Roles = "Administrador")]
+    [Authorize]
     public class TbUsuariosController : Controller
     {
         private readonly Project_DesmodusDBContext _context;
@@ -22,6 +22,7 @@ namespace WebApplication4.Controllers
         }
 
         // GET: TbUsuarios
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Index(string buscar)
         {
             
@@ -34,9 +35,10 @@ namespace WebApplication4.Controllers
             var project_DesmodusDBContext = _context.TbUsuarios.Include(t => t.IdEmpresaNavigation);
             return View(await user.ToListAsync());
         }
-    
-       
+
+
         // GET: TbUsuarios/Details/5
+        [Authorize(Roles = "Administrador, Usuario, Técnico")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.TbUsuarios == null)
@@ -56,6 +58,7 @@ namespace WebApplication4.Controllers
         }
 
         // GET: TbUsuarios/Create
+        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "Nombre");
@@ -65,6 +68,7 @@ namespace WebApplication4.Controllers
         // POST: TbUsuarios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdUsuario,Nombre,Apellido1,Apellido2,Telefono,Correo,IdEmpresa")] TbUsuario tbUsuario)
@@ -80,6 +84,7 @@ namespace WebApplication4.Controllers
         }
 
         // GET: TbUsuarios/Edit/5
+        [Authorize(Roles = "Administrador, Usuario, Técnico")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.TbUsuarios == null)
@@ -99,6 +104,7 @@ namespace WebApplication4.Controllers
         // POST: TbUsuarios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrador, Usuario, Técnico")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdUsuario,Nombre,Apellido1,Apellido2,Telefono,Correo,IdEmpresa")] TbUsuario tbUsuario)
@@ -133,6 +139,7 @@ namespace WebApplication4.Controllers
         }
 
         // GET: TbUsuarios/Delete/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.TbUsuarios == null)
@@ -152,6 +159,7 @@ namespace WebApplication4.Controllers
         }
 
         // POST: TbUsuarios/Delete/5
+        [Authorize(Roles = "Administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -169,7 +177,7 @@ namespace WebApplication4.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = "Administrador")]
         private bool TbUsuarioExists(int id)
         {
           return _context.TbUsuarios.Any(e => e.IdUsuario == id);

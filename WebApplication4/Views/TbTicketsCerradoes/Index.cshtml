@@ -6,6 +6,64 @@
 }
 
 <h2 class="mx-auto">Reporte de Tickets Cerrados</h2>
+<div class="table-responsive">
+    <table class="table align-middle table-secondary table-bordered border border-dark">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    <label class="fw-bold">Ticket</label>
+                </th>
+                <th>
+                    <label class="fw-bold">Cliente</label>
+                </th>
+                <th>
+                    <label class="fw-bold">Comentario</label>
+                </th>
+                <th>
+                    <label class="fw-bold">Ausnto</label>
+                </th>
+                <th>
+                    <label class="fw-bold">Solicitado</label>
+                </th>
+                <th>
+                    <label class="fw-bold">Cerrado</label>
+                </th>
+                <th>
+                    <label class="fw-bold">Receptor</label>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdTicket)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cliente)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comentario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DespricionP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCreado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCerrado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Receptor)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 
 <form asp-controller="TbTicketsCerradoes" asp-action="Index">
     <p>

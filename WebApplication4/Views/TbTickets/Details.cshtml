@@ -88,7 +88,10 @@
                     
                     <hr />
                     <dd>
-                        <a asp-action="Edit" asp-route-id="@Model?.IdTicket" class="btn btn-warning">Editar</a>
+                        @if (Model.IdEstado != 4)
+                        {
+                            <a asp-action="Edit" asp-route-id="@Model?.IdTicket" class="btn btn-warning">Editar</a>
+                        }
                         @if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
                         {
                             <a asp-action="Index" class="btn btn-secondary">Volver</a>

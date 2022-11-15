@@ -34,26 +34,58 @@
                             Inicio</a>
                     </li>
                     @if (User.IsInRole("Usuario")) {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="TbTickets" asp-action="UserTickets">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropbtn" asp-controller="TbTickets" asp-action="UserTickets">
                                 <i class="icofont-ticket text-light"></i>
-                                Tickets</a>
+                                Tickets
+                            </a>
+                            <div class="dropdown-content dropdown-menu">
+                                <a class="nav-link" asp-controller="TbTickets" asp-action="Create">
+                                    <i class="icofont-plus"></i>
+                                    Nuevo
+                                </a>
+
+                            </div>
                         </li>
                     }
                     @if (User.IsInRole("Técnico") || User.IsInRole("Administrador"))
                     {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="TbTickets" asp-action="Index">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropbtn" asp-controller="TbTickets" asp-action="Index">
                                 <i class="icofont-ticket text-light"></i>
                                 Tickets</a>
+                            <div class="dropdown-content dropdown-menu">
+                                <a class="nav-link" asp-controller="TbTickets" asp-action="BuscarTicket">
+                                    <i class="icofont-search-1 text-light"></i>
+                                    Buscar</a>
+                                <a class="nav-link" asp-controller="TbTickets" asp-action="Create">
+                                    <i class="icofont-plus text-light"></i>
+                                    Nuevo</a>
+
+                            </div>
                         </li>
                     }
                     @if (User.IsInRole("Administrador"))
                     {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="TbUsuarios" asp-action="Index">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropbtn" asp-controller="TbUsuarios" asp-action="Index">
                                 <i class="icofont-ui-user-group text-light"></i>
                                 Usuarios</a>
+                            <div class="dropdown-content dropdown-menu">
+
+                                <a class="nav-link" asp-controller="TbUsuarios" asp-action="Create">
+                                    <i class="icofont-plus text-light"></i>
+                                    Nuevo
+                                </a>
+                                <a class="nav-link" asp-controller="TbEmpresas" asp-action="Index">
+                                    <i class="icofont-ui-password text-light"></i>
+                                    Accesos
+                                </a>
+                                <a class="nav-link" asp-controller="TbAccesoes" asp-action="Index">
+                                    <i class="icofont-bag-alt text-light"></i>
+                                    Empresas
+                                </a>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="TbTicketsCerradoes" asp-action="Index">
@@ -79,7 +111,7 @@
         </div>
      </nav>
 
-    <div class="container">
+    <div class="container justify-content-center">
         
             @RenderBody()
      
@@ -101,3 +133,39 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<style>
+
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #212529;
+        padding-left:5px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            
+        }
+
+
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+
+</style>
