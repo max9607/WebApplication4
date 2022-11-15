@@ -503,7 +503,7 @@ namespace WebApplication4.Controllers
             TbFechaTicketsController oFecha = new TbFechaTicketsController(_context);
 
             tbFecha.FechaCerrado = DateTime.Now;
-            tbFecha = oFecha.CerrarTicket(tbFecha);
+            tbFecha =  await oFecha.CerrarTicket(tbFecha);
 
             string Cliente = tbCliente.Nombre + " " + tbCliente.Apellido1 + " " + tbCliente.Apellido2;
             string Receptor = tbReceptor.Nombre + " " + tbReceptor.Apellido1 + " " + tbReceptor.Apellido2;

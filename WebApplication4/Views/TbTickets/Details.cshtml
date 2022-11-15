@@ -133,8 +133,9 @@
                     {
                         <dl class="row">
                             <form asp-controller="TbTickets" asp-action="CerrarTicket" asp-route-idTicket="@Model.IdTicket" method="post">
+                                <textarea class="form-control" placeholder="Razón de cierre" name="Comentario" required></textarea>
                                 <input type="submit" class="mt-2 mb-2 btn btn-primary" value="Cerrar">
-                                <textarea id="w3review" name="Comentario" rows="4" cols="50"></textarea>>
+                                                              
                             </form>
                         </dl>
                     }
@@ -143,7 +144,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
+
 
