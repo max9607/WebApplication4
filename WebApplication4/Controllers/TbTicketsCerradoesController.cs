@@ -28,7 +28,7 @@ namespace WebApplication4.Controllers
             
             if (FechaInicio != null && FechaFinal != null)
             {
-                date = date.Where(e => e.FechaCreado >= FechaInicio || e.FechaCerrado <= FechaFinal);
+                date = date.Where(e => e.FechaCreado >= FechaInicio && e.FechaCerrado <= FechaFinal);
  
                 return View(await date.ToListAsync());
             }
