@@ -6,6 +6,13 @@
 }
 
 <h2 class="mx-auto">Reporte de Tickets Cerrados</h2>
+<form asp-controller="TbTicketsCerradoes" asp-action="Index">
+    <p>
+        <input type="date" name="FechaInicio"  />
+        <input type="date" name="FechaFinal"  />
+        <input type="submit" value="Buscar" class="btn btn-dark" />
+    </p>
+</form>
 <div class="table-responsive">
     <table class="table align-middle table-secondary table-bordered border border-dark">
         <thead class="table-dark">
@@ -65,13 +72,7 @@
 </div>
 
 
-<form asp-controller="TbTicketsCerradoes" asp-action="Index">
-    <p>
-        <input type="date" name="FechaInicio"  />
-        <input type="date" name="FechaFinal"  />
-        <input type="submit" value="Buscar" class="btn btn-dark" />
-    </p>
-</form>
+
 
 <table class="table table-secondary table-bordered border border-dark">
     <thead class="table-dark">
