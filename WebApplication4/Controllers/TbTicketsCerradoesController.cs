@@ -182,5 +182,11 @@ namespace WebApplication4.Controllers
             }
             return false;
         }
+
+        public async Task<IActionResult> BuscarPorMes()
+        {
+            var data = (from fecha in _context.TbTicketsCerrados group f by )
+            return View();
+        }
     }
 }
