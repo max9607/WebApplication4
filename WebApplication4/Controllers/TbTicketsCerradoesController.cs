@@ -185,7 +185,7 @@ namespace WebApplication4.Controllers
 
         public async Task<IActionResult> BuscarPorMes()
         {
-            var data = (from fecha in _context.TbTicketsCerrados group f by )
+            //var data = (from fecha in _context.TbTicketsCerrados group f by )
             return View();
         }
     }
