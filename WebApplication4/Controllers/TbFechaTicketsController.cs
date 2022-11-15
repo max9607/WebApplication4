@@ -197,12 +197,12 @@ namespace WebApplication4.Controllers
         //Funcion que actualiza el registro de abierto del ticket y establece la fecha cerrada
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public TbFechaTicket CerrarTicket(TbFechaTicket oticket)
+        public async Task<TbFechaTicket> CerrarTicket(TbFechaTicket oticket)
         {
             if (ModelState.IsValid)
             {
                 _context.Update(oticket);
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return oticket;
             }
             return null;
