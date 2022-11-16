@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="~/WebApplication4.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/icofont/icofont.min.css" asp-append-version="true">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.1/af-2.5.1/b-2.3.3/b-html5-2.3.3/b-print-2.3.3/date-1.2.0/fc-4.2.1/r-2.4.0/sc-2.0.7/sb-1.4.0/sp-2.1.0/sl-1.5.0/datatables.min.css"/>
+ 
 </head>
 
 <body>
@@ -78,12 +80,14 @@
                                     Nuevo
                                 </a>
                                 <a class="nav-link" asp-controller="TbEmpresas" asp-action="Index">
-                                    <i class="icofont-ui-password text-light"></i>
-                                    Accesos
+                                     <i class="icofont-bag-alt text-light"></i>
+                                    
+                                    Empresas
                                 </a>
                                 <a class="nav-link" asp-controller="TbAccesoes" asp-action="Index">
-                                    <i class="icofont-bag-alt text-light"></i>
-                                    Empresas
+                                   <i class="icofont-ui-password text-light"></i>
+                                    Accesos
+
                                 </a>
                             </div>
                         </li>
@@ -129,6 +133,9 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.1/af-2.5.1/b-2.3.3/b-html5-2.3.3/b-print-2.3.3/date-1.2.0/fc-4.2.1/r-2.4.0/sc-2.0.7/sb-1.4.0/sp-2.1.0/sl-1.5.0/datatables.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -23,14 +23,13 @@ namespace WebApplication4.Controllers
         public async Task<IActionResult> Index(DateTime? FechaInicio, DateTime? FechaFinal)
         {
             var date = from m in _context.TbTicketsCerrados select m;
-            Console.WriteLine("FechaInicio "+FechaInicio.ToString());
-            Console.WriteLine("FechaFinal  "+FechaFinal.ToString());
+            //Console.WriteLine("FechaInicio "+FechaInicio.ToString());
+            //Console.WriteLine("FechaFinal  "+FechaFinal.ToString());
             
             if (FechaInicio != null && FechaFinal != null)
             {
-                date = date.Where(e => e.FechaCreado >= FechaInicio && e.FechaCreado <= FechaFinal);
-                FechaFinal = FechaFinal.Value.AddDays(1);
-
+                date = date.Where(e => e.FechaCreado >= FechaInicio && e.FechaCreado <= FechaFinal.Value.AddDays(1));
+ 
                 return View(await date.ToListAsync());
             }
             else
