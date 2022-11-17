@@ -14,8 +14,9 @@
             <div class="col-md-4 col-xl-3">
                 <div class="card bg-c-blue order-card">
                     <div class="card-block">
-                        <h6 class="m-b-20"> Tecnicos <i class="icofont-ui-user"></i></h6>
-                        <h2 id="tecnico" class="text-right"><span>486</span></h2>
+                        <h6 class="m-b-20"> Tecnicos </h6>
+                        <i class="icofont-ui-user f-left d-inline text-dark" style="width:7px;"></i>
+                        <h2 id="tecnico" class="text-right d-inline"><span>486</span></h2>
                     </div>
                 </div>
             </div>
@@ -23,8 +24,9 @@
             <div class="col-md-4 col-xl-3">
                 <div class="card bg-c-green order-card">
                     <div class="card-block">
-                        <h6 class="m-b-20">Usuarios</h6>
-                        <h2 id="usuarios" class="text-right"><i class="fa fa-rocket f-left"></i><span>486</span></h2>
+                        <h6 class="m-b-20 ">Usuarios</h6>
+                        <i class="icofont-user-alt-5 f-left d-inline text-dark " style="width:7px;"></i>
+                            <h2 id="usuarios" class="text-center d-inline"><span>486</span></h2>
                     </div>
                 </div>
             </div>
@@ -33,7 +35,8 @@
                 <div class="card bg-c-yellow order-card">
                     <div class="card-block">
                         <h6 class="m-b-20">Administradores</h6>
-                        <h2 id="admin" class="text-right"><i class="fa fa-refresh f-left"></i><span>486</span></h2>
+                        <i class="icofont-user-suited f-left d-inline text-dark" style="width:7px;"></i>
+                        <h2 id="admin" class="text-right d-inline"><span>486</span></h2>
                     </div>
                 </div>
             </div>
@@ -41,8 +44,10 @@
             <div class="col-md-4 col-xl-3">
                 <div class="card bg-c-pink order-card">
                     <div class="card-block">
-                        <h6 class="m-b-20">wea</h6>
-                        <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>486</span></h2>
+                        <h6 class="m-b-20">Ticket Cerrados</h6>
+                        <i class="icofont-ticket f-left text-dark" style="width:7px;"></i>
+                    
+                        <h2 id="Tickets" class="text-right d-inline"><span>486</span></h2>
                     </div>
                 </div>
             </div>
@@ -180,7 +185,7 @@
                     return response.ok ? response.json() : Promise.reject(response);
                 })
                 .then((dataJson) => {
-                    console.log(dataJson)
+                    //console.log(dataJson)
 
                     document.getElementById('tecnico').innerHTML=dataJson.length;
                 })
@@ -192,7 +197,7 @@
                     return response.ok ? response.json() : Promise.reject(response);
                 })
                 .then((dataJson) => {
-                    console.log(dataJson)
+                    //console.log(dataJson)
 
                     document.getElementById('usuarios').innerHTML = dataJson.length;
                 })
@@ -205,13 +210,44 @@
                     return response.ok ? response.json() : Promise.reject(response);
                 })
                 .then((dataJson) => {
-                    console.log(dataJson)
+                    //console.log(dataJson)
 
                     document.getElementById('admin').innerHTML = dataJson.length;
                 })
         }
-        
-        
+
+        function ResumenMes() {
+
+            fetch("/TbTicketsCerradoes/BuscarPorMes")
+                .then((response) => {
+                    return response.ok ? response.json() : Promise.reject(response);
+                })
+                .then((dataJson) => {
+                    console.log(dataJson)
+
+                    //document.getElementById('admin').innerHTML = dataJson.length;
+                    const values = dataJson.map((item) => { return item.idCerrados })
+                    let suma = 0;
+                    values.forEach(value => {suma+=value} );
+
+                    //$.each(values, function () {
+                    //    suma += this.values;
+                    //});
+                   
+                    console.log(values)
+                    console.log(suma)
+
+                    document.getElementById('Tickets').innerHTML= suma;
+
+                
+
+                    
+
+                })
+        }
+
+
+
 
 
         $(document).ready(() => {
@@ -221,6 +257,7 @@
             ResumenTecnico()
             ResumenUsusarios()
             ResumenAdmin()
+            ResumenMes()
             
             
 

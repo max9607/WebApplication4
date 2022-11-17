@@ -198,14 +198,22 @@ namespace WebApplication4.Controllers
             return false;
         }
 
-       /* public async Task<IActionResult> BuscarPorMes()
+        public async Task<IActionResult> BuscarPorMes()
         {
-            DateTime FechaInicio = DateTime.Today.AddDays(-45);
             DateTime FechaFinal = DateTime.Now;
+            FechaFinal = FechaFinal.AddDays(-31);
+            
 
-            var data = _context.TbTicketsCerrados.Where()
+            List<TbTicketsCerrado> list =(from TbTicketsCerrado in _context.TbTicketsCerrados where TbTicketsCerrado.FechaCerrado.Value.Date >= FechaFinal.Date
+                                          group TbTicketsCerrado by TbTicketsCerrado.FechaCerrado.Value.Date into grupo
+                                          select new TbTicketsCerrado
+                                          {
+                                              FechaCerrado = grupo.Key,
+                                              IdCerrados= grupo.Count()
+                                          }).ToList();
+            
 
-            return View();
-        }*/
+            return StatusCode(StatusCodes.Status200OK, list);
+        }
     }
 }
