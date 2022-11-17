@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Editar</h1>
 
-<h4>TbUsuario</h4>
+<h4>Usuario n° @Html.DisplayFor(model => model.IdUsuario)</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,12 +19,12 @@
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Apellido1" class="control-label"></label>
+                <label class="control-label">Apellido Paterno</label>
                 <input asp-for="Apellido1" class="form-control" />
                 <span asp-validation-for="Apellido1" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Apellido2" class="control-label"></label>
+                <label class="control-label">Apellido Materno</label>
                 <input asp-for="Apellido2" class="form-control" />
                 <span asp-validation-for="Apellido2" class="text-danger"></span>
             </div>
@@ -39,20 +39,31 @@
                 <span asp-validation-for="Correo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdEmpresa" class="control-label"></label>
+                <label class="control-label">Empresa</label>
                 <select asp-for="IdEmpresa" class="form-control" asp-items="ViewBag.IdEmpresa"></select>
                 <span asp-validation-for="IdEmpresa" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div>
+                <h5 style="padding-bottom:10px;">Opciones</h5>
+
+                <hr />
+                <dd>
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                    @if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
+                    {
+                        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                    }
+                    @if (User.IsInRole("Usuario"))
+                    {
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver</a>
+                    }
+                </dd>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

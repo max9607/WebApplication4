@@ -4,39 +4,50 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detalles</h1>
 
 <div>
-    <h4>TbAcceso</h4>
+    <h4>Registro n° @Html.DisplayFor(model => model.IdAcceso)</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Correo)
+            Correo de Acceso
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Correo)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Clave)
+            Contraseña
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Clave)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdPermisoNavigation)
+            Rol
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdPermisoNavigation.IdPermiso)
+            @Html.DisplayFor(model => model.IdPermisoNavigation.Nombre)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdUsuarioNavigation)
+            Usuario Asignado
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdUsuarioNavigation.IdUsuario)
+            @Html.DisplayFor(model => model.IdUsuarioNavigation.Nombre)
+            @Html.DisplayFor(model => model.IdUsuarioNavigation.Apellido1)
+            @Html.DisplayFor(model => model.IdUsuarioNavigation.Apellido2)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdAcceso">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <h5 style="padding-bottom:10px;">Opciones</h5>
+
+    <hr />
+    <dd>
+
+            <a asp-action="Edit" asp-route-id="@Model?.IdAcceso" class="btn btn-warning">Editar</a>
+            <a asp-action="Index" class="btn btn-secondary">Volver</a>
+
+
+
+    </dd>
 </div>

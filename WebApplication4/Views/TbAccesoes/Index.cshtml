@@ -4,27 +4,33 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
+<div class="text-center">
+    <h1>Listado de Usuarios</h1>
+    <hr />
+</div>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a type="button" class="btn btn-primary" asp-action="Create">
+        <i class="icofont-plus text-light"></i>
+        Crear Nuevo</a>
 </p>
-<table class="table">
-    <thead>
+<table id="Secundaria" class="table align-middle table-bordered border border-dark">
+    <thead class="table-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Correo)
+                Correo de Acceso
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Clave)
+                Contraseña
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdPermisoNavigation)
+                Rol
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdUsuarioNavigation)
+                Usuario Asignado
             </th>
-            <th></th>
+            <th>
+                Opciones
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -45,9 +51,9 @@
                         @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido2)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdAcceso">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdAcceso">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdAcceso">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.IdAcceso">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdAcceso">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdAcceso">Eliminar</a>
             </td>
         </tr>
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -285,6 +286,18 @@ namespace WebApplication4.Controllers
                 oTicket.AceptarTicketAsync(idTicket);
 
                 return RedirectToAction("Index", "TbTickets");
+            }
+
+        }
+
+        //Eliminar derivados a cerrar
+        public async Task EliminarDerivado(int idTicket)
+        {
+            var tbDerivado = _context.TbDerivados.FirstOrDefault(i => i.IdTicket == idTicket);
+            if(tbDerivado != null)
+            {
+                _context.TbDerivados.Remove(tbDerivado);
+                await _context.SaveChangesAsync();
             }
 
         }

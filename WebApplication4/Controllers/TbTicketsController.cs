@@ -551,6 +551,7 @@ namespace WebApplication4.Controllers
 
             TbTicketsCerradoesController oTCerrados = new TbTicketsCerradoesController(_context);
             TbFechaTicketsController oFecha = new TbFechaTicketsController(_context);
+            TbDerivadoesController oDerivados = new TbDerivadoesController(_context);
 
             tbFecha.FechaCerrado = DateTime.Now;
             tbFecha =  await oFecha.CerrarTicket(tbFecha);
@@ -563,6 +564,8 @@ namespace WebApplication4.Controllers
             tbTicket.IdEstado = 4;//pasa a estar cerrado
             _context.Update(tbTicket);
             await _context.SaveChangesAsync();
+            
+            await oDerivados.EliminarDerivado(IdTicket);
 
             return RedirectToAction("Index", "TbTickets");
         }
