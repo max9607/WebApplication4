@@ -302,5 +302,51 @@ namespace WebApplication4.Controllers
 
         }
 
+        //Devolver Nombre y comentario del derivado
+        public string CerradoReceptor(int idTicket)
+        {
+            //TbTicketsCerradoesController oCerrados = new TbTicketsCerradoesController(_context);
+            if(_context.TbTicketsCerrados.Any(i => i.IdTicket == idTicket))
+            {
+                var tbTicket = _context.TbTicketsCerrados.Single(i => i.IdTicket == idTicket);
+                if( tbTicket.Receptor != null)
+                {
+                    return tbTicket.Receptor;
+                }
+                else
+                {
+                    return "No se encontró la información";
+                }
+            }
+            else
+            {
+                return "No Existen Registros";
+            }
+            
+
+        }
+
+        public string CerradoComentario(int idTicket)
+        {
+            //TbTicketsCerradoesController oCerrados = new TbTicketsCerradoesController(_context);
+            if (_context.TbTicketsCerrados.Any(i => i.IdTicket == idTicket))
+            {
+                var tbTicket = _context.TbTicketsCerrados.Single(i => i.IdTicket == idTicket);
+                if (tbTicket.Comentario != null)
+                {
+                    return tbTicket.Comentario;
+                }
+                else
+                {
+                    return "No se encontró la información";
+                }
+            }
+            else
+            {
+                return "No Existen Registros";
+            }
+
+        }
+
     }
 }

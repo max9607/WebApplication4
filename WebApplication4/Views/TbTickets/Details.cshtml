@@ -44,7 +44,20 @@
                         {
 
 
-                            <img src="@Url.Action("Obtener","TbTickets",new{id = Model.IdTicket} )" width="50px" height="50px">
+                            <img id="myImg"  src="@Url.Action("Obtener","TbTickets",new{id = Model.IdTicket} )" width="50px" height="50px">
+
+                            <!-- The Modal -->
+                            <div id="myModal" class="modal">
+
+                              <!-- The Close Button -->
+                              <span class="close">&times;</span>
+
+                              <!-- Modal Content (The Image) -->
+                              <img class="modal-content" id="img01">
+
+                              <!-- Modal Caption (Image Text) -->
+                              <div id="caption"></div>
+                            </div>
 
                         }
                         else
@@ -111,7 +124,25 @@
                         <label class="mt-2 mb-2 fw-bold">@oDerivados.NombreDerivado(Model.IdTicket)</label>
                     }
                     else{
-                        <label class="mb-2 text-danger fw-bold">Sin derivar</label>
+                        @if (Model.IdEstado == 4){
+                            <dt class="col-sm-5">
+                               Ticket Cerrado por: 
+                            </dt>
+                            <dd class="col-sm-10">
+                                @oDerivados.CerradoReceptor(Model.IdTicket)
+                            </dd>
+                            <dt class="col-sm-7">
+                                Razón de cierre:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @oDerivados.CerradoComentario(Model.IdTicket)
+                            </dd>
+
+                        }
+                        else{
+                            <label class="mb-2 text-danger fw-bold">Sin derivar</label>
+                        }
+                        
                     }
 
                     @if (Model.IdEstado == 1 || Model.IdEstado == 2)
