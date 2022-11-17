@@ -7,8 +7,50 @@
 <div class="text-center">
     <h2 class="display-6">Bienvenido @User.Identity.Name</h2>
     <hr />
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-xl-3">
+                <div class="card bg-c-blue order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20"> Tecnicos</h6>
+                        <h2 id="tecnico" class="text-right"><i class="fa fa-cart-plus f-left"></i><span>486</span></h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xl-3">
+                <div class="card bg-c-green order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20">Usuarios</h6>
+                        <h2 id="usuarios" class="text-right"><i class="fa fa-rocket f-left"></i><span>486</span></h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xl-3">
+                <div class="card bg-c-yellow order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20">Administradores</h6>
+                        <h2 id="admin" class="text-right"><i class="fa fa-refresh f-left"></i><span>486</span></h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xl-3">
+                <div class="card bg-c-pink order-card">
+                    <div class="card-block">
+                        <h6 class="m-b-20">wea</h6>
+                        <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>486</span></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container text-center">
  
+        
 
         <div class="row mt-2">
         <div class="col-sm-6">
@@ -29,7 +71,6 @@
                 </div>
             </div>
         </div>
-
         </div>
     </div>
 </div>
@@ -99,13 +140,13 @@
                     return response.ok ? response.json() : Promise.reject(response);
                 })
                 .then((dataJson) => {
-                    console.log(dataJson)
+                    //console.log(dataJson)
 
                     const labels = dataJson.map((item) => { return item.nombreUsusario })
                     const values = dataJson.map((item) => { return item.idTicket })
 
-                    console.log(labels)
-                    console.log(values)
+                    //console.log(labels)
+                    //console.log(values)
 
                     const data2 = {
                         labels: labels,
@@ -131,17 +172,57 @@
 
 
                 })
-
-
-
-
-
         }
+        function ResumenTecnico() {
+
+            fetch("/TbTickets/contadorDetecnico")
+                .then((response) => {
+                    return response.ok ? response.json() : Promise.reject(response);
+                })
+                .then((dataJson) => {
+                    console.log(dataJson)
+
+                    document.getElementById('tecnico').innerHTML=dataJson.length;
+                })
+        }
+        function ResumenUsusarios() {
+
+            fetch("/TbTickets/contadorDeUser")
+                .then((response) => {
+                    return response.ok ? response.json() : Promise.reject(response);
+                })
+                .then((dataJson) => {
+                    console.log(dataJson)
+
+                    document.getElementById('usuarios').innerHTML = dataJson.length;
+                })
+        }
+
+        function ResumenAdmin() {
+
+            fetch("/TbTickets/contadorDeAdmin")
+                .then((response) => {
+                    return response.ok ? response.json() : Promise.reject(response);
+                })
+                .then((dataJson) => {
+                    console.log(dataJson)
+
+                    document.getElementById('admin').innerHTML = dataJson.length;
+                })
+        }
+        
+        
+
 
         $(document).ready(() => {
 
             ResumenTickets()
             ResumenAsignados()
+            ResumenTecnico()
+            ResumenUsusarios()
+            ResumenAdmin()
+            
+            
 
         })
 

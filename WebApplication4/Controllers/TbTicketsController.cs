@@ -13,6 +13,7 @@ using System.Dynamic;
 using System.Data;
 using SelectPdf;
 using WebApplication4.Models.ViewModels;
+using System.Diagnostics.Metrics;
 
 namespace WebApplication4.Controllers
 {
@@ -492,6 +493,52 @@ namespace WebApplication4.Controllers
             return StatusCode(StatusCodes.Status200OK, list);
 
         }
+        public IActionResult contadorDetecnico()
+        {
+            List<VMContadorUsuarios> list = (from TbAcceso in _context.TbAccesos where TbAcceso.IdPermisoNavigation.Nombre == "Técnico"
+                                             group TbAcceso by TbAcceso.IdUsuario into grupo
+                                             select new VMContadorUsuarios
+                                             {
+                                                 IdPermiso = grupo.Key,
+                                                 IdUsuario = grupo.Count(),
+
+                                             }).ToList();
+
+            return StatusCode(StatusCodes.Status200OK, list);
+
+        }
+        public IActionResult contadorDeUser()
+        {
+            List<VMContadorUsuarios> list = (from TbAcceso in _context.TbAccesos
+                                             where TbAcceso.IdPermisoNavigation.Nombre == "Usuario"
+                                             group TbAcceso by TbAcceso.IdUsuario into grupo
+                                             select new VMContadorUsuarios
+                                             {
+                                                 IdPermiso = grupo.Key,
+                                                 IdUsuario = grupo.Count(),
+
+                                             }).ToList();
+
+            return StatusCode(StatusCodes.Status200OK, list);
+
+        }
+
+        public IActionResult contadorDeAdmin()
+        {
+            List<VMContadorUsuarios> list = (from TbAcceso in _context.TbAccesos where TbAcceso.IdPermisoNavigation.Nombre == "Administrador"
+                                             group TbAcceso by TbAcceso.IdUsuario into grupo
+                                             select new VMContadorUsuarios
+                                             {
+                                                 IdPermiso = grupo.Key,
+                                                 IdUsuario = grupo.Count(),
+
+                                             }).ToList();
+
+            return StatusCode(StatusCodes.Status200OK, list);
+
+        }
+
+       
 
 
         public async Task<RedirectToActionResult> CerrarTicket(int IdTicket, string Comentario)
@@ -520,7 +567,6 @@ namespace WebApplication4.Controllers
             return RedirectToAction("Index", "TbTickets");
         }
 
-
-
+        
     }
 }
