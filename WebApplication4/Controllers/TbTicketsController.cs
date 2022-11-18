@@ -580,6 +580,10 @@ namespace WebApplication4.Controllers
             return RedirectToAction("Index", "TbTickets");
         }
 
-        
+        public void probarcorreo()
+        {
+            mailLogica oMail = new mailLogica();
+            oMail.emailpruebas();
+        }
     }
 }
