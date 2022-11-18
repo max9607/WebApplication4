@@ -14,6 +14,7 @@ using System.Data;
 using SelectPdf;
 using WebApplication4.Models.ViewModels;
 using System.Diagnostics.Metrics;
+using WebApplication4.Logica;
 
 namespace WebApplication4.Controllers
 {
@@ -168,6 +169,15 @@ namespace WebApplication4.Controllers
 
 
                 }
+                mailLogica omail = new mailLogica();
+
+                var admins = _context.TbAccesos.Where(i => i.IdPermisoNavigation.Nombre == "Administrador").ToList();
+                var idadmins = admins.Select(i => i.IdUsuario).ToList();
+                var correosadmins = _context.TbUsuarios.Where(i => idadmins.Contains(i.IdUsuario));
+                var listacorreos = correosadmins.Select(i => i.Correo).ToList();
+
+                await omail.SendEmailAsync(listacorreos);
+
                 _context.Add(tbTicket);
                 await _context.SaveChangesAsync();
                 if (User.IsInRole("Administrador"))

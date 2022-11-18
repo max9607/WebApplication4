@@ -45,15 +45,20 @@ namespace WebApplication4.Controllers
                     Aqui pasamos todo el esquema del usuario, nombre, correo y rol
                  */
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                /*if(Permiso_usuario.Nombre == "Usuario")
+                if(Permiso_usuario.Nombre == "Usuario")
+                {
+                    return RedirectToAction("UserTickets", "TbTickets");
+                }
+                if(Permiso_usuario.Nombre == "Técnico")
+                {
+                    return RedirectToAction("Index", "TbTickets");
+                }
+                if (Permiso_usuario.Nombre == "Administrador")
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                if(Permiso_usuario.Nombre == "Administrador")
-                {
-                    return RedirectToAction("AdminIndex", "Home");
-                }*/
-                return RedirectToAction("Index", "Home");
+                return await Salir();
+                
             }
             else
             {

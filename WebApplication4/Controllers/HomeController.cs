@@ -4,7 +4,7 @@ using WebApplication4.Models;
 using Microsoft.AspNetCore.Authorization;
 namespace WebApplication4.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrador")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

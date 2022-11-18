@@ -59,9 +59,13 @@
             <a asp-action="Index" class="btn btn-secondary">Volver</a>
  
         }
-        @if (User.IsInRole("Usuario") || User.IsInRole("Técnico"))
+        @if (User.IsInRole("Usuario"))
         {
-            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver</a>
+            <a asp-controller="TbTickets" asp-action="UserTickets" class="btn btn-secondary">Volver</a>
+        }
+        @if (User.IsInRole("Técnico"))
+        {
+            <a asp-controller="TbTickets" asp-action="Index" class="btn btn-secondary">Volver</a>
         }
     </dd>
 </div>
