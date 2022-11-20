@@ -4,11 +4,11 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1>Eliminar</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>TbCategorium</h4>
+    <h4>Registro n° @Html.DisplayFor(model => model.IdProblema)</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -19,9 +19,15 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdProblema" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+
+    <div>
+        <h5 style="padding-bottom:10px;">Opciones</h5>
+
+        <hr />
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="IdProblema" />
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-secondary">Volver</a>
+        </form>
+    </div>
 </div>

@@ -168,9 +168,19 @@ namespace WebApplication4.Controllers
             {
                 return Problem("Entity set 'Project_DesmodusDBContext.TbUsuarios'  is null.");
             }
+
             var tbUsuario = await _context.TbUsuarios.FindAsync(id);
+            
+
             if (tbUsuario != null)
             {
+
+                var tbAccesos = _context.TbAccesos.Where(i => i.IdUsuario == id);
+                foreach (var item in tbAccesos)
+                {
+                    _context.TbAccesos.Remove(item);
+                }
+                
                 _context.TbUsuarios.Remove(tbUsuario);
             }
             

@@ -5,7 +5,7 @@
 }
 
 <div class="text-center">
-    <h1>Listado de Usuarios</h1>
+    <h1>Listado de Accesos</h1>
     <hr />
 </div>
 <p>
@@ -50,11 +50,13 @@
                     @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido1)
                         @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido2)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdAcceso">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.IdAcceso">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdAcceso">Eliminar</a>
-            </td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                        <a asp-action="Edit" asp-route-id="@item.IdAcceso" class="btn btn-outline-dark">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.IdAcceso" class="btn btn-outline-dark">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.IdAcceso" class="btn btn-outline-dark">Eliminar</a>
+                    </div>
+                </td>
         </tr>
 }
     </tbody>

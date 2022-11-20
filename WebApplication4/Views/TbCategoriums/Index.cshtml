@@ -4,31 +4,46 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
+<div class="text-center">
+    <h1>Listado de Categorías</h1>
+    <hr />
+</div>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a type="button" class="btn btn-primary" asp-action="Create">
+        <i class="icofont-plus text-light"></i>
+        Crear Nuevo
+    </a>
 </p>
-<table class="table">
-    <thead>
+<table id="Secundaria" class="table align-middle table-bordered border border-dark">
+    <thead class="table-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Problema)
+                I.D
             </th>
-            <th></th>
+            <th>
+                Categoría
+            </th>
+            <th>
+                Opciones
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Problema)
+                @Html.DisplayFor(modelItem => item.IdProblema)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdProblema">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdProblema">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdProblema">Delete</a>
+                @Html.DisplayFor(modelItem => item.Problema)
             </td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                        <a asp-action="Edit" asp-route-id="@item.IdProblema" class="btn btn-outline-dark">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.IdProblema" class="btn btn-outline-dark">Detalles</a>
+                        
+                    </div>
+                </td>
         </tr>
 }
     </tbody>
