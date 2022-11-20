@@ -105,7 +105,12 @@ namespace WebApplication4.Controllers
             {
                 return NotFound();
             }
-            ViewData["Derivar"] = new SelectList(_context.TbAccesos.Where(i => i.IdPermiso == 3 || i.IdPermisoNavigation.Nombre == "Técnico"), "IdUsuario", "Correo");
+            var listTecnicos = _context.TbAccesos.Where(i => i.IdPermiso == 3 || i.IdPermisoNavigation.Nombre == "Técnico").Select(s => new
+            {
+                IdUsuario = s.IdUsuario,
+                NombreCompleto = string.Format("{0} {1} {2}", s.IdUsuarioNavigation.Nombre, s.IdUsuarioNavigation.Apellido1, s.IdUsuarioNavigation.Apellido2)
+            });
+            ViewData["Derivar"] = new SelectList(listTecnicos, "IdUsuario", "NombreCompleto");
             return View(tbTicket);
         }
         //GET TbTickets/Volver
