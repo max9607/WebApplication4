@@ -5,20 +5,20 @@ namespace WebApplication4.Logica
 {
     public class mailLogica
     {
-        public Task SendEmailAsync(List<string?> email)
+        public Task SendEmailAsync(List<string?> email,string asunto, string correoUsuario)
         {
             for(int i = 0; i < email.Count; i++)
             {
                 try
                 {
                     // Credentials
-                    var credentials = new NetworkCredential("servicedesk_notif@outlook.com", "MMOrpg77");
+                    var credentials = new NetworkCredential("anthony.aldunate@iseintegrados.com", "Upds2023.");
                     // Mail message
                     var mail = new MailMessage()
                     {
-                        From = new MailAddress("servicedesk_notif@outlook.com", "ServiceDesk"),
-                        Subject = "NUEVO TICKET",
-                        Body = "Hay un nuevo ticket a la espera de ser atendido",
+                        From = new MailAddress("anthony.aldunate@iseintegrados.com", "ServiceDesk"),
+                        Subject = "NUEVO TICKET " + correoUsuario,
+                        Body = "Hay un nuevo ticket a la espera de ser atendido, " +"\n asunto:"+ asunto,
                         IsBodyHtml = true
                     };
 
@@ -30,7 +30,7 @@ namespace WebApplication4.Logica
                         Port = 587,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
                         UseDefaultCredentials = false,
-                        Host = "smtp-mail.outlook.com",
+                        Host = "smtp.zoho.com",
                         EnableSsl = true,
                         Credentials = credentials
                     };

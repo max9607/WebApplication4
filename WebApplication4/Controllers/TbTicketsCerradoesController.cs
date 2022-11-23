@@ -201,7 +201,7 @@ namespace WebApplication4.Controllers
         public async Task<IActionResult> BuscarPorMes()
         {
             DateTime FechaFinal = DateTime.Now;
-            FechaFinal = FechaFinal.AddDays(-3);
+            FechaFinal = FechaFinal.AddDays(-31);
             
 
             List<TbTicketsCerrado> list =(from TbTicketsCerrado in _context.TbTicketsCerrados where TbTicketsCerrado.FechaCerrado.Value.Date >= FechaFinal.Date

@@ -180,8 +180,11 @@ namespace WebApplication4.Controllers
                 var idadmins = admins.Select(i => i.IdUsuario).ToList();
                 var correosadmins = _context.TbUsuarios.Where(i => idadmins.Contains(i.IdUsuario));
                 var listacorreos = correosadmins.Select(i => i.Correo).ToList();
+                
+                var correoUsuario = _context.TbUsuarios.First(i => i.IdUsuario == tbTicket.IdUsuario);
+                
 
-                await omail.SendEmailAsync(listacorreos);*/
+                await omail.SendEmailAsync(listacorreos,tbTicket.DespricionP,correoUsuario.Correo);
 
                 _context.Add(tbTicket);
                 await _context.SaveChangesAsync();
