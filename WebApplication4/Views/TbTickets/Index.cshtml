@@ -99,21 +99,27 @@
         <div class="col col-tickets">
             @foreach (var item in Model)
             {
-                if (item.IdEstado == 4)
-                {
-                    var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
-                    <a asp-action="Details" asp-route-id="@item.IdTicket">
-                        <div class="ticket btn btn-success">
-                            <div class="row">
-                                <p id="Id" class="col-lg-2">@Html.DisplayFor(modelItem => item.IdTicket)</p>
-                                <p id="Fecha" class="col-8">@Html.DisplayFor(modelItem => fecha)</p>
+                DateTime FechaFinal = DateTime.Now;
+                FechaFinal = FechaFinal.AddDays(-3);
+                var fecha2 = item.IdFechaNavigation.FechaCerrado;
+
+                if(fecha2 >= FechaFinal ){
+                    if (item.IdEstado == 4)
+                    {
+                        var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
+                        <a asp-action="Details" asp-route-id="@item.IdTicket">
+                            <div class="ticket btn btn-success">
+                                <div class="row">
+                                    <p id="Id" class="col-lg-2">@Html.DisplayFor(modelItem => item.IdTicket)</p>
+                                    <p id="Fecha" class="col-8">@Html.DisplayFor(modelItem => fecha)</p>
+                                </div>
+                            
+                                    <p id="Asunto" class="col">@Html.DisplayFor(modelItem => item.DespricionP)</p>
+                            
                             </div>
-                            
-                                <p id="Asunto" class="col">@Html.DisplayFor(modelItem => item.DespricionP)</p>
-                            
-                        </div>
-                    </a>
+                        </a>
  
+                    }
                 }
             }
         </div>
