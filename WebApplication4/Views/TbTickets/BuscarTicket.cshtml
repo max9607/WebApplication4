@@ -33,7 +33,7 @@
                     <td>@Html.DisplayFor(modelItem => item.IdEstadoNavigation.EstadoTicket)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdPrioridadNavigation.Prioridad)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdProblemaNavigation.Problema)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IdFechaNavigation.FechaCreado)</td>
+                    <td>@item.IdFechaNavigation.FechaCreado.Value.ToString("yyyy-MM-dd HH:mm")</td>
                     <td>@Html.DisplayFor(modelItem => item.DespricionP)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Correo)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre) @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido1)</td>

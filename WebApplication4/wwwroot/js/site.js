@@ -3,9 +3,24 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-     $('#myTable').DataTable({
+    //$.fn.dataTable.moment('dd/MM/yyyy HH:mm');
+    //$.fn.dataTable.moment('HH:mm MMM D, YY');
+    //$.fn.dataTable.moment('ddd, MMMM Do, YYYY');
+    $.fn.dataTable.moment('DD-MM-YYYY HH:mm');
+    $('#myTable').DataTable({              
         "paging": true,
-        language: {
+
+            
+        columnDefs: [{
+           
+            targets: [3,4],
+            /* 			render: $.fn.dataTable.render.moment( 'DD/MM/YY' ) */
+            render: function (data) {
+                return moment(data, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
+            }
+        }],
+
+        /*language: {
             info: "Mostrando _PAGE_ de _PAGES_ paginas",
             lengthMenu: "Mostrando _MENU_ resultados",
             search: "Buscar:",
@@ -21,8 +36,66 @@ $(document).ready(function () {
                 copy: "Copiar",
                 pdf: "Descargar"
             },
-            
+            searchBuilder: {
+                add: "Añadir Filtro",
+                logicAnd: "Y",
+                logicOr: "O",
+                data: "Datos",
+                condition: "Condiciones",
+                value: "Valor",
+                conditions: {
+                    array: {
+                        contains: 'Contiene',
+                        empty: 'Vacío',
+                        equals: 'Igual',
+                        not: 'No',
+                        notEmpty: 'No vacío',
+                        without: 'Sin que'
+                    },
+                    string: {
+                        contains: 'Contiene',
+                        empty: 'Vacío',
+                        endsWith: 'Termina en',
+                        equals: 'Igual',
+                        not: 'No sea',
+                        notContains: 'No contiene',
+                        notEmpty: 'No esté vacío',
+                        notEndsWith: 'No termina con',
+                        notStartsWith: 'No empieza con',
+                        startsWith: 'Empieza con',
+                    },
+                    number: {
+                        between: 'Entre',
+                        empty: 'Vacío',
+                        equals: 'Igual',
+                        gt: 'Mayor que',
+                        gte: 'Mayor o igual que',
+                        lt: 'Menor que',
+                        lte: 'Menor o igual que',
+                        not: 'No sea',
+                        notBetween: 'No está entre',
+                        notEmpty: 'No esté vacío',
+                    },
+                    date: {
+                        after: 'Después',
+                        before: 'Antes de',
+                        between: 'Entre',
+                        empty: 'Vacío',
+                        equals: 'Igual',
+                        not: 'No sea',
+                        notBetween: 'No estén entre',
+                        notEmpty: 'No esté vacío'
+                    }
+                },
+                clearAll: "Borrar todos los filtros",
+                title: "Busqueda avanzada",
+            },
+        
+        		
 
+        },*/
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json',
         },
          //dom: "<Bfl<t>ip>",
          dom: "Q<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +

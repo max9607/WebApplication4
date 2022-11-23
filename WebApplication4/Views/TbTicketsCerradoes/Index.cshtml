@@ -6,7 +6,6 @@
 }
 
 <h2 class="mx-auto">Reporte de Tickets Cerrados</h2>
-
 <div class="table-responsive">
     <table id="myTable" class="table align-middle y table-bordered border border-dark">
         <thead class="table-dark">
@@ -47,11 +46,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.DespricionP)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaCreado)
+                    <td class="fecha">
+                        @item.FechaCreado.Value.ToString("yyyy-MM-dd HH:mm")
+                        
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaCerrado)
+                    <td class="fecha">
+                        @item.FechaCerrado.Value.ToString("yyyy-MM-dd HH:mm")
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Receptor)

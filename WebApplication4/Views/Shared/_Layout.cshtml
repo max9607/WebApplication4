@@ -123,11 +123,15 @@
                     }
                 </ul>
                 <ul class="navbar-nav justify-content-end mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link me-3" asp-controller="TbUsuarios" asp-action="Details" asp-route-id="@User.FindFirst("IdUsuario").Value">
-                            <i class="icofont-ui-user text-light"></i>
-                            @User.Identity.Name</a>
-                    </li>
+                    @if (User.FindFirst("IdUsuario") != null){
+                        <li class="nav-item">
+                            <a class="nav-link me-3" asp-controller="TbUsuarios" asp-action="Details" asp-route-id="@User.FindFirst("IdUsuario").Value">
+                                <i class="icofont-ui-user text-light"></i>
+                                @User.Identity.Name
+                            </a>
+                        </li>
+                    }
+
                     <li class="nav-item">
                         <a class="btn btn-outline-light my-2 my-sm-0" asp-controller="Login" asp-action="Salir">Salir</a>
                     </li>
@@ -159,7 +163,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.1/af-2.5.1/b-2.3.3/b-html5-2.3.3/b-print-2.3.3/date-1.2.0/fc-4.2.1/r-2.4.0/sc-2.0.7/sb-1.4.0/sp-2.1.0/sl-1.5.0/datatables.min.js"></script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.13.1/sorting/datetime-moment.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
