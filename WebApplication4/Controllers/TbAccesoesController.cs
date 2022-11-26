@@ -111,7 +111,14 @@ namespace WebApplication4.Controllers
                 return NotFound();
             }
             ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre", tbAcceso.IdUsuario);
+            var listUsuarios = _context.TbUsuarios.Select(s => new
+            {
+                IdUsuario = s.IdUsuario,
+                NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)//como son tres columnas con el format le decimos que haya un espacio entre cada uno
+            });
+
+            ViewData["IdUsuario"] = new SelectList(listUsuarios, "IdUsuario", "NombreCompleto");
+            //ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre", tbAcceso.IdUsuario);
             return View(tbAcceso);
         }
 
@@ -147,8 +154,16 @@ namespace WebApplication4.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            var listUsuarios = _context.TbUsuarios.Select(s => new
+            {
+                IdUsuario = s.IdUsuario,
+                NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)//como son tres columnas con el format le decimos que haya un espacio entre cada uno
+            });
+
+            ViewData["IdUsuario"] = new SelectList(listUsuarios, "IdUsuario", "NombreCompleto");
             ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre", tbAcceso.IdUsuario);
+            //ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre", tbAcceso.IdUsuario);
             return View(tbAcceso);
         }
 
