@@ -583,7 +583,7 @@ namespace WebApplication4.Controllers
             _context.Update(tbTicket);
             await _context.SaveChangesAsync();
             
-            await oDerivados.EliminarDerivado(IdTicket);
+            //await oDerivados.EliminarDerivado(IdTicket);
 
             return RedirectToAction("Index", "TbTickets");
         }
