@@ -144,7 +144,39 @@ $(document).ready(function () {
         ]
     });
 });
+$(document).ready(function () {
+    //$.fn.dataTable.moment('dd/MM/yyyy HH:mm');
+    //$.fn.dataTable.moment('HH:mm MMM D, YY');
+    //$.fn.dataTable.moment('ddd, MMMM Do, YYYY');
+    $.fn.dataTable.moment('DD-MM-YYYY HH:mm');
+    $('#busqueda').DataTable({
+        "paging": true,
 
+
+        columnDefs: [{
+
+            targets: 4,
+            /* 			render: $.fn.dataTable.render.moment( 'DD/MM/YY' ) */
+            render: function (data) {
+                return moment(data, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
+            }
+        }],
+
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json',
+        },
+        //dom: "<Bfl<t>ip>",
+        dom: "Q<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>" + "<'row'<'col-sm-12 pb-3'B>>",
+        // es como un <row clas='col-sm-12 -pb3'> funciona igual que un div
+        //https://datatables.net/reference/option/dom
+        buttons: [
+            'copy', 'excel', 'pdf',
+
+        ]
+    });
+});
 
 // Get the modal
 var modal = document.getElementById("myModal");
@@ -166,3 +198,5 @@ var span = document.getElementsByClassName("close")[0];
 span.onclick = function () {
     modal.style.display = "none";
 }
+
+
