@@ -12,11 +12,11 @@ namespace WebApplication4.Logica
                 try
                 {
                     // Credentials
-                    var credentials = new NetworkCredential("anthony.aldunate@iseintegrados.com", "Upds2023.");
+                    var credentials = new NetworkCredential("servicedesk@siibolivia.com", "Pruebas123");
                     // Mail message
                     var mail = new MailMessage()
                     {
-                        From = new MailAddress("anthony.aldunate@iseintegrados.com", "ServiceDesk"),
+                        From = new MailAddress("servicedesk@siibolivia.com", "ServiceDesk"),
                         Subject = "NUEVO TICKET " + correoUsuario,
                         Body = "Hay un nuevo ticket a la espera de ser atendido, " +"\n asunto:"+ asunto,
                         IsBodyHtml = true
@@ -30,7 +30,7 @@ namespace WebApplication4.Logica
                         Port = 587,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
                         UseDefaultCredentials = false,
-                        Host = "smtp.zoho.com",
+                        Host = "smtp.gmail.com",
                         EnableSsl = true,
                         Credentials = credentials
                     };
@@ -50,7 +50,7 @@ namespace WebApplication4.Logica
         }
 
 
-        public Task emailpruebas()
+       /* public Task emailpruebas()
         {
 
                 try
@@ -73,7 +73,7 @@ namespace WebApplication4.Logica
                     {
                         Port = 587,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
-                        UseDefaultCredentials = false,
+                        UseDefaultCredentials = true,
                         Host = "smtp-mail.outlook.com",
                         EnableSsl = true,
                         Credentials = credentials
@@ -89,6 +89,6 @@ namespace WebApplication4.Logica
                 }
 
             return Task.CompletedTask;
-        }
+        }*/
     }
 }

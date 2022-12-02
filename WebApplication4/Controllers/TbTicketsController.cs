@@ -174,7 +174,7 @@ namespace WebApplication4.Controllers
 
 
                 }
-                /*mailLogica omail = new mailLogica();
+                mailLogica omail = new mailLogica();
 
                 var admins = _context.TbAccesos.Where(i => i.IdPermisoNavigation.Nombre == "Administrador").ToList();
                 var idadmins = admins.Select(i => i.IdUsuario).ToList();
@@ -184,7 +184,7 @@ namespace WebApplication4.Controllers
                 var correoUsuario = _context.TbUsuarios.First(i => i.IdUsuario == tbTicket.IdUsuario);
                 
 
-                await omail.SendEmailAsync(listacorreos,tbTicket.DespricionP,correoUsuario.Correo);*/
+                await omail.SendEmailAsync(listacorreos,tbTicket.DespricionP,correoUsuario.Correo);
 
                 _context.Add(tbTicket);
                 await _context.SaveChangesAsync();
@@ -381,6 +381,7 @@ namespace WebApplication4.Controllers
             var img = _context.TbTickets.Where(i => i.IdTicket == id).FirstOrDefault();
             return File(img.Adjunto, "image/jpeg");
         }
+
         //GET: Obtiene los tickets cerrados
 
         public async Task<IActionResult> BuscarTicket(string buscar)
@@ -588,10 +589,10 @@ namespace WebApplication4.Controllers
             return RedirectToAction("Index", "TbTickets");
         }
 
-        public void probarcorreo()
+        /*public void probarcorreo()
         {
             mailLogica oMail = new mailLogica();
             oMail.emailpruebas();
-        }
+        }*/
     }
 }
