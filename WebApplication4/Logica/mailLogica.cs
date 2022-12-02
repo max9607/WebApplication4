@@ -12,7 +12,7 @@ namespace WebApplication4.Logica
                 try
                 {
                     // Credentials
-                    var credentials = new NetworkCredential("servicedesk@siibolivia.com", "Pruebas123");
+                    var credentials = new NetworkCredential("servicedesk@siibolivia.com", "Pruebas123.");
                     // Mail message
                     var mail = new MailMessage()
                     {
