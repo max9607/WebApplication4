@@ -118,13 +118,19 @@
             <div class="col">
                 @if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
                 {
-                    @if (oDerivados.ExisteDerivado(Model.IdTicket))
+                    @if (oDerivados.ExisteDerivado(Model.IdTicket) && Model.IdEstado != 4)
                     {
+                        <h5 style="padding-bottom:10px;">Opciones de Derivación</h5>
+
+                        <hr />
                         <label class="mb-2">Derivado a: </label>
                         <label class="mt-2 mb-2 fw-bold">@oDerivados.NombreDerivado(Model.IdTicket)</label>
                     }
                     else{
                         @if (Model.IdEstado == 4){
+                            <h5 style="padding-bottom:10px;">Detalles de Cierre</h5>
+
+                            <hr />
                             <dt class="col-sm-5">
                                Ticket Cerrado por: 
                             </dt>
@@ -140,6 +146,9 @@
 
                         }
                         else{
+                            <h5 style="padding-bottom:10px;">Opciones de Derivación</h5>
+
+                            <hr />
                             <label class="mb-2 text-danger fw-bold">Sin derivar</label>
                         }
                         
@@ -157,9 +166,12 @@
 
                         </dl>
                         <dl class="row">
+                            <h5 style="padding-bottom:10px;">¿Desea atender este ticket?</h5>
+
+                            <hr />
                             <form asp-controller="TbDerivadoes" asp-action="Aceptar" asp-route-idTicket="@Model.IdTicket" asp-route-idUsuario="@User.FindFirst("IdUsuario").Value" method="post">
 
-                                <input type="submit" class="mt-2 mb-2 btn btn-primary" value="Aceptar">
+                                <input type="submit" class="mt-2 mb-2 btn btn-warning" value="Aceptar">
                             </form>
                         </dl>
                     }
@@ -168,7 +180,7 @@
                         <dl class="row">
                             <form asp-controller="TbTickets" asp-action="CerrarTicket" asp-route-idTicket="@Model.IdTicket" method="post">
                                 <textarea class="form-control" placeholder="Razón de cierre" name="Comentario" required></textarea>
-                                <input type="submit" class="mt-2 mb-2 btn btn-primary" value="Cerrar">
+                                <input type="submit" class="mt-2 mb-2 btn btn-success" value="Cerrar">
                                                               
                             </form>
                         </dl>

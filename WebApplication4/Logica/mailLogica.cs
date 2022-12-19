@@ -12,7 +12,7 @@ namespace WebApplication4.Logica
                 try
                 {
                     // Credentials
-                    var credentials = new NetworkCredential("servicedesk@siibolivia.com", "Pruebas123.");
+                    var credentials = new NetworkCredential("servicedesk@siibolivia.com", "4nB4K9DKRAnm6mQ>");
                     // Mail message
                     var mail = new MailMessage()
                     {
@@ -29,7 +29,7 @@ namespace WebApplication4.Logica
                     {
                         Port = 587,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
-                        UseDefaultCredentials = false,
+                        UseDefaultCredentials = true,
                         Host = "smtp.gmail.com",
                         EnableSsl = true,
                         Credentials = credentials
