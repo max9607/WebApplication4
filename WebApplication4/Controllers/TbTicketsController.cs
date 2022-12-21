@@ -137,7 +137,7 @@ namespace WebApplication4.Controllers
             var fechaT = _con_ft.AbrirTicket(f);
             Actual = fechaT.IdFecha;
 
-            var estado = _context.TbEstadoTickets.Single(f => f.EstadoTicket == "nuevo");
+            //var estado = _context.TbEstadoTickets.Single(f => f.EstadoTicket == "nuevo");
             //ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "EstadoTicket");
             ViewData["IdFecha"] = fechaT.IdFecha;
             ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "Prioridad");
@@ -145,7 +145,7 @@ namespace WebApplication4.Controllers
             // ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre");
             var a = User.FindFirst("IdUsuario");
             var usuario = _context.TbUsuarios.Single(i => i.IdUsuario == int.Parse(a.Value));
-            ViewData["IdEstado"] = estado.IdEstado;
+           // ViewData["IdEstado"] = estado.IdEstado;
             ViewData["IdUsuario"] = usuario.IdUsuario;
             //Console.WriteLine(usuario.Nombre);
             return View();
