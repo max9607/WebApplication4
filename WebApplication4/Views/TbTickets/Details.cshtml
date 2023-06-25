@@ -107,7 +107,7 @@
                         }
                         @if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
                         {
-                            <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                            <a asp-action="Details" class="btn btn-secondary">Volver</a>
                         }
                         @if (User.IsInRole("Usuario")){
                             <a asp-action="UserTickets" class="btn btn-secondary">Volver</a>
