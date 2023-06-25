@@ -306,7 +306,7 @@ namespace WebApplication4.Controllers
                 }
                 if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index),"Details",tbTicket.IdTicket.ToString());
                 }
                 if (User.IsInRole("Usuario"))
                 {
