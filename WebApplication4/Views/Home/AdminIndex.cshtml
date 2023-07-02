@@ -5,8 +5,9 @@
 }
 
 
-
-<div class="row mt-2">
+@if (User.Identity.IsAuthenticated)
+{
+   <div class="row mt-2">
     <h1 class="display-4">Bienvenido! @User.Identity.Name</h1>
 
     
@@ -30,12 +31,18 @@
     </div>
 
 
-</div>
+    </div>
+}
 
 
 
 
 @section Scripts{
+
+    <script type="text/javascript">
+        window.history.forward(-1);
+    </script>
+
    
     <script>
         function ResumenTickets() {

@@ -86,6 +86,7 @@ namespace WebApplication4.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             Response.Cookies.Delete(CookieAuthenticationDefaults.AuthenticationScheme);
+ 
             return RedirectToAction("Index", "Login");
         }
     }
