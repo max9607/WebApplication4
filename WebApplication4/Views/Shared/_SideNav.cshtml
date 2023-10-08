@@ -1,0 +1,52 @@
+﻿@page
+@model WebApplication4.Views.Shared._SideNavModel
+@{
+}
+<div class="sidenav">
+    <a href="#section1">Sección 1</a>
+    <a href="#section2">Sección 2</a>
+    <a href="#section3">Sección 3</a>
+    <!-- Agrega más enlaces según tus necesidades -->
+</div>
+
+<div class="main">
+    <!-- Contenido principal de tu página va aquí -->
+</div>
+<script>
+    $(document).ready(function () {
+        $("#menu-toggle").click(function () {
+            $("#menu-content").collapse('toggle');
+        });
+    });
+</script>
+
+<style>
+
+    .sidenav {
+        height: 100%;
+        width: 250px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        padding-top: 20px;
+    }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            display: block;
+        }
+
+            .sidenav a:hover {
+                color: #f1f1f1;
+            }
+
+    .main {
+        margin-left: 260px; /* Ajusta el margen para dar espacio al side nav */
+        padding: 20px;
+    }
+</style>

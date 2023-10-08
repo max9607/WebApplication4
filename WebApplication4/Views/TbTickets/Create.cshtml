@@ -34,9 +34,16 @@
                 <span asp-validation-for="Adjunto" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
+                {
+                    <label class="control-label">Prioridad</label>
+                    <select asp-for="IdPrioridad" class="form-control" asp-items="ViewBag.IdPrioridad"></select>
+                }
+            </div>
+            @*<div class="form-group">
                 <label class="control-label">Prioridad</label>
                 <select asp-for="IdPrioridad" class ="form-control" asp-items="ViewBag.IdPrioridad"></select>
-            </div>
+            </div> *@
             <div class="form-group">
 
                 <input type="hidden" asp-for="IdUsuario" class="form-control" value="@(ViewBag.IdUsuario)" readonly/>
@@ -51,9 +58,16 @@
                 
             </div>
             <div class="form-group">
+                @if (User.IsInRole("Administrador") || User.IsInRole("Técnico"))
+                {
+            <label class="control-label">Categoría</label>
+            <select asp-for="IdProblema" class="form-control" asp-items="ViewBag.IdProblema"></select>
+                }
+            </div>
+            @* <div class="form-group">
                 <label class="control-label">Categoria</label>
                 <select asp-for="IdProblema" class ="form-control" asp-items="ViewBag.IdProblema"></select>
-            </div>
+            </div> *@
             <div>
                 <h5 style="padding-bottom:10px;">Opciones</h5>
 
