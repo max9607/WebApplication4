@@ -18,157 +18,199 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
  
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   @*  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                <img src="/images/logo.jpg" width="30" height="30" class="d-inline-block align-top rounded" alt="">
-                ISE Integrados
-            </a>
+            
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                    @if (User.IsInRole("Usuario")) {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropbtn" asp-controller="TbTickets" asp-action="UserTickets">
-                                <i class="icofont-ticket text-light"></i>
-                                Tickets
-                            </a>
-                            <div class="dropdown-content dropdown-menu">
-                                <a class="nav-link" asp-controller="TbTickets" asp-action="Create">
-                                    <i class="icofont-plus text-light"></i>
-                                    Nuevo
-                                </a>
-
-                            </div>
-                        </li>
-                    }
-                    @if (User.IsInRole("Técnico"))
-                    {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropbtn" asp-controller="TbTickets" asp-action="Index">
-                                <i class="icofont-ticket text-light"></i>
-                                Tickets
-                            </a>
-                            <div class="dropdown-content dropdown-menu">
-                                <a class="nav-link" asp-controller="TbTickets" asp-action="Create">
-                                    <i class="icofont-plus text-light"></i>
-                                    Nuevo
-                                </a>
-
-                            </div>
-                        </li>
-                    }
-                    @if (User.IsInRole("Administrador"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">
-                                <i class="icofont-home text-light"></i>
-                                Inicio
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropbtn" asp-controller="TbTickets" asp-action="Index">
-                                <i class="icofont-ticket text-light"></i>
-                                Tickets</a>
-                            <div class="dropdown-content dropdown-menu">
-                                <a class="nav-link" asp-controller="TbTickets" asp-action="Create">
-                                    <i class="icofont-plus text-light"></i>
-                                    Nuevo
-                                </a>
-                                <a class="nav-link" asp-controller="TbTickets" asp-action="BuscarTicket">
-                                    <i class="icofont-search-1 text-light"></i>
-                                    Buscar</a>
-                                <a class="nav-link" asp-controller="TbCategoriums" asp-action="Index">
-                                    <i class="icofont-tasks text-light"></i>
-                                    Categorías
-                                </a>
-
-                            </div>
-                        </li>
-                    }
-                    @if (User.IsInRole("Administrador"))
-                    {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropbtn" asp-controller="TbUsuarios" asp-action="Index">
-                                <i class="icofont-ui-user-group text-light"></i>
-                                Usuarios</a>
-                            <div class="dropdown-content dropdown-menu">
-
-                                <a class="nav-link" asp-controller="TbUsuarios" asp-action="Create">
-                                    <i class="icofont-plus text-light"></i>
-                                    Nuevo
-                                </a>
-                                <a class="nav-link" asp-controller="TbEmpresas" asp-action="Index">
-                                     <i class="icofont-bag-alt text-light"></i>
-                                    
-                                    Empresas
-                                </a>
-                                <a class="nav-link" asp-controller="TbAccesoes" asp-action="Index">
-                                   <i class="icofont-ui-password text-light"></i>
-                                    Accesos
-
-                                </a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" asp-controller="TbTicketsCerradoes" asp-action="Index">
-                                <i class="icofont-file-document text-light"></i>
-                                Reportes
-                            </a>
-                            <div class="dropdown-content dropdown-menu">
-
-                                <a class="nav-link" asp-controller="TbTicketsCerradoes" asp-action="Index2">
-                                    <i class="icofont-plus text-light"></i>
-                                    power
-                                </a>
-                            </div>
-                           
-                        </li>
-                        
-                    }
-                </ul>
-                <ul class="navbar-nav justify-content-end mb-2 mb-lg-0">
-                    @if (User.FindFirst("IdUsuario") != null){
-                        <li class="nav-item">
-                            <a class="nav-link me-3" asp-controller="TbUsuarios" asp-action="Details" asp-route-id="@User.FindFirst("IdUsuario").Value">
-                                <i class="icofont-ui-user text-light"></i>
-                                @User.Identity.Name
-                            </a>
-                        </li>
-                    }
-
-                    <li class="nav-item">
-                        <a class="btn btn-outline-light my-2 my-sm-0" asp-controller="Login" asp-action="Salir">Salir</a>
-                    </li>
-                 </ul>
+                
                 
 
             </div>
         </div>
-     </nav>
-
-    <div class="container justify-content-center">
-        
-        @* @Html.Partial("_SideNav") <!-- Opcional: Puedes agregarlo donde desees que aparezca -->
-        <div class="container"> *@
-            @RenderBody()
-     
+     </nav> *@
+    <div id="mainContent">
+        <!-- Contenido principal de la página -->
+        <button id="toggleButton" class="btn btn-primary">
+            <i class="fas fa-bars"></i>
+        </button>
     </div>
+    <div id="sideMenu">
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+            <img src="/images/logo.jpg" width="30" height="30" class="d-inline-block align-top rounded" alt="">
+            ISE Integrados
+        </a>
+        <!-- Contenido del menú -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+            @if (User.IsInRole("Usuario"))
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropbtn" asp-controller="TbTickets" asp-action="UserTickets">
+                        <i class="icofont-ticket text-light"></i>
+                        Tickets
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a class="nav-link" asp-controller="TbTickets" asp-action="Create">
+                                <i class="icofont-plus text-light"></i>
+                                Nuevo
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if (User.IsInRole("Técnico"))
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropbtn" asp-controller="TbTickets" asp-action="Index">
+                        <i class="icofont-ticket text-light"></i>
+                        Tickets
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a class="nav-link" asp-controller="TbTickets" asp-action="Create">
+                                <i class="icofont-plus text-light"></i>
+                                Nuevo
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if (User.IsInRole("Administrador"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">
+                        <i class="icofont-home text-light"></i>
+                        Inicio
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropbtn" asp-controller="TbTickets" asp-action="Index">
+                        <i class="icofont-ticket text-light"></i>
+                        Tickets
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a class="nav-link" asp-controller="TbTickets" asp-action="Create">
+                                <i class="icofont-plus text-light"></i>
+                                Nuevo
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" asp-controller="TbTickets" asp-action="BuscarTicket">
+                                <i class="icofont-search-1 text-light"></i>
+                                Buscar
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" asp-controller="TbCategoriums" asp-action="Index">
+                                <i class="icofont-tasks text-light"></i>
+                                Categorías
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if (User.IsInRole("Administrador"))
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropbtn" asp-controller="TbUsuarios" asp-action="Index">
+                        <i class="icofont-ui-user-group text-light"></i>
+                        Usuarios
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a class="nav-link" asp-controller="TbUsuarios" asp-action="Create">
+                                <i class="icofont-plus text-light"></i>
+                                Nuevo
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" asp-controller="TbEmpresas" asp-action="Index">
+                                <i class="icofont-bag-alt text-light"></i>
+
+                                Empresas
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" asp-controller="TbAccesoes" asp-action="Index">
+                                <i class="icofont-ui-password text-light"></i>
+                                Accesos
+
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" asp-controller="TbTicketsCerradoes" asp-action="Index">
+                        <i class="icofont-file-document text-light"></i>
+                        Reportes
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a class="nav-link" asp-controller="TbTicketsCerradoes" asp-action="PowerBi">
+                                <i class="icofont-plus text-light"></i>
+                                power
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+
+            }
+        </ul>
+        <ul class="navbar-nav justify-content-end mb-2 mb-lg-0">
+            @if (User.FindFirst("IdUsuario") != null)
+            {
+                <li class="nav-item">
+                    <a class="nav-link me-3" asp-controller="TbUsuarios" asp-action="Details" asp-route-id="@User.FindFirst("IdUsuario").Value">
+                        <i class="icofont-ui-user text-light"></i>
+                        @User.Identity.Name
+                    </a>
+                </li>
+            }
+
+            <li class="nav-item">
+                <a class="btn btn-outline-light my-2 my-sm-0" asp-controller="Login" asp-action="Salir">Salir</a>
+            </li>
+        </ul>
+    </div>
+    <script src="script.js"></script>
+    <div id="mainContent">
+        <!-- Contenido principal de la página -->
+    </div>
+    <script src="script.js"></script>
+
+     <div class="container justify-content-center">
+            @RenderBody()
+
+     </div>
+    @*  <div class="collapse show" id="menu-content">
+        @Html.Partial("_SideNav") <!-- Opcional: Puedes agregarlo donde desees que aparezca -->
+        <div class="container">
+        </div> *@
 
 
-    <footer class="border-top footer text-muted">
+  @*   <footer class="border-top footer text-muted" style="padding-right">
         <div class="container">
             &copy; 2022 - ServiceDesk 
         </div>
-    </footer>
+    </footer> *@
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -185,36 +227,87 @@
 </html>
 <style>
 
+  /* styles.css */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
 
-    /* The container <div> - needed to position the dropdown content */
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
+#sideMenu {
+    width: 0;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index: 1;
+}
 
-    /* Dropdown Content (Hidden by Default) */
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #212529;
-        padding-left:5px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-    }
+#sideMenu ul {
+    list-style-type: none;
+    padding: 0;
+}
 
-        /* Links inside the dropdown */
-        .dropdown-content a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            
+#sideMenu ul li {
+    padding: 10px;
+    text-align: center;
+}
+
+#sideMenu ul li a {
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+#sideMenu ul li a:hover {
+    background-color: #555;
+}
+
+.submenu {
+    display: none; /* Oculta inicialmente los submenús */
+    background-color: #444;
+}
+
+.submenu li {
+    padding: 10px;
+    text-align: center;
+}
+
+#mainContent {
+    margin-left: 0;
+    transition: margin-left 0.5s;
+}
+
+#toggleButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+}
+
+/* Mostrar submenús cuando se pasa el mouse por encima */
+#sideMenu ul li:hover .submenu {
+    display: block;
+}
+</style> 
+<script>
+
+    const toggleButton = document.getElementById('toggleButton');
+    const sideMenu = document.getElementById('sideMenu');
+    const mainContent = document.getElementById('mainContent');
+
+    toggleButton.addEventListener('click', () => {
+        if (sideMenu.style.width === '250px') {
+            sideMenu.style.width = '0';
+            mainContent.style.marginLeft = '0';
+        } else {
+            sideMenu.style.width = '250px';
+            mainContent.style.marginLeft = '250px';
         }
-
-
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-</style>
+    });
+</script>

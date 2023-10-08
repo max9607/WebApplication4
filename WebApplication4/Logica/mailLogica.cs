@@ -29,11 +29,11 @@ namespace WebApplication4.Logica
                     {
                         Port = 587,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
-                        UseDefaultCredentials = true,
+                        UseDefaultCredentials = false,
                         Host = "smtp.gmail.com",
                         EnableSsl = true,
-                        Credentials = credentials
-                    };
+                        Credentials = new NetworkCredential("servicedesk@siibolivia.com", "Bolivia.2022")
+                };
 
                     // Send it...         
                     client.Send(mail);

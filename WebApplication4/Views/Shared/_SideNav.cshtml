@@ -2,7 +2,9 @@
 @model WebApplication4.Views.Shared._SideNavModel
 @{
 }
-<div class="sidenav">
+<button id="menu-toggle" class="btn btn-primary">Mostrar Menú</button>
+
+<div class="sidenav" id="menu-content">
     <a href="#section1">Sección 1</a>
     <a href="#section2">Sección 2</a>
     <a href="#section3">Sección 3</a>
@@ -12,10 +14,12 @@
 <div class="main">
     <!-- Contenido principal de tu página va aquí -->
 </div>
+
+
 <script>
     $(document).ready(function () {
         $("#menu-toggle").click(function () {
-            $("#menu-content").collapse('toggle');
+            $("#sidebar").toggleClass("active");
         });
     });
 </script>
@@ -24,13 +28,15 @@
 
     .sidenav {
         height: 100%;
-        width: 250px;
+        width: 0;
         position: fixed;
         z-index: 1;
         top: 0;
         left: 0;
         background-color: #111;
         padding-top: 20px;
+        overflow-x: hidden;
+        transition: 0.5s;
     }
 
         .sidenav a {
@@ -45,8 +51,9 @@
                 color: #f1f1f1;
             }
 
-    .main {
-        margin-left: 260px; /* Ajusta el margen para dar espacio al side nav */
-        padding: 20px;
+    #menu-toggle {
+        position: fixed;
+        left: 20px;
+        top: 20px;
     }
 </style>

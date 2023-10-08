@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace WebApplication4.Controllers
         }
 
         // GET: TbTicketsCerradoes
+        [Authorize]
         public async Task<IActionResult> Index(DateTime? FechaInicio, DateTime? FechaFinal)
         {
             var date = from m in _context.TbTicketsCerrados select m;
