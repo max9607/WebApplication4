@@ -13,6 +13,7 @@ namespace WebApplication4.Logica
                 {
                     // Credentials
                     var credentials = new NetworkCredential("servicedesk@siibolivia.com", "Bolivia.2022");
+                    //var credentials = new NetworkCredential("aldunatejustinianoanthonygabri@gmail.com", "Ranger1998.");
                     // Mail message
                     var mail = new MailMessage()
                     {
@@ -32,8 +33,8 @@ namespace WebApplication4.Logica
                         UseDefaultCredentials = false,
                         Host = "smtp.gmail.com",
                         EnableSsl = true,
-                        Credentials = new NetworkCredential("servicedesk@siibolivia.com", "Bolivia.2022")
-                };
+                        Credentials = credentials
+                    };
 
                     // Send it...         
                     client.Send(mail);
