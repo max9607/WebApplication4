@@ -13,9 +13,9 @@ namespace WebApplication4.Controllers
     [Authorize(Roles = "Administrador")]
     public class TbCategoriumsController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public TbCategoriumsController(Project_DesmodusDBContext context)
+        public TbCategoriumsController(ServicesDeskContext context)
         {
             _context = context;
         }
