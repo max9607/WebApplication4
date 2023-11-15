@@ -21,13 +21,13 @@ namespace WebApplication4.Controllers
     [Authorize]
     public class TbTicketsController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
         public static int Actual { get; set; }
         public static byte[] EditImagen { get; set; }
 
         private static TbTicket EditTicket { get; set; }
-        public TbTicketsController(Project_DesmodusDBContext context)
+        public TbTicketsController(ServicesDeskContext context)
         {
             _context = context;
         }
@@ -47,9 +47,9 @@ namespace WebApplication4.Controllers
                 'lista_tickets' obtiene las entidades las cuales sus id's estén dentro de la lista 'id_derivados'
                  */
                 var iduser = User.FindFirst("IdUsuario"); //1003
-                var lista_derivados = _context.TbDerivados.Include(t => t.IdTicketNavigation).Include(t => t.IdUsuarioNavigation).Where(i => i.IdUsuario == int.Parse(iduser.Value)).ToList(); //{1003,2002}{1003,2006}
+                var lista_derivados = _context.TbDerivado.Include(t => t.IdTicketNavigation).Include(t => t.IdUsuarioNavigation).Where(i => i.IdUsuario == int.Parse(iduser.Value)).ToList(); //{1003,2002}{1003,2006}
                 var id_derivados = lista_derivados.Select(x => x.IdTicket).ToList();//2002,2006,2008
-                var lista_tickets = _context.TbTickets.Include(t => t.IdEstadoNavigation)
+                var lista_tickets = _context.TbTicket.Include(t => t.IdEstadoNavigation)
                                                       .Include(t => t.IdFechaNavigation)
                                                       .Include(t => t.IdPrioridadNavigation)
                                                       .Include(t => t.IdProblemaNavigation)
@@ -58,7 +58,7 @@ namespace WebApplication4.Controllers
             }
             else
             {
-                var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
+                var project_DesmodusDBContext = _context.TbTicket.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
                 return View(await project_DesmodusDBContext.ToListAsync());
             }
         }
@@ -68,11 +68,11 @@ namespace WebApplication4.Controllers
         {
             var a = User.FindFirst("IdUsuario");    //obtenemos el claim IdUsuario y lo almacenamos en una variable a
             var userid = int.Parse(a.Value);        //guardamos el valor de a convertido a entero
-            if (_context.TbTickets == null)
+            if (_context.TbTicket == null)
             {
                 return NotFound();
             }
-            var tbTicket = await _context.TbTickets
+            var tbTicket = await _context.TbTicket
                 .Include(t => t.IdEstadoNavigation)
                 .Include(t => t.IdFechaNavigation)
                 .Include(t => t.IdPrioridadNavigation)
@@ -89,23 +89,25 @@ namespace WebApplication4.Controllers
         // GET: TbTickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TbTickets == null)
+            if (id == null || _context.TbTicket == null)
             {
                 return NotFound();
             }
 
-            var tbTicket = await _context.TbTickets
+            var tbTicket = await _context.TbTicket
                 .Include(t => t.IdEstadoNavigation)
                 .Include(t => t.IdFechaNavigation)
                 .Include(t => t.IdPrioridadNavigation)
                 .Include(t => t.IdProblemaNavigation)
                 .Include(t => t.IdUsuarioNavigation)
+                .Include(t => t.TbComentario)
+                .ThenInclude(t=>t.IdUsuarioNavigation)
                 .FirstOrDefaultAsync(m => m.IdTicket == id);
             if (tbTicket == null)
             {
                 return NotFound();
             }
-            var listTecnicos = _context.TbAccesos.Where(i => i.IdPermiso == 3 || i.IdPermisoNavigation.Nombre == "Técnico").Select(s => new
+            var listTecnicos = _context.TbAcceso.Where(i => i.IdPermiso == 3 || i.IdPermisoNavigation.Nombre == "Técnico").Select(s => new
             {
                 IdUsuario = s.IdUsuario,
                 NombreCompleto = string.Format("{0} {1} {2}", s.IdUsuarioNavigation.Nombre, s.IdUsuarioNavigation.Apellido1, s.IdUsuarioNavigation.Apellido2)
@@ -137,14 +139,14 @@ namespace WebApplication4.Controllers
             var fechaT = _con_ft.AbrirTicket(f);
             Actual = fechaT.IdFecha;
 
-            var estado = _context.TbEstadoTickets.Single(f => f.EstadoTicket == "nuevo");
+            var estado = _context.TbEstadoTicket.Single(f => f.EstadoTicket == "nuevo");
             //ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "EstadoTicket");
             ViewData["IdFecha"] = fechaT.IdFecha;
-            ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "Prioridad");
+            ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTicket, "IdPrioridad", "Prioridad");
             ViewData["IdProblema"] = new SelectList(_context.TbCategoria, "IdProblema", "Problema");
             // ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre");
             var a = User.FindFirst("IdUsuario");
-            var usuario = _context.TbUsuarios.Single(i => i.IdUsuario == int.Parse(a.Value));
+            var usuario = _context.TbUsuario.Single(i => i.IdUsuario == int.Parse(a.Value));
             ViewData["IdEstado"] = estado.IdEstado;
             ViewData["IdUsuario"] = usuario.IdUsuario;
             //Console.WriteLine(usuario.Nombre);
@@ -177,12 +179,12 @@ namespace WebApplication4.Controllers
                 
                 mailLogica omail = new mailLogica();
 
-                var admins = _context.TbAccesos.Where(i => i.IdPermisoNavigation.Nombre == "Administrador").ToList();
+                var admins = _context.TbAcceso.Where(i => i.IdPermisoNavigation.Nombre == "Administrador").ToList();
                 var idadmins = admins.Select(i => i.IdUsuario).ToList();
-                var correosadmins = _context.TbUsuarios.Where(i => idadmins.Contains(i.IdUsuario));
+                var correosadmins = _context.TbUsuario.Where(i => idadmins.Contains(i.IdUsuario));
                 var listacorreos = correosadmins.Select(i => i.Correo).ToList();
                 
-                var correoUsuario = _context.TbUsuarios.First(i => i.IdUsuario == tbTicket.IdUsuario);
+                var correoUsuario = _context.TbUsuario.First(i => i.IdUsuario == tbTicket.IdUsuario);
                 
 
                 await omail.SendEmailAsync(listacorreos,tbTicket.DespricionP,correoUsuario.Correo);
@@ -204,23 +206,23 @@ namespace WebApplication4.Controllers
 
             }
 
-            ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
-            ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);
-            ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "IdPrioridad", tbTicket.IdPrioridad);
+            ViewData["IdEstado"] = new SelectList(_context.TbEstadoTicket, "IdEstado", "IdEstado", tbTicket.IdEstado);
+            ViewData["IdFecha"] = new SelectList(_context.TbFechaTicket, "IdFecha", "IdFecha", tbTicket.IdFecha);
+            ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTicket, "IdPrioridad", "IdPrioridad", tbTicket.IdPrioridad);
             ViewData["IdProblema"] = new SelectList(_context.TbCategoria, "IdProblema", "IdProblema", tbTicket.IdProblema);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario", tbTicket.IdUsuario);
+            ViewData["IdUsuario"] = new SelectList(_context.TbUsuario, "IdUsuario", "IdUsuario", tbTicket.IdUsuario);
             return View(tbTicket);
         }
 
         // GET: TbTickets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TbTickets == null)
+            if (id == null || _context.TbTicket == null)
             {
                 return NotFound();
             }
 
-            var tbTicket = await _context.TbTickets.FindAsync(id);
+            var tbTicket = await _context.TbTicket.FindAsync(id);
 
             if (tbTicket.Adjunto != null)
             {
@@ -235,9 +237,9 @@ namespace WebApplication4.Controllers
             //ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "EstadoTicket", tbTicket.IdEstado);
             //ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "FechaCreado", tbTicket.IdFecha);
 
-            ViewData["Estado"] = _context.TbEstadoTickets.Single(i => i.IdEstado == tbTicket.IdEstado).EstadoTicket; //hice esto mas arriba pero aqui en una sola linea xdxd me da paja cambiarlo en el create
-            ViewData["Fecha"] = _context.TbFechaTickets.Single(i => i.IdFecha == tbTicket.IdFecha).FechaCreado;
-            ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "Prioridad", tbTicket.IdPrioridad);
+            ViewData["Estado"] = _context.TbEstadoTicket.Single(i => i.IdEstado == tbTicket.IdEstado).EstadoTicket; //hice esto mas arriba pero aqui en una sola linea xdxd me da paja cambiarlo en el create
+            ViewData["Fecha"] = _context.TbFechaTicket.Single(i => i.IdFecha == tbTicket.IdFecha).FechaCreado;
+            ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTicket, "IdPrioridad", "Prioridad", tbTicket.IdPrioridad);
             ViewData["IdProblema"] = new SelectList(_context.TbCategoria, "IdProblema", "Problema", tbTicket.IdProblema);
             //ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre");
             EditTicket = tbTicket; //Guardamos de forma temporal el ticket a editar
@@ -320,7 +322,7 @@ namespace WebApplication4.Controllers
             }
             //ViewData["IdEstado"] = new SelectList(_context.TbEstadoTickets, "IdEstado", "IdEstado", tbTicket.IdEstado);
             //ViewData["IdFecha"] = new SelectList(_context.TbFechaTickets, "IdFecha", "IdFecha", tbTicket.IdFecha);
-            ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTickets, "IdPrioridad", "IdPrioridad", tbTicket.IdPrioridad);
+            ViewData["IdPrioridad"] = new SelectList(_context.TbPrioridadTicket, "IdPrioridad", "IdPrioridad", tbTicket.IdPrioridad);
             ViewData["IdProblema"] = new SelectList(_context.TbCategoria, "IdProblema", "IdProblema", tbTicket.IdProblema);
             //ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario", tbTicket.IdUsuario);
             return View(tbTicket);
@@ -329,12 +331,12 @@ namespace WebApplication4.Controllers
         // GET: TbTickets/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TbTickets == null)
+            if (id == null || _context.TbTicket == null)
             {
                 return NotFound();
             }
 
-            var tbTicket = await _context.TbTickets
+            var tbTicket = await _context.TbTicket
                 .Include(t => t.IdEstadoNavigation)
                 .Include(t => t.IdFechaNavigation)
                 .Include(t => t.IdPrioridadNavigation)
@@ -354,14 +356,14 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TbTickets == null)
+            if (_context.TbTicket == null)
             {
                 return Problem("Entity set 'Project_DesmodusDBContext.TbTickets'  is null.");
             }
-            var tbTicket = await _context.TbTickets.FindAsync(id);
+            var tbTicket = await _context.TbTicket.FindAsync(id);
             if (tbTicket != null)
             {
-                _context.TbTickets.Remove(tbTicket);
+                _context.TbTicket.Remove(tbTicket);
             }
 
             await _context.SaveChangesAsync();
@@ -370,7 +372,7 @@ namespace WebApplication4.Controllers
 
         private bool TbTicketExists(int id)
         {
-            return _context.TbTickets.Any(e => e.IdTicket == id);
+            return _context.TbTicket.Any(e => e.IdTicket == id);
         }
 
 
@@ -379,7 +381,7 @@ namespace WebApplication4.Controllers
         //GET: Obtener imaganes
         public ActionResult Obtener(int id)
         {
-            var img = _context.TbTickets.Where(i => i.IdTicket == id).FirstOrDefault();
+            var img = _context.TbTicket.Where(i => i.IdTicket == id).FirstOrDefault();
             return File(img.Adjunto, "image/jpeg");
         }
 
@@ -387,13 +389,13 @@ namespace WebApplication4.Controllers
 
         public async Task<IActionResult> BuscarTicket(string buscar)
         {
-            var user = from m in _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation) select m;
+            var user = from m in _context.TbTicket.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation) select m;
             if (!string.IsNullOrEmpty(buscar))
             {
                 user = user.Where(s => s.IdTicket.ToString().Contains(buscar) || s.DespricionP!.Contains(buscar) || s.DescripionDetallada!.Contains(buscar) || s.IdUsuarioNavigation!.Nombre.Contains(buscar)
                 || (s.IdTicket + " " + s.DespricionP + " " + s.DescripionDetallada + " " + s.IdUsuarioNavigation.Nombre).ToLower().Contains(buscar));
             }
-            var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
+            var project_DesmodusDBContext = _context.TbTicket.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
             return View(await user.ToListAsync());
         }
 
@@ -401,14 +403,14 @@ namespace WebApplication4.Controllers
         public IActionResult Test()
         {
             var name = HttpContext.Request.Query["term"].ToString();
-            var name2 = _context.TbTickets.Where(c => c.IdTicket.ToString().Contains(name) || c.DespricionP!.Contains(name) || c.IdUsuarioNavigation!.Nombre.Contains(name)).Select(c => c.IdTicket + " " + c.DespricionP + " " + c.DescripionDetallada + " " + c.IdUsuarioNavigation.Nombre).ToList();
+            var name2 = _context.TbTicket.Where(c => c.IdTicket.ToString().Contains(name) || c.DespricionP!.Contains(name) || c.IdUsuarioNavigation!.Nombre.Contains(name)).Select(c => c.IdTicket + " " + c.DespricionP + " " + c.DescripionDetallada + " " + c.IdUsuarioNavigation.Nombre).ToList();
 
             return Ok(name2);
         }
         //Funcion que se activa al derivar el ticker cambia el estado a abierto
         public async Task<bool> AbrirTicketAsync(int IdTicket)
         {
-            var tbTicket = _context.TbTickets.Single(i => i.IdTicket == IdTicket);
+            var tbTicket = _context.TbTicket.Single(i => i.IdTicket == IdTicket);
             if (tbTicket == null)
             {
                 return false;
@@ -433,7 +435,7 @@ namespace WebApplication4.Controllers
         //Funcion que cambia el estado del ticket a pendiente
         public async Task<bool> AceptarTicketAsync(int IdTicket)
         {
-            var tbTicket = _context.TbTickets.Single(i => i.IdTicket == IdTicket);
+            var tbTicket = _context.TbTicket.Single(i => i.IdTicket == IdTicket);
             if (tbTicket == null)
             {
                 return false;
@@ -477,7 +479,7 @@ namespace WebApplication4.Controllers
         [Authorize(Roles = "Administrador,Técnico")]
         public async Task<IActionResult> Cerrados()
         {
-            var project_DesmodusDBContext = _context.TbTickets.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
+            var project_DesmodusDBContext = _context.TbTicket.Include(t => t.IdEstadoNavigation).Include(t => t.IdFechaNavigation).Include(t => t.IdPrioridadNavigation).Include(t => t.IdProblemaNavigation).Include(t => t.IdUsuarioNavigation);
             return View(await project_DesmodusDBContext.ToListAsync());
 
         }
@@ -486,7 +488,7 @@ namespace WebApplication4.Controllers
         {
             
             //este coso devuelve una lista de los ticktes con un estado asignado.
-            List<VMTickets> list = (from TbTicket in _context.TbTickets where TbTicket.IdEstado==1 ||TbTicket.IdEstado==2 || TbTicket.IdEstado == 3 || TbTicket.IdEstado == 4 
+            List<VMTickets> list = (from TbTicket in _context.TbTicket where TbTicket.IdEstado==1 ||TbTicket.IdEstado==2 || TbTicket.IdEstado == 3 || TbTicket.IdEstado == 4 
                                    group TbTicket by TbTicket.IdEstadoNavigation.EstadoTicket  into grupo
                                    select new VMTickets
                                    {
@@ -501,7 +503,7 @@ namespace WebApplication4.Controllers
 
         public IActionResult ResumeTicketsTecnicos() {
             //este coso devuelve una lista de los ticktes asiganos a cada tecnico.
-            List<VMAsignados> list = (from TbDerivado in _context.TbDerivados 
+            List<VMAsignados> list = (from TbDerivado in _context.TbDerivado 
                                       group TbDerivado by TbDerivado.IdUsuarioNavigation.Nombre into grupo    
                                       select new VMAsignados
                                       {
@@ -515,7 +517,7 @@ namespace WebApplication4.Controllers
         }
         public IActionResult contadorDetecnico()
         {
-            List<VMContadorUsuarios> list = (from TbAcceso in _context.TbAccesos where TbAcceso.IdPermisoNavigation.Nombre == "Técnico"
+            List<VMContadorUsuarios> list = (from TbAcceso in _context.TbAcceso where TbAcceso.IdPermisoNavigation.Nombre == "Técnico"
                                              group TbAcceso by TbAcceso.IdUsuario into grupo
                                              select new VMContadorUsuarios
                                              {
@@ -529,7 +531,7 @@ namespace WebApplication4.Controllers
         }
         public IActionResult contadorDeUser()
         {
-            List<VMContadorUsuarios> list = (from TbAcceso in _context.TbAccesos
+            List<VMContadorUsuarios> list = (from TbAcceso in _context.TbAcceso
                                              where TbAcceso.IdPermisoNavigation.Nombre == "Usuario"
                                              group TbAcceso by TbAcceso.IdUsuario into grupo
                                              select new VMContadorUsuarios
@@ -545,7 +547,7 @@ namespace WebApplication4.Controllers
 
         public IActionResult contadorDeAdmin()
         {
-            List<VMContadorUsuarios> list = (from TbAcceso in _context.TbAccesos where TbAcceso.IdPermisoNavigation.Nombre == "Administrador"
+            List<VMContadorUsuarios> list = (from TbAcceso in _context.TbAcceso where TbAcceso.IdPermisoNavigation.Nombre == "Administrador"
                                              group TbAcceso by TbAcceso.IdUsuario into grupo
                                              select new VMContadorUsuarios
                                              {
@@ -563,11 +565,11 @@ namespace WebApplication4.Controllers
 
         public async Task<RedirectToActionResult> CerrarTicket(int IdTicket, string Comentario)
         {
-            var tbTicket = _context.TbTickets.Single(i => i.IdTicket == IdTicket);
-            var tbCliente = _context.TbUsuarios.Single(i => i.IdUsuario == tbTicket.IdUsuario);
-            var tbFecha = _context.TbFechaTickets.Single(i => i.IdFecha == tbTicket.IdFecha);
-            var tbDerivado = _context.TbDerivados.Single(i => i.IdTicket == tbTicket.IdTicket);
-            var tbReceptor = _context.TbUsuarios.Single(i => i.IdUsuario == tbDerivado.IdUsuario);
+            var tbTicket = _context.TbTicket.Single(i => i.IdTicket == IdTicket);
+            var tbCliente = _context.TbUsuario.Single(i => i.IdUsuario == tbTicket.IdUsuario);
+            var tbFecha = _context.TbFechaTicket.Single(i => i.IdFecha == tbTicket.IdFecha);
+            var tbDerivado = _context.TbDerivado.Single(i => i.IdTicket == tbTicket.IdTicket);
+            var tbReceptor = _context.TbUsuario.Single(i => i.IdUsuario == tbDerivado.IdUsuario);
 
             TbTicketsCerradoesController oTCerrados = new TbTicketsCerradoesController(_context);
             TbFechaTicketsController oFecha = new TbFechaTicketsController(_context);

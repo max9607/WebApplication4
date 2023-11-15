@@ -13,9 +13,9 @@ namespace WebApplication4.Controllers
     [Authorize(Roles = "Administrador")]
     public class TbPrioridadTicketsController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public TbPrioridadTicketsController(Project_DesmodusDBContext context)
+        public TbPrioridadTicketsController(ServicesDeskContext context)
         {
             _context = context;
         }
@@ -23,18 +23,18 @@ namespace WebApplication4.Controllers
         // GET: TbPrioridadTickets
         public async Task<IActionResult> Index()
         {
-              return View(await _context.TbPrioridadTickets.ToListAsync());
+              return View(await _context.TbPrioridadTicket.ToListAsync());
         }
 
         // GET: TbPrioridadTickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TbPrioridadTickets == null)
+            if (id == null || _context.TbPrioridadTicket == null)
             {
                 return NotFound();
             }
 
-            var tbPrioridadTicket = await _context.TbPrioridadTickets
+            var tbPrioridadTicket = await _context.TbPrioridadTicket
                 .FirstOrDefaultAsync(m => m.IdPrioridad == id);
             if (tbPrioridadTicket == null)
             {
@@ -69,12 +69,12 @@ namespace WebApplication4.Controllers
         // GET: TbPrioridadTickets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TbPrioridadTickets == null)
+            if (id == null || _context.TbPrioridadTicket == null)
             {
                 return NotFound();
             }
 
-            var tbPrioridadTicket = await _context.TbPrioridadTickets.FindAsync(id);
+            var tbPrioridadTicket = await _context.TbPrioridadTicket.FindAsync(id);
             if (tbPrioridadTicket == null)
             {
                 return NotFound();
@@ -120,12 +120,12 @@ namespace WebApplication4.Controllers
         // GET: TbPrioridadTickets/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TbPrioridadTickets == null)
+            if (id == null || _context.TbPrioridadTicket == null)
             {
                 return NotFound();
             }
 
-            var tbPrioridadTicket = await _context.TbPrioridadTickets
+            var tbPrioridadTicket = await _context.TbPrioridadTicket
                 .FirstOrDefaultAsync(m => m.IdPrioridad == id);
             if (tbPrioridadTicket == null)
             {
@@ -140,14 +140,14 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TbPrioridadTickets == null)
+            if (_context.TbPrioridadTicket == null)
             {
                 return Problem("Entity set 'Project_DesmodusDBContext.TbPrioridadTickets'  is null.");
             }
-            var tbPrioridadTicket = await _context.TbPrioridadTickets.FindAsync(id);
+            var tbPrioridadTicket = await _context.TbPrioridadTicket.FindAsync(id);
             if (tbPrioridadTicket != null)
             {
-                _context.TbPrioridadTickets.Remove(tbPrioridadTicket);
+                _context.TbPrioridadTicket.Remove(tbPrioridadTicket);
             }
             
             await _context.SaveChangesAsync();
@@ -156,7 +156,7 @@ namespace WebApplication4.Controllers
 
         private bool TbPrioridadTicketExists(int id)
         {
-          return _context.TbPrioridadTickets.Any(e => e.IdPrioridad == id);
+          return _context.TbPrioridadTicket.Any(e => e.IdPrioridad == id);
         }
     }
 }

@@ -14,9 +14,9 @@ namespace WebApplication4.Controllers
     [Authorize]
     public class TbUsuariosController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public TbUsuariosController(Project_DesmodusDBContext context)
+        public TbUsuariosController(ServicesDeskContext context)
         {
             _context = context;
         }
@@ -26,13 +26,13 @@ namespace WebApplication4.Controllers
         public async Task<IActionResult> Index(string buscar)
         {
             
-           var user = from m in _context.TbUsuarios.Include(t=>t.IdEmpresaNavigation) select m;
+           var user = from m in _context.TbUsuario.Include(t=>t.IdEmpresaNavigation) select m;
             if (!string.IsNullOrEmpty(buscar))
             {
                 user = user.Where(s => s.Nombre!.Contains(buscar)|| s.Apellido1!.Contains(buscar) || s.Apellido2!.Contains(buscar) || s.Correo!.Contains(buscar) || s.Telefono!.Contains(buscar)||s.IdEmpresaNavigation!.Nombre.Contains(buscar)
                 ||(s.Nombre+" "+s.Apellido1+" "+s.Apellido2+" "+s.Correo).ToLower().Contains(buscar));
             }
-            var project_DesmodusDBContext = _context.TbUsuarios.Include(t => t.IdEmpresaNavigation);
+            var project_DesmodusDBContext = _context.TbUsuario.Include(t => t.IdEmpresaNavigation);
             return View(await user.ToListAsync());
         }
 
@@ -41,12 +41,12 @@ namespace WebApplication4.Controllers
         [Authorize(Roles = "Administrador, Usuario, Técnico")]
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TbUsuarios == null)
+            if (id == null || _context.TbUsuario == null)
             {
                 return NotFound();
             }
 
-            var tbUsuario = await _context.TbUsuarios
+            var tbUsuario = await _context.TbUsuario
                 .Include(t => t.IdEmpresaNavigation)
                 .FirstOrDefaultAsync(m => m.IdUsuario == id);
             if (tbUsuario == null)
@@ -61,7 +61,7 @@ namespace WebApplication4.Controllers
         [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
-            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "Nombre");
+            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresa, "IdEmpresa", "Nombre");
             return View();
         }
 
@@ -79,7 +79,7 @@ namespace WebApplication4.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "Nombre", tbUsuario.IdEmpresa);
+            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresa, "IdEmpresa", "Nombre", tbUsuario.IdEmpresa);
             return View(tbUsuario);
         }
 
@@ -87,17 +87,17 @@ namespace WebApplication4.Controllers
         [Authorize(Roles = "Administrador, Usuario, Técnico")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TbUsuarios == null)
+            if (id == null || _context.TbUsuario == null)
             {
                 return NotFound();
             }
 
-            var tbUsuario = await _context.TbUsuarios.FindAsync(id);
+            var tbUsuario = await _context.TbUsuario.FindAsync(id);
             if (tbUsuario == null)
             {
                 return NotFound();
             }
-            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "Nombre", tbUsuario.IdEmpresa);
+            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresa, "IdEmpresa", "Nombre", tbUsuario.IdEmpresa);
             return View(tbUsuario);
         }
 
@@ -134,7 +134,7 @@ namespace WebApplication4.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresas, "IdEmpresa", "Nombre", tbUsuario.IdEmpresa);
+            ViewData["IdEmpresa"] = new SelectList(_context.TbEmpresa, "IdEmpresa", "Nombre", tbUsuario.IdEmpresa);
             return View(tbUsuario);
         }
 
@@ -142,12 +142,12 @@ namespace WebApplication4.Controllers
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TbUsuarios == null)
+            if (id == null || _context.TbUsuario == null)
             {
                 return NotFound();
             }
 
-            var tbUsuario = await _context.TbUsuarios
+            var tbUsuario = await _context.TbUsuario
                 .Include(t => t.IdEmpresaNavigation)
                 .FirstOrDefaultAsync(m => m.IdUsuario == id);
             if (tbUsuario == null)
@@ -164,24 +164,24 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TbUsuarios == null)
+            if (_context.TbUsuario == null)
             {
                 return Problem("Entity set 'Project_DesmodusDBContext.TbUsuarios'  is null.");
             }
 
-            var tbUsuario = await _context.TbUsuarios.FindAsync(id);
+            var tbUsuario = await _context.TbUsuario.FindAsync(id);
             
 
             if (tbUsuario != null)
             {
 
-                var tbAccesos = _context.TbAccesos.Where(i => i.IdUsuario == id);
+                var tbAccesos = _context.TbAcceso.Where(i => i.IdUsuario == id);
                 foreach (var item in tbAccesos)
                 {
-                    _context.TbAccesos.Remove(item);
+                    _context.TbAcceso.Remove(item);
                 }
                 
-                _context.TbUsuarios.Remove(tbUsuario);
+                _context.TbUsuario.Remove(tbUsuario);
             }
             
             await _context.SaveChangesAsync();
@@ -190,13 +190,13 @@ namespace WebApplication4.Controllers
         [Authorize(Roles = "Administrador")]
         private bool TbUsuarioExists(int id)
         {
-          return _context.TbUsuarios.Any(e => e.IdUsuario == id);
+          return _context.TbUsuario.Any(e => e.IdUsuario == id);
         }
         [HttpGet]
         public  IActionResult Test()
         {
             var name = HttpContext.Request.Query["term"].ToString();
-            var name2 = _context.TbUsuarios.Where(c => c.Nombre.Contains(name)|| c.Apellido1.Contains(name) || c.Apellido2.Contains(name) || c.Correo.Contains(name)).Select(c=>c.Nombre+" "+c.Apellido1+" "+c.Apellido2+" "+c.Correo).ToList();
+            var name2 = _context.TbUsuario.Where(c => c.Nombre.Contains(name)|| c.Apellido1.Contains(name) || c.Apellido2.Contains(name) || c.Correo.Contains(name)).Select(c=>c.Nombre+" "+c.Apellido1+" "+c.Apellido2+" "+c.Correo).ToList();
            
             return Ok(name2);
         }

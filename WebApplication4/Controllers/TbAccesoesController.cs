@@ -14,9 +14,9 @@ namespace WebApplication4.Controllers
     [Authorize(Roles = "Administrador")]
     public class TbAccesoesController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public TbAccesoesController(Project_DesmodusDBContext context)
+        public TbAccesoesController(ServicesDeskContext context)
         {
             _context = context;
         }
@@ -24,7 +24,7 @@ namespace WebApplication4.Controllers
         // GET: TbAccesoes
         public async Task<IActionResult> Index()
         {
-            var project_DesmodusDBContext = _context.TbAccesos.Include(t => t.IdPermisoNavigation).Include(t => t.IdUsuarioNavigation);
+            var project_DesmodusDBContext = _context.TbAcceso.Include(t => t.IdPermisoNavigation).Include(t => t.IdUsuarioNavigation);
             return View(await project_DesmodusDBContext.ToListAsync());
         }
         // VALIDAR USUARIOS
@@ -37,12 +37,12 @@ namespace WebApplication4.Controllers
         // GET: TbAccesoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TbAccesos == null)
+            if (id == null || _context.TbAcceso == null)
             {
                 return NotFound();
             }
 
-            var tbAcceso = await _context.TbAccesos
+            var tbAcceso = await _context.TbAcceso
                 .Include(t => t.IdPermisoNavigation)
                 .Include(t => t.IdUsuarioNavigation)
                 .FirstOrDefaultAsync(m => m.IdAcceso == id);
@@ -57,12 +57,12 @@ namespace WebApplication4.Controllers
         // GET: TbAccesoes/Create
         public IActionResult Create()
         {
-            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "Nombre");
+            ViewData["IdPermiso"] = new SelectList(_context.TbPermiso, "IdPermiso", "Nombre");
             /*
                 creamos una lista donde almacenamos el nombre completo de todos los usuarios para luego
                 mostrarlo en el viewbag en la vista 
              */
-            var listUsuarios = _context.TbUsuarios.Select(s => new
+            var listUsuarios = _context.TbUsuario.Select(s => new
             {
                 IdUsuario = s.IdUsuario,
                 NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)//como son tres columnas con el format le decimos que haya un espacio entre cada uno
@@ -85,8 +85,8 @@ namespace WebApplication4.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
-            var listUsuarios = _context.TbUsuarios.Select(s => new
+            ViewData["IdPermiso"] = new SelectList(_context.TbPermiso, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
+            var listUsuarios = _context.TbUsuario.Select(s => new
             {
                 IdUsuario = s.IdUsuario,
                 NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)//como son tres columnas con el format le decimos que haya un espacio entre cada uno
@@ -100,18 +100,18 @@ namespace WebApplication4.Controllers
         // GET: TbAccesoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TbAccesos == null)
+            if (id == null || _context.TbAcceso == null)
             {
                 return NotFound();
             }
 
-            var tbAcceso = await _context.TbAccesos.FindAsync(id);
+            var tbAcceso = await _context.TbAcceso.FindAsync(id);
             if (tbAcceso == null)
             {
                 return NotFound();
             }
-            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
-            var listUsuarios = _context.TbUsuarios.Select(s => new
+            ViewData["IdPermiso"] = new SelectList(_context.TbPermiso, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
+            var listUsuarios = _context.TbUsuario.Select(s => new
             {
                 IdUsuario = s.IdUsuario,
                 NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)//como son tres columnas con el format le decimos que haya un espacio entre cada uno
@@ -155,14 +155,14 @@ namespace WebApplication4.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var listUsuarios = _context.TbUsuarios.Select(s => new
+            var listUsuarios = _context.TbUsuario.Select(s => new
             {
                 IdUsuario = s.IdUsuario,
                 NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)//como son tres columnas con el format le decimos que haya un espacio entre cada uno
             });
 
             ViewData["IdUsuario"] = new SelectList(listUsuarios, "IdUsuario", "NombreCompleto");
-            ViewData["IdPermiso"] = new SelectList(_context.TbPermisos, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
+            ViewData["IdPermiso"] = new SelectList(_context.TbPermiso, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
             //ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "Nombre", tbAcceso.IdUsuario);
             return View(tbAcceso);
         }
@@ -170,12 +170,12 @@ namespace WebApplication4.Controllers
         // GET: TbAccesoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TbAccesos == null)
+            if (id == null || _context.TbAcceso == null)
             {
                 return NotFound();
             }
 
-            var tbAcceso = await _context.TbAccesos
+            var tbAcceso = await _context.TbAcceso
                 .Include(t => t.IdPermisoNavigation)
                 .Include(t => t.IdUsuarioNavigation)
                 .FirstOrDefaultAsync(m => m.IdAcceso == id);
@@ -192,14 +192,14 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TbAccesos == null)
+            if (_context.TbAcceso == null)
             {
                 return Problem("Entity set 'Project_DesmodusDBContext.TbAccesos'  is null.");
             }
-            var tbAcceso = await _context.TbAccesos.FindAsync(id);
+            var tbAcceso = await _context.TbAcceso.FindAsync(id);
             if (tbAcceso != null)
             {
-                _context.TbAccesos.Remove(tbAcceso);
+                _context.TbAcceso.Remove(tbAcceso);
             }
             
             await _context.SaveChangesAsync();
@@ -208,7 +208,7 @@ namespace WebApplication4.Controllers
 
         private bool TbAccesoExists(int id)
         {
-          return _context.TbAccesos.Any(e => e.IdAcceso == id);
+          return _context.TbAcceso.Any(e => e.IdAcceso == id);
         }
     }
 }

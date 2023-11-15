@@ -7,9 +7,10 @@ namespace WebApplication4.Models
     {
         public TbUsuario()
         {
-            TbAccesos = new HashSet<TbAcceso>();
-            TbDerivados = new HashSet<TbDerivado>();
-            TbTickets = new HashSet<TbTicket>();
+            TbAcceso = new HashSet<TbAcceso>();
+            TbComentario = new HashSet<TbComentario>();
+            TbDerivado = new HashSet<TbDerivado>();
+            TbTicket = new HashSet<TbTicket>();
         }
 
         public int IdUsuario { get; set; }
@@ -21,8 +22,9 @@ namespace WebApplication4.Models
         public int? IdEmpresa { get; set; }
 
         public virtual TbEmpresa? IdEmpresaNavigation { get; set; }
-        public virtual ICollection<TbAcceso> TbAccesos { get; set; }
-        public virtual ICollection<TbDerivado> TbDerivados { get; set; }
-        public virtual ICollection<TbTicket> TbTickets { get; set; }
+        public virtual ICollection<TbAcceso> TbAcceso { get; set; }
+        public virtual ICollection<TbComentario> TbComentario { get; set; }
+        public virtual ICollection<TbDerivado> TbDerivado { get; set; }
+        public virtual ICollection<TbTicket> TbTicket { get; set; }
     }
 }

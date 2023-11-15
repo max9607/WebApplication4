@@ -7,12 +7,13 @@ namespace WebApplication4.Models
     {
         public TbPrioridadTicket()
         {
-            TbTickets = new HashSet<TbTicket>();
+            TbTicket = new HashSet<TbTicket>();
         }
 
         public int IdPrioridad { get; set; }
         public string? Prioridad { get; set; }
+        public int? Tiempo_Respuesta { get; set; }
 
-        public virtual ICollection<TbTicket> TbTickets { get; set; }
+        public virtual ICollection<TbTicket> TbTicket { get; set; }
     }
 }

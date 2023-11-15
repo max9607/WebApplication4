@@ -7,7 +7,8 @@ namespace WebApplication4.Models
     {
         public TbTicket()
         {
-            TbDerivados = new HashSet<TbDerivado>();
+            TbComentario = new HashSet<TbComentario>();
+            TbDerivado = new HashSet<TbDerivado>();
         }
 
         public int IdTicket { get; set; }
@@ -24,8 +25,9 @@ namespace WebApplication4.Models
         public virtual TbEstadoTicket? IdEstadoNavigation { get; set; }
         public virtual TbFechaTicket? IdFechaNavigation { get; set; }
         public virtual TbPrioridadTicket? IdPrioridadNavigation { get; set; }
-        public virtual TbCategorium? IdProblemaNavigation { get; set; }
+        public virtual TbCategoria? IdProblemaNavigation { get; set; }
         public virtual TbUsuario? IdUsuarioNavigation { get; set; }
-        public virtual ICollection<TbDerivado> TbDerivados { get; set; }
+        public virtual ICollection<TbComentario> TbComentario { get; set; }
+        public virtual ICollection<TbDerivado> TbDerivado { get; set; }
     }
 }

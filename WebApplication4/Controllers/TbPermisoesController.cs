@@ -14,9 +14,9 @@ namespace WebApplication4.Controllers
     [Authorize(Roles = "Administrador")]
     public class TbPermisoesController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public TbPermisoesController(Project_DesmodusDBContext context)
+        public TbPermisoesController(ServicesDeskContext context)
         {
             _context = context;
         }
@@ -24,18 +24,18 @@ namespace WebApplication4.Controllers
         // GET: TbPermisoes
         public async Task<IActionResult> Index()
         {
-              return View(await _context.TbPermisos.ToListAsync());
+              return View(await _context.TbPermiso.ToListAsync());
         }
 
         // GET: TbPermisoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TbPermisos == null)
+            if (id == null || _context.TbPermiso == null)
             {
                 return NotFound();
             }
 
-            var tbPermiso = await _context.TbPermisos
+            var tbPermiso = await _context.TbPermiso
                 .FirstOrDefaultAsync(m => m.IdPermiso == id);
             if (tbPermiso == null)
             {
@@ -70,12 +70,12 @@ namespace WebApplication4.Controllers
         // GET: TbPermisoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TbPermisos == null)
+            if (id == null || _context.TbPermiso == null)
             {
                 return NotFound();
             }
 
-            var tbPermiso = await _context.TbPermisos.FindAsync(id);
+            var tbPermiso = await _context.TbPermiso.FindAsync(id);
             if (tbPermiso == null)
             {
                 return NotFound();
@@ -121,12 +121,12 @@ namespace WebApplication4.Controllers
         // GET: TbPermisoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TbPermisos == null)
+            if (id == null || _context.TbPermiso == null)
             {
                 return NotFound();
             }
 
-            var tbPermiso = await _context.TbPermisos
+            var tbPermiso = await _context.TbPermiso
                 .FirstOrDefaultAsync(m => m.IdPermiso == id);
             if (tbPermiso == null)
             {
@@ -141,14 +141,14 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TbPermisos == null)
+            if (_context.TbPermiso == null)
             {
                 return Problem("Entity set 'Project_DesmodusDBContext.TbPermisos'  is null.");
             }
-            var tbPermiso = await _context.TbPermisos.FindAsync(id);
+            var tbPermiso = await _context.TbPermiso.FindAsync(id);
             if (tbPermiso != null)
             {
-                _context.TbPermisos.Remove(tbPermiso);
+                _context.TbPermiso.Remove(tbPermiso);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace WebApplication4.Controllers
 
         private bool TbPermisoExists(int id)
         {
-          return _context.TbPermisos.Any(e => e.IdPermiso == id);
+          return _context.TbPermiso.Any(e => e.IdPermiso == id);
         }
     }
 }

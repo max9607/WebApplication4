@@ -13,9 +13,9 @@ namespace WebApplication4.Controllers
     [Authorize(Roles = "Administrador")]
     public class TbFechaTicketsController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public TbFechaTicketsController(Project_DesmodusDBContext context)
+        public TbFechaTicketsController(ServicesDeskContext context)
         {
             _context = context;
         }
@@ -23,18 +23,18 @@ namespace WebApplication4.Controllers
         // GET: TbFechaTickets
         public async Task<IActionResult> Index()
         {
-              return View(await _context.TbFechaTickets.ToListAsync());
+              return View(await _context.TbFechaTicket.ToListAsync());
         }
 
         // GET: TbFechaTickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TbFechaTickets == null)
+            if (id == null || _context.TbFechaTicket == null)
             {
                 return NotFound();
             }
 
-            var tbFechaTicket = await _context.TbFechaTickets
+            var tbFechaTicket = await _context.TbFechaTicket
                 .FirstOrDefaultAsync(m => m.IdFecha == id);
             if (tbFechaTicket == null)
             {
@@ -73,7 +73,7 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public bool CancelarTicket(int id)
         {
-            var a = _context.TbFechaTickets.Where(m => m.IdFecha == id).FirstOrDefault();
+            var a = _context.TbFechaTicket.Where(m => m.IdFecha == id).FirstOrDefault();
             if (a != null)
             {
                 Console.WriteLine(id);
@@ -89,12 +89,12 @@ namespace WebApplication4.Controllers
         // GET: TbFechaTickets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TbFechaTickets == null)
+            if (id == null || _context.TbFechaTicket == null)
             {
                 return NotFound();
             }
 
-            var tbFechaTicket = await _context.TbFechaTickets.FindAsync(id);
+            var tbFechaTicket = await _context.TbFechaTicket.FindAsync(id);
             if (tbFechaTicket == null)
             {
                 return NotFound();
@@ -140,12 +140,12 @@ namespace WebApplication4.Controllers
         // GET: TbFechaTickets/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TbFechaTickets == null)
+            if (id == null || _context.TbFechaTicket == null)
             {
                 return NotFound();
             }
 
-            var tbFechaTicket = await _context.TbFechaTickets
+            var tbFechaTicket = await _context.TbFechaTicket
                 .FirstOrDefaultAsync(m => m.IdFecha == id);
             if (tbFechaTicket == null)
             {
@@ -160,14 +160,14 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TbFechaTickets == null)
+            if (_context.TbFechaTicket == null)
             {
                 return Problem("Entity set 'Project_DesmodusDBContext.TbFechaTickets'  is null.");
             }
-            var tbFechaTicket = await _context.TbFechaTickets.FindAsync(id);
+            var tbFechaTicket = await _context.TbFechaTicket.FindAsync(id);
             if (tbFechaTicket != null)
             {
-                _context.TbFechaTickets.Remove(tbFechaTicket);
+                _context.TbFechaTicket.Remove(tbFechaTicket);
             }
             
             await _context.SaveChangesAsync();
@@ -176,7 +176,7 @@ namespace WebApplication4.Controllers
 
         private bool TbFechaTicketExists(int id)
         {
-          return _context.TbFechaTickets.Any(e => e.IdFecha == id);
+          return _context.TbFechaTicket.Any(e => e.IdFecha == id);
         }
 
         //-----------------------------------------------------------------

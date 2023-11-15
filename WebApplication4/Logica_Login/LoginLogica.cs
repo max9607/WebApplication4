@@ -8,26 +8,26 @@ namespace WebApplication4.Logica_Login
     public class LoginLogica
     {
 
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public LoginLogica(Project_DesmodusDBContext context)
+        public LoginLogica(ServicesDeskContext context)
         {
             _context = context;
         }
         public TbAcceso ValidarAcceso(string _correo, string _clave)
         {
          
-            var DatosAcceso = _context.TbAccesos.Where(t => t.Correo == _correo && t.Clave == _clave).FirstOrDefault();
+            var DatosAcceso = _context.TbAcceso.Where(t => t.Correo == _correo && t.Clave == _clave).FirstOrDefault();
             return DatosAcceso;
         }
         public TbUsuario ValidarUsuario(int id)
         {
-            var DatosUsuario = _context.TbUsuarios.Where(t => t.IdUsuario == id).FirstOrDefault();
+            var DatosUsuario = _context.TbUsuario.Where(t => t.IdUsuario == id).FirstOrDefault();
             return DatosUsuario;
         }
         public TbPermiso ValidarPermiso(int idP)
         {
-            var DatosPermiso = _context.TbPermisos.Where(t => t.IdPermiso == idP).FirstOrDefault();
+            var DatosPermiso = _context.TbPermiso.Where(t => t.IdPermiso == idP).FirstOrDefault();
             return DatosPermiso;
         }
 

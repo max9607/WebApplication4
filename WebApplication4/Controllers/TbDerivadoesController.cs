@@ -12,9 +12,9 @@ namespace WebApplication4.Controllers
 {
     public class TbDerivadoesController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public TbDerivadoesController(Project_DesmodusDBContext context)
+        public TbDerivadoesController(ServicesDeskContext context)
         {
             _context = context;
         }
@@ -22,19 +22,19 @@ namespace WebApplication4.Controllers
         // GET: TbDerivadoes
         public async Task<IActionResult> Index()
         {
-            var project_DesmodusDBContext = _context.TbDerivados.Include(t => t.IdTicketNavigation).Include(t => t.IdUsuarioNavigation);
+            var project_DesmodusDBContext = _context.TbDerivado.Include(t => t.IdTicketNavigation).Include(t => t.IdUsuarioNavigation);
             return View(await project_DesmodusDBContext.ToListAsync());
         }
 
         // GET: TbDerivadoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TbDerivados == null)
+            if (id == null || _context.TbDerivado == null)
             {
                 return NotFound();
             }
 
-            var tbDerivado = await _context.TbDerivados
+            var tbDerivado = await _context.TbDerivado
                 .Include(t => t.IdTicketNavigation)
                 .Include(t => t.IdUsuarioNavigation)
                 .FirstOrDefaultAsync(m => m.IdDerivado == id);
@@ -49,8 +49,8 @@ namespace WebApplication4.Controllers
         // GET: TbDerivadoes/Create
         public IActionResult Create()
         {
-            ViewData["IdTicket"] = new SelectList(_context.TbTickets, "IdTicket", "IdTicket");
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario");
+            ViewData["IdTicket"] = new SelectList(_context.TbTicket, "IdTicket", "IdTicket");
+            ViewData["IdUsuario"] = new SelectList(_context.TbUsuario, "IdUsuario", "IdUsuario");
             return View();
         }
 
@@ -67,26 +67,26 @@ namespace WebApplication4.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdTicket"] = new SelectList(_context.TbTickets, "IdTicket", "IdTicket", tbDerivado.IdTicket);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario", tbDerivado.IdUsuario);
+            ViewData["IdTicket"] = new SelectList(_context.TbTicket, "IdTicket", "IdTicket", tbDerivado.IdTicket);
+            ViewData["IdUsuario"] = new SelectList(_context.TbUsuario, "IdUsuario", "IdUsuario", tbDerivado.IdUsuario);
             return View(tbDerivado);
         }
 
         // GET: TbDerivadoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TbDerivados == null)
+            if (id == null || _context.TbDerivado == null)
             {
                 return NotFound();
             }
 
-            var tbDerivado = await _context.TbDerivados.FindAsync(id);
+            var tbDerivado = await _context.TbDerivado.FindAsync(id);
             if (tbDerivado == null)
             {
                 return NotFound();
             }
-            ViewData["IdTicket"] = new SelectList(_context.TbTickets, "IdTicket", "IdTicket", tbDerivado.IdTicket);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario", tbDerivado.IdUsuario);
+            ViewData["IdTicket"] = new SelectList(_context.TbTicket, "IdTicket", "IdTicket", tbDerivado.IdTicket);
+            ViewData["IdUsuario"] = new SelectList(_context.TbUsuario, "IdUsuario", "IdUsuario", tbDerivado.IdUsuario);
             return View(tbDerivado);
         }
 
@@ -122,20 +122,20 @@ namespace WebApplication4.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdTicket"] = new SelectList(_context.TbTickets, "IdTicket", "IdTicket", tbDerivado.IdTicket);
-            ViewData["IdUsuario"] = new SelectList(_context.TbUsuarios, "IdUsuario", "IdUsuario", tbDerivado.IdUsuario);
+            ViewData["IdTicket"] = new SelectList(_context.TbTicket, "IdTicket", "IdTicket", tbDerivado.IdTicket);
+            ViewData["IdUsuario"] = new SelectList(_context.TbUsuario, "IdUsuario", "IdUsuario", tbDerivado.IdUsuario);
             return View(tbDerivado);
         }
 
         // GET: TbDerivadoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TbDerivados == null)
+            if (id == null || _context.TbDerivado == null)
             {
                 return NotFound();
             }
 
-            var tbDerivado = await _context.TbDerivados
+            var tbDerivado = await _context.TbDerivado
                 .Include(t => t.IdTicketNavigation)
                 .Include(t => t.IdUsuarioNavigation)
                 .FirstOrDefaultAsync(m => m.IdDerivado == id);
@@ -152,14 +152,14 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TbDerivados == null)
+            if (_context.TbDerivado == null)
             {
                 return Problem("Entity set 'Project_DesmodusDBContext.TbDerivados'  is null.");
             }
-            var tbDerivado = await _context.TbDerivados.FindAsync(id);
+            var tbDerivado = await _context.TbDerivado.FindAsync(id);
             if (tbDerivado != null)
             {
-                _context.TbDerivados.Remove(tbDerivado);
+                _context.TbDerivado.Remove(tbDerivado);
             }
             
             await _context.SaveChangesAsync();
@@ -168,7 +168,7 @@ namespace WebApplication4.Controllers
 
         public bool TbDerivadoExists(int id)
         {
-          return _context.TbDerivados.Any(e => e.IdDerivado == id);
+          return _context.TbDerivado.Any(e => e.IdDerivado == id);
         }
 
         //-----------------------------------------------------------
@@ -186,8 +186,8 @@ namespace WebApplication4.Controllers
              */
             if (ExisteDerivado(Vticket))
             {
-                var DerivadoAnterior = _context.TbDerivados.FirstOrDefault(i => i.IdTicket == Vticket);
-                _context.TbDerivados.Remove(DerivadoAnterior);
+                var DerivadoAnterior = _context.TbDerivado.FirstOrDefault(i => i.IdTicket == Vticket);
+                _context.TbDerivado.Remove(DerivadoAnterior);
                 await _context.SaveChangesAsync();
 
             }
@@ -210,7 +210,7 @@ namespace WebApplication4.Controllers
 
         public bool ExisteDerivado(int id)
         {
-            return _context.TbDerivados.Any(e => e.IdTicket == id);
+            return _context.TbDerivado.Any(e => e.IdTicket == id);
         }
 
         public string NombreDerivado(int idT)
@@ -221,8 +221,8 @@ namespace WebApplication4.Controllers
              * 
              * se devuelve una cadena concatenada con el nombre completo
              */
-            var oDerivado = _context.TbDerivados.FirstOrDefault(e => e.IdTicket == idT);
-            var oUsuario = _context.TbUsuarios.FirstOrDefault(e => e.IdUsuario == oDerivado.IdUsuario);
+            var oDerivado = _context.TbDerivado.FirstOrDefault(e => e.IdTicket == idT);
+            var oUsuario = _context.TbUsuario.FirstOrDefault(e => e.IdUsuario == oDerivado.IdUsuario);
 
             return (oUsuario.Nombre + " " + oUsuario.Apellido1 + " " + oUsuario.Apellido2);
         }
@@ -259,11 +259,11 @@ namespace WebApplication4.Controllers
             }
             else
             {
-                var DerivadoAnterior = _context.TbDerivados.Single(i => i.IdTicket == idTicket);
+                var DerivadoAnterior = _context.TbDerivado.Single(i => i.IdTicket == idTicket);
 
                 if (DerivadoAnterior.IdUsuario != idUsuario)
                 {
-                    _context.TbDerivados.Remove(DerivadoAnterior);
+                    _context.TbDerivado.Remove(DerivadoAnterior);
                     await _context.SaveChangesAsync();
 
                     TbDerivado tbDerivado = new TbDerivado();
@@ -293,10 +293,10 @@ namespace WebApplication4.Controllers
         //Eliminar derivados a cerrar
         public async Task EliminarDerivado(int idTicket)
         {
-            var tbDerivado = _context.TbDerivados.FirstOrDefault(i => i.IdTicket == idTicket);
+            var tbDerivado = _context.TbDerivado.FirstOrDefault(i => i.IdTicket == idTicket);
             if(tbDerivado != null)
             {
-                _context.TbDerivados.Remove(tbDerivado);
+                _context.TbDerivado.Remove(tbDerivado);
                 await _context.SaveChangesAsync();
             }
 

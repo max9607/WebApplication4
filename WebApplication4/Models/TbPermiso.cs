@@ -7,12 +7,12 @@ namespace WebApplication4.Models
     {
         public TbPermiso()
         {
-            TbAccesos = new HashSet<TbAcceso>();
+            TbAcceso = new HashSet<TbAcceso>();
         }
 
         public int IdPermiso { get; set; }
         public string? Nombre { get; set; }
 
-        public virtual ICollection<TbAcceso> TbAccesos { get; set; }
+        public virtual ICollection<TbAcceso> TbAcceso { get; set; }
     }
 }

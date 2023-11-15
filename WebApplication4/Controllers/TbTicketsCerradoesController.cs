@@ -13,9 +13,9 @@ namespace WebApplication4.Controllers
 {
     public class TbTicketsCerradoesController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public TbTicketsCerradoesController(Project_DesmodusDBContext context)
+        public TbTicketsCerradoesController(ServicesDeskContext context)
         {
             _context = context;
         }

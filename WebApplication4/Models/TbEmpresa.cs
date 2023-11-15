@@ -7,7 +7,7 @@ namespace WebApplication4.Models
     {
         public TbEmpresa()
         {
-            TbUsuarios = new HashSet<TbUsuario>();
+            TbUsuario = new HashSet<TbUsuario>();
         }
 
         public int IdEmpresa { get; set; }
@@ -15,6 +15,6 @@ namespace WebApplication4.Models
         public string? Nit { get; set; }
         public string? Telefono { get; set; }
 
-        public virtual ICollection<TbUsuario> TbUsuarios { get; set; }
+        public virtual ICollection<TbUsuario> TbUsuario { get; set; }
     }
 }

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication4.Models
 {
-    public partial class TbEstadoTicket
+    public partial class TbCategoria
     {
-        public TbEstadoTicket()
+        public TbCategoria()
         {
             TbTicket = new HashSet<TbTicket>();
         }
-
-        public int IdEstado { get; set; }
-        public string? EstadoTicket { get; set; }
+        public int IdProblema { get; set; }
+        public string? Problema { get; set; }
 
         public virtual ICollection<TbTicket> TbTicket { get; set; }
     }

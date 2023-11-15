@@ -10,10 +10,10 @@ namespace WebApplication4.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
 
-        public LoginController(Project_DesmodusDBContext context)
+        public LoginController(ServicesDeskContext context)
         {
             _context = context;
         }

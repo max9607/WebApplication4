@@ -13,9 +13,9 @@ namespace WebApplication4.Controllers
     [Authorize(Roles = "Administrador")]
     public class TbEstadoTicketsController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public TbEstadoTicketsController(Project_DesmodusDBContext context)
+        public TbEstadoTicketsController(ServicesDeskContext context)
         {
             _context = context;
         }
@@ -23,18 +23,18 @@ namespace WebApplication4.Controllers
         // GET: TbEstadoTickets
         public async Task<IActionResult> Index()
         {
-              return View(await _context.TbEstadoTickets.ToListAsync());
+              return View(await _context.TbEstadoTicket.ToListAsync());
         }
 
         // GET: TbEstadoTickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TbEstadoTickets == null)
+            if (id == null || _context.TbEstadoTicket == null)
             {
                 return NotFound();
             }
 
-            var tbEstadoTicket = await _context.TbEstadoTickets
+            var tbEstadoTicket = await _context.TbEstadoTicket
                 .FirstOrDefaultAsync(m => m.IdEstado == id);
             if (tbEstadoTicket == null)
             {
@@ -69,12 +69,12 @@ namespace WebApplication4.Controllers
         // GET: TbEstadoTickets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TbEstadoTickets == null)
+            if (id == null || _context.TbEstadoTicket == null)
             {
                 return NotFound();
             }
 
-            var tbEstadoTicket = await _context.TbEstadoTickets.FindAsync(id);
+            var tbEstadoTicket = await _context.TbEstadoTicket.FindAsync(id);
             if (tbEstadoTicket == null)
             {
                 return NotFound();
@@ -120,12 +120,12 @@ namespace WebApplication4.Controllers
         // GET: TbEstadoTickets/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TbEstadoTickets == null)
+            if (id == null || _context.TbEstadoTicket == null)
             {
                 return NotFound();
             }
 
-            var tbEstadoTicket = await _context.TbEstadoTickets
+            var tbEstadoTicket = await _context.TbEstadoTicket
                 .FirstOrDefaultAsync(m => m.IdEstado == id);
             if (tbEstadoTicket == null)
             {
@@ -140,14 +140,14 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TbEstadoTickets == null)
+            if (_context.TbEstadoTicket == null)
             {
                 return Problem("Entity set 'Project_DesmodusDBContext.TbEstadoTickets'  is null.");
             }
-            var tbEstadoTicket = await _context.TbEstadoTickets.FindAsync(id);
+            var tbEstadoTicket = await _context.TbEstadoTicket.FindAsync(id);
             if (tbEstadoTicket != null)
             {
-                _context.TbEstadoTickets.Remove(tbEstadoTicket);
+                _context.TbEstadoTicket.Remove(tbEstadoTicket);
             }
             
             await _context.SaveChangesAsync();
@@ -156,7 +156,7 @@ namespace WebApplication4.Controllers
 
         private bool TbEstadoTicketExists(int id)
         {
-          return _context.TbEstadoTickets.Any(e => e.IdEstado == id);
+          return _context.TbEstadoTicket.Any(e => e.IdEstado == id);
         }
     }
 }

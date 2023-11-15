@@ -14,9 +14,9 @@ namespace WebApplication4.Controllers
     [Authorize(Roles = "Administrador")]
     public class TbEmpresasController : Controller
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public TbEmpresasController(Project_DesmodusDBContext context)
+        public TbEmpresasController(ServicesDeskContext context)
         {
             _context = context;
         }
@@ -24,18 +24,18 @@ namespace WebApplication4.Controllers
         // GET: TbEmpresas
         public async Task<IActionResult> Index()
         {
-              return View(await _context.TbEmpresas.ToListAsync());
+              return View(await _context.TbEmpresa.ToListAsync());
         }
 
         // GET: TbEmpresas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TbEmpresas == null)
+            if (id == null || _context.TbEmpresa == null)
             {
                 return NotFound();
             }
 
-            var tbEmpresa = await _context.TbEmpresas
+            var tbEmpresa = await _context.TbEmpresa
                 .FirstOrDefaultAsync(m => m.IdEmpresa == id);
             if (tbEmpresa == null)
             {
@@ -70,12 +70,12 @@ namespace WebApplication4.Controllers
         // GET: TbEmpresas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TbEmpresas == null)
+            if (id == null || _context.TbEmpresa == null)
             {
                 return NotFound();
             }
 
-            var tbEmpresa = await _context.TbEmpresas.FindAsync(id);
+            var tbEmpresa = await _context.TbEmpresa.FindAsync(id);
             if (tbEmpresa == null)
             {
                 return NotFound();
@@ -121,12 +121,12 @@ namespace WebApplication4.Controllers
         // GET: TbEmpresas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TbEmpresas == null)
+            if (id == null || _context.TbEmpresa == null)
             {
                 return NotFound();
             }
 
-            var tbEmpresa = await _context.TbEmpresas
+            var tbEmpresa = await _context.TbEmpresa
                 .FirstOrDefaultAsync(m => m.IdEmpresa == id);
             if (tbEmpresa == null)
             {
@@ -141,14 +141,14 @@ namespace WebApplication4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TbEmpresas == null)
+            if (_context.TbEmpresa == null)
             {
                 return Problem("Entity set 'Project_DesmodusDBContext.TbEmpresas'  is null.");
             }
-            var tbEmpresa = await _context.TbEmpresas.FindAsync(id);
+            var tbEmpresa = await _context.TbEmpresa.FindAsync(id);
             if (tbEmpresa != null)
             {
-                _context.TbEmpresas.Remove(tbEmpresa);
+                _context.TbEmpresa.Remove(tbEmpresa);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace WebApplication4.Controllers
 
         private bool TbEmpresaExists(int id)
         {
-          return _context.TbEmpresas.Any(e => e.IdEmpresa == id);
+          return _context.TbEmpresa.Any(e => e.IdEmpresa == id);
         }
     }
 }

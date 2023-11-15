@@ -101,7 +101,7 @@
                     
                     <hr />
                     <dd>
-                        @if (Model.IdEstado != 4)
+                        @if (Model.IdEstado != 4 && User.IsInRole("Administrador") || User.IsInRole("Técnico"))
                         {
                             <a asp-action="Edit" asp-route-id="@Model?.IdTicket" class="btn btn-warning">Editar</a>
                         }
@@ -191,5 +191,88 @@
         </div>
     </div>
 </div>
+<h5 style="padding-bottom:10px;">Comentarios</h5>
+<hr />
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-controller="TbComentarios" asp-action="Create" method="post">
+        <input type="hidden" asp-for="IdTicket" class="form-control" value="@Model.IdTicket" readonly />
+        <input type="hidden" asp-for="IdUsuario" class="form-control" value="@User.FindFirst("IdUsuario")?.Value" readonly />
+        <div class="form-group">
+            <label for="Comentario">Agregar Comentario:</label>
+            <textarea class="form-control" name="Comentario" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar Comentario</button>
+    </form>
+}
+else
+{
+    <p>Inicia sesión para agregar comentarios.</p>
+}
+
+<!-- Lista de Comentarios -->
+@if (Model.TbComentario.Any())
+{
+        @foreach (var comentario in Model.TbComentario)
+        {
+            @* <li>
+                <strong>@comentario.IdUsuarioNavigation?.Nombre:</strong> @comentario.Comentario
+            </li> *@
+
+            <div class="card p-3 mt-2">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div class="user d-flex flex-row align-items-center">
+
+                        <span><small class="font-weight-bold text-primary">@comentario.IdUsuarioNavigation?.Nombre:</small> <small class="font-weight-bold">@comentario.Comentario </small></span>
+
+                    </div>
+
+                </div>
 
 
+            </div>
+        }
+}
+else
+{
+    <p>No hay comentarios aún.</p>
+}
+@section Estilo{
+
+<style>
+    body {
+        background-color: #f7f6f6
+    }
+
+    .card {
+        border: none;
+        box-shadow: 5px 6px 6px 2px #e9ecef;
+        border-radius: 4px;
+    }
+
+    .dots {
+        height: 4px;
+        width: 4px;
+        margin-bottom: 2px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .badge {
+        padding: 7px;
+        padding-right: 9px;
+        padding-left: 16px;
+        box-shadow: 5px 6px 6px 2px #e9ecef;
+    }
+
+    
+    .form-check-input {
+        margin-top: 6px;
+        margin-left: -24px !important;
+        cursor: pointer;
+    }
+</style>
+}

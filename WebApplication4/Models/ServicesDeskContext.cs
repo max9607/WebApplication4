@@ -5,34 +5,37 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace WebApplication4.Models
 {
-    public partial class Project_DesmodusDBContext : DbContext
+    public partial class ServicesDeskContext : DbContext
     {
-        public Project_DesmodusDBContext()
+        public ServicesDeskContext()
         {
         }
 
-        public Project_DesmodusDBContext(DbContextOptions<Project_DesmodusDBContext> options)
+        public ServicesDeskContext(DbContextOptions<ServicesDeskContext> options)
             : base(options)
         {
         }
 
-        public virtual DbSet<TbAcceso> TbAccesos { get; set; } = null!;
+        public virtual DbSet<TbAcceso> TbAcceso { get; set; } = null!;
         public virtual DbSet<TbCategoria> TbCategoria { get; set; } = null!;
-        public virtual DbSet<TbDerivado> TbDerivados { get; set; } = null!;
-        public virtual DbSet<TbEmpresa> TbEmpresas { get; set; } = null!;
-        public virtual DbSet<TbEstadoTicket> TbEstadoTickets { get; set; } = null!;
-        public virtual DbSet<TbFechaTicket> TbFechaTickets { get; set; } = null!;
-        public virtual DbSet<TbPermiso> TbPermisos { get; set; } = null!;
-        public virtual DbSet<TbPrioridadTicket> TbPrioridadTickets { get; set; } = null!;
-        public virtual DbSet<TbTicket> TbTickets { get; set; } = null!;
+        public virtual DbSet<TbComentario> TbComentario { get; set; } = null!;
+        public virtual DbSet<TbDerivado> TbDerivado { get; set; } = null!;
+        public virtual DbSet<TbEmpresa> TbEmpresa { get; set; } = null!;
+        public virtual DbSet<TbEstadoTicket> TbEstadoTicket { get; set; } = null!;
+        public virtual DbSet<TbFechaTicket> TbFechaTicket { get; set; } = null!;
+        public virtual DbSet<TbPermiso> TbPermiso { get; set; } = null!;
+        public virtual DbSet<TbPrioridadTicket> TbPrioridadTicket { get; set; } = null!;
+        public virtual DbSet<TbTicket> TbTicket { get; set; } = null!;
         public virtual DbSet<TbTicketsCerrado> TbTicketsCerrados { get; set; } = null!;
-        public virtual DbSet<TbUsuario> TbUsuarios { get; set; } = null!;
+        public virtual DbSet<TbUsuario> TbUsuario { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("server=localhost; database=Project_DesmodusDB; integrated security=true; ");
+                //server=localhost; database=Project_DesmodusDB; integrated security=true;
+                //optionsBuilder.UseSqlServer("Server=localhost ;Database=ServicesDesk; User=sistema; Password=sczz; Trust Server Certificate=true");
+                optionsBuilder.UseSqlServer("server=localhost; database=Project_DesmodusDB; integrated security=true;");
             }
         }
 
@@ -41,7 +44,7 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbAcceso>(entity =>
             {
                 entity.HasKey(e => e.IdAcceso)
-                    .HasName("PK__tb_Acces__99B2858FA626FFE9");
+                    .HasName("PK__tb_Acces__99B2858F68227C83");
 
                 entity.ToTable("tb_Acceso");
 
@@ -56,18 +59,18 @@ namespace WebApplication4.Models
                 entity.HasOne(d => d.IdPermisoNavigation)
                     .WithMany(p => p.TbAcceso)
                     .HasForeignKey(d => d.IdPermiso)
-                    .HasConstraintName("FK__tb_Acceso__IdPer__2C3393D0");
+                    .HasConstraintName("FK__tb_Acceso__IdPer__5165187F");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.TbAcceso)
                     .HasForeignKey(d => d.IdUsuario)
-                    .HasConstraintName("FK__tb_Acceso__IdUsu__2B3F6F97");
+                    .HasConstraintName("FK__tb_Acceso__IdUsu__5070F446");
             });
 
             modelBuilder.Entity<TbCategoria>(entity =>
             {
                 entity.HasKey(e => e.IdProblema)
-                    .HasName("PK__tb_Categ__0FDB5F4AA41314AA");
+                    .HasName("PK__tb_Categ__0FDB5F4A50AA7EEB");
 
                 entity.ToTable("tb_Categoria");
 
@@ -76,28 +79,50 @@ namespace WebApplication4.Models
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<TbComentario>(entity =>
+            {
+                entity.HasKey(e => e.IdComentario)
+                    .HasName("PK__tb_Comen__DDBEFBF9E3DECD55");
+
+                entity.ToTable("tb_Comentario");
+
+                entity.Property(e => e.Comentario)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.IdTicketNavigation)
+                    .WithMany(p => p.TbComentario)
+                    .HasForeignKey(d => d.IdTicket)
+                    .HasConstraintName("FK__tb_Coment__IdTic__6754599E");
+
+                entity.HasOne(d => d.IdUsuarioNavigation)
+                    .WithMany(p => p.TbComentario)
+                    .HasForeignKey(d => d.IdUsuario)
+                    .HasConstraintName("FK__tb_Coment__IdUsu__66603565");
+            });
+
             modelBuilder.Entity<TbDerivado>(entity =>
             {
                 entity.HasKey(e => e.IdDerivado)
-                    .HasName("PK__tb_Deriv__91186DFA631C9159");
+                    .HasName("PK__tb_Deriv__91186DFA8CF99B42");
 
                 entity.ToTable("tb_Derivado");
 
                 entity.HasOne(d => d.IdTicketNavigation)
                     .WithMany(p => p.TbDerivado)
                     .HasForeignKey(d => d.IdTicket)
-                    .HasConstraintName("FK__tb_Deriva__IdTic__4AB81AF0");
+                    .HasConstraintName("FK__tb_Deriva__IdTic__6383C8BA");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.TbDerivado)
                     .HasForeignKey(d => d.IdUsuario)
-                    .HasConstraintName("FK__tb_Deriva__IdUsu__49C3F6B7");
+                    .HasConstraintName("FK__tb_Deriva__IdUsu__628FA481");
             });
 
             modelBuilder.Entity<TbEmpresa>(entity =>
             {
                 entity.HasKey(e => e.IdEmpresa)
-                    .HasName("PK__tb_Empre__5EF4033E096EDF8A");
+                    .HasName("PK__tb_Empre__5EF4033EC4AFC3BB");
 
                 entity.ToTable("tb_Empresa");
 
@@ -117,7 +142,7 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbEstadoTicket>(entity =>
             {
                 entity.HasKey(e => e.IdEstado)
-                    .HasName("PK__tb_Estad__FBB0EDC1D2963AAB");
+                    .HasName("PK__tb_Estad__FBB0EDC189A8F2F1");
 
                 entity.ToTable("tb_EstadoTicket");
 
@@ -129,7 +154,7 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbFechaTicket>(entity =>
             {
                 entity.HasKey(e => e.IdFecha)
-                    .HasName("PK__tb_Fecha__8D0F205AC58090FF");
+                    .HasName("PK__tb_Fecha__8D0F205AEB36FE9B");
 
                 entity.ToTable("tb_FechaTicket");
 
@@ -141,7 +166,7 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbPermiso>(entity =>
             {
                 entity.HasKey(e => e.IdPermiso)
-                    .HasName("PK__tb_Permi__0D626EC8659BB50A");
+                    .HasName("PK__tb_Permi__0D626EC8720E7F0D");
 
                 entity.ToTable("tb_Permiso");
 
@@ -153,19 +178,21 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbPrioridadTicket>(entity =>
             {
                 entity.HasKey(e => e.IdPrioridad)
-                    .HasName("PK__tb_Prior__0FC70DD5A383A030");
+                    .HasName("PK__tb_Prior__0FC70DD555838655");
 
                 entity.ToTable("tb_PrioridadTicket");
 
                 entity.Property(e => e.Prioridad)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Tiempo_Respuesta).HasColumnName("Tiempo_Respuesta");
             });
 
             modelBuilder.Entity<TbTicket>(entity =>
             {
                 entity.HasKey(e => e.IdTicket)
-                    .HasName("PK__tb_Ticke__4B93C7E79D9D8719");
+                    .HasName("PK__tb_Ticke__4B93C7E7171DE8C4");
 
                 entity.ToTable("tb_Ticket");
 
@@ -184,33 +211,33 @@ namespace WebApplication4.Models
                 entity.HasOne(d => d.IdEstadoNavigation)
                     .WithMany(p => p.TbTicket)
                     .HasForeignKey(d => d.IdEstado)
-                    .HasConstraintName("FK__tb_Ticket__IdEst__38996AB5");
+                    .HasConstraintName("FK__tb_Ticket__IdEst__5DCAEF64");
 
                 entity.HasOne(d => d.IdFechaNavigation)
                     .WithMany(p => p.TbTicket)
                     .HasForeignKey(d => d.IdFecha)
-                    .HasConstraintName("FK__tb_Ticket__IdFec__398D8EEE");
+                    .HasConstraintName("FK__tb_Ticket__IdFec__5EBF139D");
 
                 entity.HasOne(d => d.IdPrioridadNavigation)
                     .WithMany(p => p.TbTicket)
                     .HasForeignKey(d => d.IdPrioridad)
-                    .HasConstraintName("FK__tb_Ticket__IdPri__37A5467C");
+                    .HasConstraintName("FK__tb_Ticket__IdPri__5CD6CB2B");
 
                 entity.HasOne(d => d.IdProblemaNavigation)
                     .WithMany(p => p.TbTicket)
                     .HasForeignKey(d => d.IdProblema)
-                    .HasConstraintName("FK__tb_Ticket__IdPro__3A81B327");
+                    .HasConstraintName("FK__tb_Ticket__IdPro__5FB337D6");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.TbTicket)
                     .HasForeignKey(d => d.IdUsuario)
-                    .HasConstraintName("FK__tb_Ticket__IdUsu__36B12243");
-            });                     
+                    .HasConstraintName("FK__tb_Ticket__IdUsu__5BE2A6F2");
+            });
 
             modelBuilder.Entity<TbTicketsCerrado>(entity =>
             {
                 entity.HasKey(e => e.IdCerrados)
-                    .HasName("PK__tb_Ticke__6EA883BB786761BA");
+                    .HasName("PK__tb_Ticke__6EA883BB587D7DFA");
 
                 entity.ToTable("tb_TicketsCerrados");
 
@@ -238,7 +265,7 @@ namespace WebApplication4.Models
             modelBuilder.Entity<TbUsuario>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__tb_Usuar__5B65BF97907B1255");
+                    .HasName("PK__tb_Usuar__5B65BF975F97C0E0");
 
                 entity.ToTable("tb_Usuario");
 
@@ -267,7 +294,7 @@ namespace WebApplication4.Models
                 entity.HasOne(d => d.IdEmpresaNavigation)
                     .WithMany(p => p.TbUsuario)
                     .HasForeignKey(d => d.IdEmpresa)
-                    .HasConstraintName("FK__tb_Usuari__IdEmp__286302EC");
+                    .HasConstraintName("FK__tb_Usuari__IdEmp__4D94879B");
             });
 
             OnModelCreatingPartial(modelBuilder);

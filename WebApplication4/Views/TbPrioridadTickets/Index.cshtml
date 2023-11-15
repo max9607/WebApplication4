@@ -4,17 +4,21 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Prioridad de tickets</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a type="button" class="btn btn-primary" asp-action="Create">
+        <i class="icofont-plus text-light"></i>
+        Crear Nuevo
+    </a>
 </p>
-<table class="table">
-    <thead>
+<table id ="Secundaria" class="table align-middle table-bordered border border-dark">
+    <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Prioridad)
             </th>
+            <th>@Html.DisplayNameFor(model => model.Tiempo_Respuesta)</th>
             <th></th>
         </tr>
     </thead>
@@ -22,12 +26,17 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Prioridad)
+                    @Html.DisplayFor(modelItem => item.Prioridad)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tiempo_Respuesta)
+                </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPrioridad">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdPrioridad">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPrioridad">Delete</a>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                        <a asp-action="Edit" asp-route-id="@item.IdPrioridad" class="btn btn-outline-dark">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.IdPrioridad" class="btn btn-outline-dark">Detalles</a>
+
+                    </div>
             </td>
         </tr>
 }

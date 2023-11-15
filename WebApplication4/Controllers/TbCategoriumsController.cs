@@ -55,7 +55,7 @@ namespace WebApplication4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdProblema,Problema")] TbCategorium tbCategorium)
+        public async Task<IActionResult> Create([Bind("IdProblema,Problema")] TbCategoria tbCategorium)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace WebApplication4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdProblema,Problema")] TbCategorium tbCategorium)
+        public async Task<IActionResult> Edit(int id, [Bind("IdProblema,Problema")] TbCategoria tbCategorium)
         {
             if (id != tbCategorium.IdProblema)
             {
