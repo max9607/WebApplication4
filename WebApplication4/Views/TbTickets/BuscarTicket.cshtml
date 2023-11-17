@@ -19,8 +19,7 @@
         <th scope="col">Categoría</th>
         <th scope="col">Fecha</th>
         <th scope="col">Asunto</th>
-        <th scope="col">Correo</th>
-        <th scope="col">Nombre</th>
+        <th scope="col">Usuario</th>
         <th scope="col">#</th>
         </thead>
         <tbody>
@@ -35,7 +34,6 @@
                     <td>@Html.DisplayFor(modelItem => item.IdProblemaNavigation.Problema)</td>
                     <td>@item.IdFechaNavigation.FechaCreado.Value.ToString("yyyy-MM-dd HH:mm")</td>
                     <td>@Html.DisplayFor(modelItem => item.DespricionP)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Correo)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre) @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido1)</td>
 
                     <td>
