@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication4.Models
 {
     public partial class TbComentario
     {
-        [Key]
         public int IdComentario { get; set; }
         public string? Comentario { get; set; }
         public int? IdTicket { get; set; }

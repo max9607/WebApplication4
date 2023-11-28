@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication4.Models
 {
@@ -10,6 +9,7 @@ namespace WebApplication4.Models
         {
             TbTicket = new HashSet<TbTicket>();
         }
+
         public int IdProblema { get; set; }
         public string? Problema { get; set; }
 

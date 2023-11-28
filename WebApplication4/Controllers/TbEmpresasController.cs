@@ -24,8 +24,13 @@ namespace WebApplication4.Controllers
         // GET: TbEmpresas
         public async Task<IActionResult> Index()
         {
-              return View(await _context.TbEmpresa.ToListAsync());
+              return View(await _context.TbEmpresa.Where(x=>x.Estado==true).ToListAsync());
         }
+        public async Task<IActionResult> Index2()
+        {
+            return View(await _context.TbEmpresa.Where(x => x.Estado == false).ToListAsync());
+        }
+
 
         // GET: TbEmpresas/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -61,6 +66,7 @@ namespace WebApplication4.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(tbEmpresa);
+                tbEmpresa.Estado = true;
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -86,14 +92,48 @@ namespace WebApplication4.Controllers
         // POST: TbEmpresas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("IdEmpresa,Nombre,Nit,Telefono,Estado")] TbEmpresa tbEmpresa)
+        //{
+        //    if (id != tbEmpresa.IdEmpresa)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(tbEmpresa);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!TbEmpresaExists(tbEmpresa.IdEmpresa))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(tbEmpresa);
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdEmpresa,Nombre,Nit,Telefono")] TbEmpresa tbEmpresa)
+        public async Task<IActionResult> Edit(int id, [Bind("IdEmpresa,Nombre,Nit,Telefono,Estado")] TbEmpresa tbEmpresa, bool Estado)
         {
             if (id != tbEmpresa.IdEmpresa)
             {
                 return NotFound();
             }
+
+            // Asigna el valor del checkbox al modelo
+            tbEmpresa.Estado = Estado;
 
             if (ModelState.IsValid)
             {
@@ -117,6 +157,7 @@ namespace WebApplication4.Controllers
             }
             return View(tbEmpresa);
         }
+
 
         // GET: TbEmpresas/Delete/5
         public async Task<IActionResult> Delete(int? id)

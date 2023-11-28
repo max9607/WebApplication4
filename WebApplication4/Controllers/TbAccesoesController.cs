@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using WebApplication4.Models;
 
@@ -75,28 +76,133 @@ namespace WebApplication4.Controllers
         // POST: TbAccesoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("IdAcceso,Correo,Clave,IdPermiso,IdUsuario")] TbAcceso tbAcceso)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(tbAcceso);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["IdPermiso"] = new SelectList(_context.TbPermiso, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
+        //    var listUsuarios = _context.TbUsuario.Select(s => new
+        //    {
+        //        IdUsuario = s.IdUsuario,
+        //        NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)//como son tres columnas con el format le decimos que haya un espacio entre cada uno
+        //    });
+
+        //    ViewData["IdUsuario"] = new SelectList(listUsuarios, "IdUsuario", "NombreCompleto");
+        //    return View();
+        //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("IdAcceso,Correo,Clave,IdPermiso,IdUsuario")] TbAcceso tbAcceso)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Generar el hash de la contraseña antes de almacenarla
+        //        tbAcceso.ClaveHash = BCrypt.Net.BCrypt.HashPassword(tbAcceso.Clave);
+
+        //        _context.Add(tbAcceso);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+
+        //    ViewData["IdPermiso"] = new SelectList(_context.TbPermiso, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
+        //    var listUsuarios = _context.TbUsuario.Select(s => new
+        //    {
+        //        IdUsuario = s.IdUsuario,
+        //        NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)
+        //    });
+
+        //    ViewData["IdUsuario"] = new SelectList(listUsuarios, "IdUsuario", "NombreCompleto");
+
+        //    return View(tbAcceso);
+        //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("IdAcceso,Correo,Clave,IdPermiso,IdUsuario")] TbAcceso tbAcceso)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        Generar el hash de la contraseña antes de almacenarla
+        //        tbAcceso.ClaveHash = BCrypt.Net.BCrypt.HashPassword(tbAcceso.Clave);
+
+        //        _context.Add(tbAcceso);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+
+        //    ViewData["IdPermiso"] = new SelectList(_context.TbPermiso, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
+        //    var listUsuarios = _context.TbUsuario.Select(s => new
+        //    {
+        //        IdUsuario = s.IdUsuario,
+        //        NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)
+        //    });
+
+        //    ViewData["IdUsuario"] = new SelectList(listUsuarios, "IdUsuario", "NombreCompleto");
+
+        //    Clear the plain - text password before rendering the view
+        //    tbAcceso.Clave = null;
+
+        //    return View(tbAcceso);
+        //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("IdAcceso,Correo,Clave,IdPermiso,IdUsuario")] TbAcceso tbAcceso)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Generar el hash de la contraseña antes de almacenarla
+        //        tbAcceso.ClaveHash = BCrypt.Net.BCrypt.HashPassword(tbAcceso.Clave);
+
+        //        // Opcional: Almacenar también la versión sin cifrar (para casos especiales)
+        //        tbAcceso.Clave = BCrypt.Net.BCrypt.HashPassword(tbAcceso.Clave);
+
+        //        _context.Add(tbAcceso);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+
+        //    ViewData["IdPermiso"] = new SelectList(_context.TbPermiso, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
+        //    var listUsuarios = _context.TbUsuario.Select(s => new
+        //    {
+        //        IdUsuario = s.IdUsuario,
+        //        NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)
+        //    });
+
+        //    ViewData["IdUsuario"] = new SelectList(listUsuarios, "IdUsuario", "NombreCompleto");
+
+        //    return View(tbAcceso);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdAcceso,Correo,Clave,IdPermiso,IdUsuario")] TbAcceso tbAcceso)
         {
             if (ModelState.IsValid)
             {
+                // Generar el hash de la contraseña antes de almacenarla
+                tbAcceso.ClaveHash = BCrypt.Net.BCrypt.HashPassword(tbAcceso.Clave);
+
                 _context.Add(tbAcceso);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["IdPermiso"] = new SelectList(_context.TbPermiso, "IdPermiso", "Nombre", tbAcceso.IdPermiso);
-            var listUsuarios = _context.TbUsuario.Select(s => new
+            var listUsuarios = _context.TbUsuario.Where(x=>x.Estado==true).Select(s => new
             {
                 IdUsuario = s.IdUsuario,
-                NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)//como son tres columnas con el format le decimos que haya un espacio entre cada uno
+                NombreCompleto = string.Format("{0} {1} {2}", s.Nombre, s.Apellido1, s.Apellido2)
             });
 
             ViewData["IdUsuario"] = new SelectList(listUsuarios, "IdUsuario", "NombreCompleto");
-            return View();
+
             return View(tbAcceso);
         }
-
         // GET: TbAccesoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

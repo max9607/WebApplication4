@@ -12,7 +12,7 @@ namespace WebApplication4.Models
 
         public int IdPrioridad { get; set; }
         public string? Prioridad { get; set; }
-        public int? Tiempo_Respuesta { get; set; }
+        public int? TiempoRespuesta { get; set; }
 
         public virtual ICollection<TbTicket> TbTicket { get; set; }
     }

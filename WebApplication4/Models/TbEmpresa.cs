@@ -14,6 +14,7 @@ namespace WebApplication4.Models
         public string Nombre { get; set; } = null!;
         public string? Nit { get; set; }
         public string? Telefono { get; set; }
+        public bool? Estado { get; set; }
 
         public virtual ICollection<TbUsuario> TbUsuario { get; set; }
     }
