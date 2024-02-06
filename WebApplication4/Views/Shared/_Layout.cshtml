@@ -188,8 +188,66 @@
                 <a class="btn btn-outline-light my-2 my-sm-0" asp-controller="Login" asp-action="Salir">Salir</a>
             </li>
         </ul>
-    </div>
 
+        <div class="button-container">
+            <button id="darkModeToggle" class="toggle-button">
+                <span class="toggle-button-icon"></span>
+            </button>
+        </div>
+        
+    </div>
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh; /* Esto es opcional, ajusta la altura según tus necesidades */
+        }
+
+        .toggle-button {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .toggle-button-icon {
+            position: absolute;
+            top: 50%;
+            left: 2px;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .dark-mode .toggle-button-icon {
+            transform: translateY(-50%) translateX(20px);
+        }
+
+        .toggle-button:hover .toggle-button-icon {
+            background-color: #ddd;
+        }
+
+        .dark-mode .toggle-button {
+            background-color: #333; /* Cambia el color de fondo en modo oscuro */
+        }
+
+        /* Estilo del icono de alternancia para el modo oscuro */
+        .dark-mode .toggle-button-icon {
+            background-color: #ddd; /* Cambia el color del icono en modo oscuro */
+        }
+
+        .dark-mode .card {
+            background-color: #333; /* Cambia el color de fondo de las tarjetas */
+            color: #ddd; /* Cambia el color del texto en las tarjetas */
+        }
+    </style>
      <div class="container justify-content-center">
             @RenderBody()
 
@@ -205,6 +263,25 @@
             &copy; 2022 - ServiceDesk 
         </div>
     </footer> *@
+    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script>
+        window.botpressWebChat.init({
+            "composerPlaceholder": "Chat with bot",
+            "botConversationDescription": "Este bot fue construido muy rapido con Botpress",
+            "botId": "357917c8-0b55-48d4-921b-1cb9c7f79e7b",
+            "hostUrl": "https://cdn.botpress.cloud/webchat/v1",
+            "messagingUrl": "https://messaging.botpress.cloud",
+            "clientId": "357917c8-0b55-48d4-921b-1cb9c7f79e7b",
+            "webhookId": "dd83df8d-59ff-4462-b029-f1d3155c7db2",
+            "lazySocket": true,
+            "themeName": "prism",
+            "frontendVersion": "v1",
+            "showPoweredBy": true,
+            "theme": "prism",
+            "themeColor": "#2563eb"
+        });
+    </script>
+
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -219,78 +296,6 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-<style>
-
-  /* styles.css */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-}
-
-#sideMenu {
-    width: 0;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #333;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    z-index: 1;
-}
-
-#sideMenu ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-#sideMenu ul li {
-    padding: 10px;
-    text-align: center;
-}
-
-#sideMenu ul li a {
-    text-decoration: none;
-    color: white;
-    display: block;
-}
-
-#sideMenu ul li a:hover {
-    background-color: #555;
-}
-
-.submenu {
-    display: none; /* Oculta inicialmente los submenús */
-    background-color: #444;
-}
-
-.submenu li {
-    padding: 10px;
-    text-align: center;
-}
-
-#mainContent {
-    margin-left: 0;
-    transition: margin-left 0.5s;
-}
-
-#toggleButton {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 2;
-}
-
-/* Mostrar submenús cuando se pasa el mouse por encima */
-#sideMenu ul li:hover .submenu {
-    display: block;
-}
-
-
-</style> 
 <script>
 
     const toggleButton = document.getElementById('toggleButton');
@@ -306,4 +311,19 @@ body {
             mainContent.style.marginLeft = '250px';
         }
     });
+    const darkModeToggle = document.getElementById('darkModeToggle');
+
+    darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+
+        // Guardar preferencia del usuario
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode);
+    });
+
+    // Aplicar el modo oscuro si está configurado previamente
+    const isDarkModeSet = localStorage.getItem('darkMode') === 'true';
+    if (isDarkModeSet) {
+        document.body.classList.add('dark-mode');
+    }
 </script>
