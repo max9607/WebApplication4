@@ -5,68 +5,7 @@
 }
 
 <h2 class="mx-auto">Reporte de Tickets Cerrados</h2>
-@* <div class="table-responsive">
-    <table id="myTable" class="table align-middle y table-bordered border border-dark">
-        <thead class="table-dark">
-            <tr>
-                <th>
-                    <label class="fw-bold">Ticket</label>
-                </th>
-                <th>
-                    <label class="fw-bold">Cliente</label>
-                </th>
-                <th>
-                    <label class="fw-bold">Asunto</label>
-                </th>
-                <th>
-                    <label class="fw-bold">Solicitado</label>
-                </th>
-                <th>
-                    <label class="fw-bold">Cerrado</label>
-                </th>
-                <th>
-                    <label class="fw-bold">Receptor</label>
-                </th>
-                 <th>
-                    <label class="fw-bold">Comentario</label>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdTicket)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cliente)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DespricionP)
-                    </td>
-                    <td class="fecha">
-                        @item.FechaCreado.Value.ToString("yyyy-MM-dd HH:mm")
-                        
-                    </td>
-                    <td class="fecha">
-                        @item.FechaCerrado.Value.ToString("yyyy-MM-dd HH:mm")
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Receptor)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Comentario)
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div> *@
-@* <div>
 
-    <iframe title="tickeds" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=15616472-3e0d-435c-bb3b-556965bd83f7&autoAuth=true&embeddedDemo=true" frameborder="0" allowFullScreen="true"></iframe>
-</div> *@
 <div class="table-responsive">
     <iframe title="tickeds" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=15616472-3e0d-435c-bb3b-556965bd83f7&autoAuth=true&embeddedDemo=true" frameborder="0" allowFullScreen="true"></iframe>
 </div>
