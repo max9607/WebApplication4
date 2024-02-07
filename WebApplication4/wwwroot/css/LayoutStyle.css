@@ -1,4 +1,4 @@
-﻿* {
+﻿/** {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -11,7 +11,7 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
     background: #FAFAFA;
-}
+}*/
 
 .order-card {
     color: #fff;
@@ -62,7 +62,7 @@ body {
 
 
 /* styles.css */
-body {
+/*body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
@@ -103,8 +103,8 @@ body {
                 }
 
 .submenu {
-    display: none; /* Oculta inicialmente los submenús */
-    background-color: #444;
+    display: none;*/ /* Oculta inicialmente los submenús */
+    /*background-color: #444;
 }
 
     .submenu li {
@@ -122,12 +122,12 @@ body {
     top: 10px;
     left: 10px;
     z-index: 2;
-}
+}*/
 
 /* Mostrar submenús cuando se pasa el mouse por encima */
-#sideMenu ul li:hover .submenu {
+/*#sideMenu ul li:hover .submenu {
     display: block;
-}
+}*/
 
 /*body.dark-mode {
     background-color: #222;
@@ -137,7 +137,282 @@ body {
 {
     color: #fff;  Color de texto para las etiquetas h1-h6 en el modo oscuro 
 }*/
-body, h1, h2, h3, h4, h5, h6 {
+/*body, h1, h2, h3, h4, h5, h6 {
+    transition: background-color 0.3s ease, color 0.3s ease;*/ /* Agregar transición para el color de fondo y el color del texto */
+/*}*/
+
+    /* Estilos para el Modo Claro */
+    /*body.light-mode {
+        background-color: #fff;*/ /* Color de fondo para el modo claro */
+        /*color: #1D273B;*/ /* Color de texto para el modo claro */
+    /*}*/
+
+    /* Estilos para el Modo Oscuro */
+    /*body.dark-mode {
+    background-color: #222;
+    color: #fff;
+    h1, h2, h3, h4, h5, h6,td,a,li,input{
+
+    color: #fff;*/ /* Color de texto para el modo oscuro */
+/*}*/
+/*estilos para boton para cambiar tema*/
+
+/*.dark-mode .card {
+    background-color: #333;*/ /* Cambia el color de fondo de las tarjetas */
+    /*color: #ddd;*/ /* Cambia el color del texto en las tarjetas */
+/*}*/
+
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+html, body {
+    height: 100%;
+    font-family: "Roboto";
+    background: #eeeeee;
+}
+
+a, a:hover, a:active {
+    text-decoration: none;
+}
+
+a {
+    color: #008DE7;
+    font-style: italic;
+    font-weight: 700;
+}
+
+    a:hover {
+        transition: all 200ms ease-in-out;
+    }
+
+.page-container {
+    background: #eeeeee;
+    min-width: 1260px;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0px auto;
+}
+
+.content {
+    max-width: 800px;
+    min-width: 600px;
+    display: block;
+    padding: 50px;
+    margin: 50px auto;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.page-container.sidebar-collapsed {
+    padding-left: 65px;
+    transition: all 100ms linear;
+    transition-delay: 300ms;
+}
+
+.page-container.sidebar-collapsed-back {
+    padding-left: 280px;
+    transition: all 100ms linear;
+}
+
+.page-container.sidebar-collapsed .sidebar-menu {
+    width: 65px;
+    transition: all 100ms ease-in-out;
+    transition-delay: 300ms;
+}
+
+.page-container.sidebar-collapsed-back .sidebar-menu {
+    width: 280px;
+    transition: all 100ms ease-in-out;
+}
+
+.page-container.sidebar-collapsed .sidebar-icon {
+    transform: rotate(90deg);
+    transition: all 300ms ease-in-out;
+}
+
+.page-container.sidebar-collapsed-back .sidebar-icon {
+    transform: rotate(0deg);
+    transition: all 300ms ease-in-out;
+}
+
+.page-container.sidebar-collapsed .logo {
+    padding: 21px;
+    height: 136px;
+    box-sizing: border-box;
+    transition: all 100ms ease-in-out;
+    transition-delay: 300ms;
+}
+
+.page-container.sidebar-collapsed-back .logo {
+    width: 100%;
+    padding: 21px;
+    height: 136px;
+    box-sizing: border-box;
+    transition: all 100ms ease-in-out;
+}
+
+.page-container.sidebar-collapsed #logo {
+    opacity: 0;
+    transition: all 200ms ease-in-out;
+}
+
+.page-container.sidebar-collapsed-back #logo {
+    opacity: 1;
+    transition: all 200ms ease-in-out;
+    transition-delay: 300ms;
+}
+
+.page-container.sidebar-collapsed #menu span {
+    opacity: 0;
+    transition: all 50ms linear;
+}
+
+.page-container.sidebar-collapsed-back #menu span {
+    opacity: 1;
+    transition: all 200ms linear;
+    transition-delay: 300ms;
+}
+
+.sidebar-menu {
+    position: fixed;
+    float: left;
+    width: 280px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #303641;
+    color: #aaabae;
+    font-family: "Segoe UI";
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+#menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+    #menu li {
+        position: relative;
+        margin: 0;
+        font-size: 12px;
+        border-bottom: 1px solid rgba(69, 74, 84, 0.7);
+        padding: 0;
+    }
+
+        #menu li ul {
+            opacity: 0;
+            height: 0px;
+        }
+
+        #menu li a {
+            font-style: normal;
+            font-weight: 400;
+            position: relative;
+            display: block;
+            padding: 10px 20px;
+            color: #aaabae;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+            #menu li a:hover {
+                color: #ffffff;
+                background-color: #333944;
+                transition: color 250ms ease-in-out, background-color 250ms ease-in-out;
+            }
+
+        #menu li.active > a {
+            background-color: #2b303a;
+            color: #ffffff;
+        }
+
+    #menu ul li {
+        background-color: #2b303a;
+    }
+
+    #menu ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    #menu li ul {
+        position: absolute;
+        visibility: hidden;
+        left: 100%;
+        top: -1px;
+        background-color: #2b303a;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.1s linear;
+        border-top: 1px solid rgba(69, 74, 84, 0.7);
+    }
+
+    #menu li:hover > ul {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    #menu li li ul {
+        left: 100%;
+        visibility: hidden;
+        top: -1px;
+        opacity: 0;
+        transition: opacity 0.1s linear;
+    }
+
+    #menu li li:hover ul {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    #menu .fa {
+        margin-right: 5px;
+    }
+
+.logo {
+    width: 100%;
+    padding: 21px;
+    box-sizing: border-box;
+}
+
+.sidebar-icon {
+    position: relative;
+    float: right;
+    margin-top: 32px;
+    border: 1px solid #454a54;
+    text-align: center;
+    line-height: 1;
+    font-size: 18px;
+    padding: 6px 8px;
+    border-radius: 3px;
+    color: #888;
+    background-clip: padding-box;
+    text-shadow: 4px 4px 6px rgba(0,0,0,0.4);
+}
+
+/*#logo
+{
+    width: 150px;
+    height: 64px;
+    vertical-align: middle;
+    -webkit-filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.5));
+}*/
+
+.fa-codepen {
+    color: #fff;
+    margin-left: 50px;
+}
+
+body, h1, h2, h3, h4, h5, h6, .page-container {
     transition: background-color 0.3s ease, color 0.3s ease; /* Agregar transición para el color de fondo y el color del texto */
 }
 
@@ -149,15 +424,36 @@ body, h1, h2, h3, h4, h5, h6 {
 
     /* Estilos para el Modo Oscuro */
     body.dark-mode {
-    background-color: #222;
-    color: #fff;
-    h1, h2, h3, h4, h5, h6,td,a,li,input{
-
+        background-color: #222;
+        color: #fff;
+        h1, h2, h3, h4, h5, h6,td,a,li,input{
     color: #fff; /* Color de texto para el modo oscuro */
-}
+          }
 /*estilos para boton para cambiar tema*/
 
 .dark-mode .card {
     background-color: #333; /* Cambia el color de fondo de las tarjetas */
     color: #ddd; /* Cambia el color del texto en las tarjetas */
+}
+
+.dark-mode .page-container {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode .sidebar-menu {
+    background-color: #111;
+}
+
+.dark-mode #menu li a {
+    color: #aaa;
+}
+
+    .dark-mode #menu li a:hover {
+        color: #fff;
+        background-color: #444;
+    }
+
+.dark-mode #menu li.active > a {
+    background-color: #222;
 }
