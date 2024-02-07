@@ -40,6 +40,26 @@ namespace WebApplication4.Controllers
                 return View(await data.ToListAsync());
             }
         }
+        [Authorize]
+        public async Task<IActionResult> Index2(DateTime? FechaInicio, DateTime? FechaFinal)
+        {
+            var date = from m in _context.TbTicketsCerrados select m;
+            //Console.WriteLine("FechaInicio "+FechaInicio.ToString());
+            //Console.WriteLine("FechaFinal  "+FechaFinal.ToString());
+
+            if (FechaInicio != null && FechaFinal != null)
+            {
+                date = date.Where(e => e.FechaCreado >= FechaInicio && e.FechaCreado <= FechaFinal.Value.AddDays(1));
+
+                return View(await date.ToListAsync());
+            }
+            else
+            {
+                var data = _context.TbTicketsCerrados;
+                return View(await data.ToListAsync());
+            }
+        }
+
 
         // GET: TbTicketsCerradoes/Details/5
         public async Task<IActionResult> Details(int? id)
