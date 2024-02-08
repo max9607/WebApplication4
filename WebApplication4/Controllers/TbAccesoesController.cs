@@ -26,14 +26,19 @@ namespace WebApplication4.Controllers
         public async Task<IActionResult> Index()
         {
             var project_DesmodusDBContext = _context.TbAcceso.Include(t => t.IdPermisoNavigation).Include(t => t.IdUsuarioNavigation);
-            return View(await project_DesmodusDBContext.ToListAsync());
+            return View(await project_DesmodusDBContext.Where(x=>x.Estado==true).ToListAsync());
+        }
+        public async Task<IActionResult> Index2()
+        {
+            var project_DesmodusDBContext = _context.TbAcceso.Include(t => t.IdPermisoNavigation).Include(t => t.IdUsuarioNavigation);
+            return View(await project_DesmodusDBContext.Where(x=>x.Estado==false).ToListAsync());
         }
         // VALIDAR USUARIOS
-       /* public TbAcceso ValidarUsuarios(string _correo, string _clave) 
-        {
-            var datosUsuario = _context.TbAccesos.Single(t => t.Correo == _correo && t.Clave == _clave);
-            return datosUsuario;
-        }*/
+        /* public TbAcceso ValidarUsuarios(string _correo, string _clave) 
+         {
+             var datosUsuario = _context.TbAccesos.Single(t => t.Correo == _correo && t.Clave == _clave);
+             return datosUsuario;
+         }*/
 
         // GET: TbAccesoes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -233,13 +238,13 @@ namespace WebApplication4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdAcceso,Correo,Clave,IdPermiso,IdUsuario")] TbAcceso tbAcceso)
+        public async Task<IActionResult> Edit(int id, [Bind("IdAcceso,Correo,Clave,IdPermiso,IdUsuario")] TbAcceso tbAcceso, bool Estado)
         {
             if (id != tbAcceso.IdAcceso)
             {
                 return NotFound();
             }
-
+            tbAcceso.Estado = Estado;
             if (ModelState.IsValid)
             {
                 try

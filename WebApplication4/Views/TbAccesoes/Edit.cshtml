@@ -33,6 +33,11 @@
                 <select asp-for="IdUsuario" class="form-control" asp-items="ViewBag.IdUsuario"></select>
                 <span asp-validation-for="IdUsuario" class="text-danger"></span>
             </div>
+            <div class="form-check form-switch">
+                <input type="hidden" asp-for="Estado" />
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @(Model.Estado.GetValueOrDefault() ? "checked" : "")>
+                <label class="form-check-label" for="flexSwitchCheckChecked">Estado</label>
+            </div>
             <div>
                 <h5 style="padding-bottom:10px;">Opciones</h5>
 
@@ -50,4 +55,19 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $('#flexSwitchCheckChecked').change(function () {
+                // Captura el nuevo estado del checkbox
+                var nuevoEstado = $(this).prop('checked');
+
+                // Cambia el valor del campo oculto según el estado del checkbox
+                $('#Estado').val(nuevoEstado);
+
+                // Envía automáticamente el formulario
+                $('form').submit();
+            });
+        });
+    </script>
 }
+

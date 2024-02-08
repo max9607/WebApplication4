@@ -21,6 +21,7 @@ namespace WebApplication4.Models
         public string? Correo { get; set; }
         public int? IdEmpresa { get; set; }
         public bool? Estado { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
 
         public virtual TbEmpresa? IdEmpresaNavigation { get; set; }
         public virtual ICollection<TbAcceso> TbAcceso { get; set; }

@@ -26,7 +26,7 @@ namespace WebApplication4.Models
         public virtual DbSet<TbPermiso> TbPermiso { get; set; } = null!;
         public virtual DbSet<TbPrioridadTicket> TbPrioridadTicket { get; set; } = null!;
         public virtual DbSet<TbTicket> TbTicket { get; set; } = null!;
-        public virtual DbSet<TbTicketsCerrado> TbTicketsCerrados { get; set; } = null!;
+        public virtual DbSet<TbTicketsCerrados> TbTicketsCerrados { get; set; } = null!;
         public virtual DbSet<TbUsuario> TbUsuario { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -54,6 +54,8 @@ namespace WebApplication4.Models
                 entity.Property(e => e.Correo)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Estado).HasDefaultValueSql("((1))");
 
                 entity.HasOne(d => d.IdPermisoNavigation)
                     .WithMany(p => p.TbAcceso)
@@ -235,7 +237,7 @@ namespace WebApplication4.Models
                     .HasConstraintName("FK__tb_Ticket__IdUsu__5BE2A6F2");
             });
 
-            modelBuilder.Entity<TbTicketsCerrado>(entity =>
+            modelBuilder.Entity<TbTicketsCerrados>(entity =>
             {
                 entity.HasKey(e => e.IdCerrados)
                     .HasName("PK__tb_Ticke__6EA883BB587D7DFA");
@@ -285,6 +287,10 @@ namespace WebApplication4.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.FechaNacimiento)
+                    .HasColumnType("date")
+                    .HasColumnName("fecha_nacimiento");
 
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(30)

@@ -4,15 +4,15 @@ namespace WebApplication4.Logica_Ticket
 {
     public class TcketLogica
     {
-        private readonly Project_DesmodusDBContext _context;
+        private readonly ServicesDeskContext _context;
 
-        public TcketLogica(Project_DesmodusDBContext context)
+        public TcketLogica(ServicesDeskContext context)
         {
             _context = context;
         }
         public TbTicket ValidarCerrado(int idE)
         {
-            var DatosC = _context.TbTickets.Where(t => t.IdEstado == 4).FirstOrDefault();
+            var DatosC = _context.TbTicket.Where(t => t.IdEstado == 4).FirstOrDefault();
             return DatosC;
         }
 

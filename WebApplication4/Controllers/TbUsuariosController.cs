@@ -84,7 +84,7 @@ namespace WebApplication4.Controllers
         [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdUsuario,Nombre,Apellido1,Apellido2,Telefono,Correo,IdEmpresa")] TbUsuario tbUsuario)
+        public async Task<IActionResult> Create([Bind("IdUsuario,Nombre,Apellido1,Apellido2,Telefono,Correo,IdEmpresa,FechaNacimiento")] TbUsuario tbUsuario)
         {
             if (ModelState.IsValid)
             {
@@ -120,7 +120,7 @@ namespace WebApplication4.Controllers
         [Authorize(Roles = "Administrador, Usuario, Técnico")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdUsuario,Nombre,Apellido1,Apellido2,Telefono,Correo,IdEmpresa,Estado")] TbUsuario tbUsuario, bool Estado)
+        public async Task<IActionResult> Edit(int id, [Bind("IdUsuario,Nombre,Apellido1,Apellido2,Telefono,Correo,IdEmpresa,Estado,FechaNacimiento")] TbUsuario tbUsuario, bool Estado)
         {
             if (id != tbUsuario.IdUsuario)
             {
