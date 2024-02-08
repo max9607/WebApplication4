@@ -13,6 +13,107 @@ body {
     background: #FAFAFA;
 }*/
 
+/* styles.css */
+/*body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+#sideMenu {
+    width: 0;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index: 1;
+}
+
+    #sideMenu ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+        #sideMenu ul li {
+            padding: 10px;
+            text-align: center;
+        }
+
+            #sideMenu ul li a {
+                text-decoration: none;
+                color: white;
+                display: block;
+            }
+
+                #sideMenu ul li a:hover {
+                    background-color: #555;
+                }
+
+.submenu {
+    display: none;*/ /* Oculta inicialmente los submenús */
+/*background-color: #444;
+}
+
+    .submenu li {
+        padding: 10px;
+        text-align: center;
+    }
+
+#mainContent {
+    margin-left: 0;
+    transition: margin-left 0.5s;
+}
+
+#toggleButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+}*/
+
+/* Mostrar submenús cuando se pasa el mouse por encima */
+/*#sideMenu ul li:hover .submenu {
+    display: block;
+}*/
+
+/*body.dark-mode {
+    background-color: #222;
+    color: #fff;
+    h1, h2, h3, h4, h5, h6
+
+{
+    color: #fff;  Color de texto para las etiquetas h1-h6 en el modo oscuro 
+}*/
+/*body, h1, h2, h3, h4, h5, h6 {
+    transition: background-color 0.3s ease, color 0.3s ease;*/ /* Agregar transición para el color de fondo y el color del texto */
+/*}*/
+
+/* Estilos para el Modo Claro */
+/*body.light-mode {
+        background-color: #fff;*/ /* Color de fondo para el modo claro */
+/*color: #1D273B;*/ /* Color de texto para el modo claro */
+/*}*/
+
+/* Estilos para el Modo Oscuro */
+/*body.dark-mode {
+    background-color: #222;
+    color: #fff;
+    h1, h2, h3, h4, h5, h6,td,a,li,input{
+
+    color: #fff;*/ /* Color de texto para el modo oscuro */
+/*}*/
+/*estilos para boton para cambiar tema*/
+
+/*.dark-mode .card {
+    background-color: #333;*/ /* Cambia el color de fondo de las tarjetas */
+/*color: #ddd;*/ /* Cambia el color del texto en las tarjetas */
+/*}*/
+
 .order-card {
     color: #fff;
 }
@@ -59,108 +160,6 @@ body {
 .f-right {
     float: right;
 }
-
-
-/* styles.css */
-/*body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-}
-
-#sideMenu {
-    width: 0;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #333;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    z-index: 1;
-}
-
-    #sideMenu ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-        #sideMenu ul li {
-            padding: 10px;
-            text-align: center;
-        }
-
-            #sideMenu ul li a {
-                text-decoration: none;
-                color: white;
-                display: block;
-            }
-
-                #sideMenu ul li a:hover {
-                    background-color: #555;
-                }
-
-.submenu {
-    display: none;*/ /* Oculta inicialmente los submenús */
-    /*background-color: #444;
-}
-
-    .submenu li {
-        padding: 10px;
-        text-align: center;
-    }
-
-#mainContent {
-    margin-left: 0;
-    transition: margin-left 0.5s;
-}
-
-#toggleButton {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 2;
-}*/
-
-/* Mostrar submenús cuando se pasa el mouse por encima */
-/*#sideMenu ul li:hover .submenu {
-    display: block;
-}*/
-
-/*body.dark-mode {
-    background-color: #222;
-    color: #fff;
-    h1, h2, h3, h4, h5, h6
-
-{
-    color: #fff;  Color de texto para las etiquetas h1-h6 en el modo oscuro 
-}*/
-/*body, h1, h2, h3, h4, h5, h6 {
-    transition: background-color 0.3s ease, color 0.3s ease;*/ /* Agregar transición para el color de fondo y el color del texto */
-/*}*/
-
-    /* Estilos para el Modo Claro */
-    /*body.light-mode {
-        background-color: #fff;*/ /* Color de fondo para el modo claro */
-        /*color: #1D273B;*/ /* Color de texto para el modo claro */
-    /*}*/
-
-    /* Estilos para el Modo Oscuro */
-    /*body.dark-mode {
-    background-color: #222;
-    color: #fff;
-    h1, h2, h3, h4, h5, h6,td,a,li,input{
-
-    color: #fff;*/ /* Color de texto para el modo oscuro */
-/*}*/
-/*estilos para boton para cambiar tema*/
-
-/*.dark-mode .card {
-    background-color: #333;*/ /* Cambia el color de fondo de las tarjetas */
-    /*color: #ddd;*/ /* Cambia el color del texto en las tarjetas */
-/*}*/
 
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 
@@ -399,13 +398,7 @@ a {
     text-shadow: 4px 4px 6px rgba(0,0,0,0.4);
 }
 
-/*#logo
-{
-    width: 150px;
-    height: 64px;
-    vertical-align: middle;
-    -webkit-filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.5));
-}*/
+
 
 .fa-codepen {
     color: #fff;
