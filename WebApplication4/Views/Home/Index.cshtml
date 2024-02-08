@@ -227,7 +227,7 @@
                     return response.ok ? response.json() : Promise.reject(response);
                 })
                 .then((dataJson) => {
-                    console.log(dataJson)
+                    // console.log(dataJson)
 
                     //document.getElementById('admin').innerHTML = dataJson.length;
                     const values = dataJson.map((item) => { return item.idCerrados })
@@ -238,8 +238,8 @@
                     //    suma += this.values;
                     //});
                    
-                    console.log(values)
-                    console.log(suma)
+                    // console.log(values)
+                    // console.log(suma)
 
                     document.getElementById('Tickets').innerHTML= suma;
                 })
