@@ -37,7 +37,9 @@
                     <td>@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre) @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Apellido1)</td>
 
                     <td>
-                        <a type="button" class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@item.IdTicket">Details</a>
+                        <a asp-action="Details" asp-route-id="@item.IdTicket" class="btn btn-outline-dark">
+                            <i class="bi bi-arrow-up-right-square"></i>
+                        </a>
                     </td>
 
                 </tr>

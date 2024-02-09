@@ -44,9 +44,12 @@
             </td>
                 <td class="text-center">
                     <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                        <a asp-action="Edit" asp-route-id="@item.IdEmpresa" class="btn btn-outline-dark">Editar</a>
-                        <a asp-action="Details" asp-route-id="@item.IdEmpresa" class="btn btn-outline-dark">Detalles</a>
-                        
+                        <a asp-action="Edit" asp-route-id="@item.IdEmpresa" class="btn btn-outline-dark">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdEmpresa" class="btn btn-outline-dark">
+                            <i class="bi bi-arrow-up-right-square"></i>
+                        </a>
                     </div>
                 </td>
         </tr>

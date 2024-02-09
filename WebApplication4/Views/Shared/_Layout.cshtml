@@ -22,6 +22,18 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Iconos de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- JavaScript de Bootstrap (requiere jQuery y Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
     @RenderSection("Estilo", required: false) 
 
 </head>
@@ -31,7 +43,31 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <div class="page-container">
-  
+        <header class="p-2 mb-2 border-bottom">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap" /></svg>
+                    </a>
+
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                        <li><a id="nombreVista" class="nav-link px-2 link-secondary">Nombre de la vista</a></li>
+                        <li><a href="#" class="nav-link px-2 link-secondary">Acerca de</a></li>
+                    </ul>
+                    <a class="nav-link px-2">Bienvenido @User.Identity.Name</a>
+                    <div class="dropdown text-end">  
+                        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                        <ul class="dropdown-menu text-small">
+                            <li><a class="dropdown-item" asp-controller="TbUsuarios" asp-action="Details" asp-route-id="@User.FindFirst("IdUsuario").Value">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" asp-controller="Login" asp-action="Salir">Salir</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
         <div class="sidebar-menu">
             <header class="logo">
                 <a  class="sidebar-icon">
@@ -184,7 +220,9 @@
                     }
 
                     <li class="nav-item">
-                        <a class="btn btn-outline-light my-2 my-sm-0" asp-controller="Login" asp-action="Salir">Salir</a>
+                        <a class="btn btn-outline-light my-2 my-sm-0" asp-controller="Login" asp-action="Salir">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </a>
                     </li>
                 </ul>
                 <div class="button-container">
@@ -279,5 +317,32 @@
     const isDarkModeSet = localStorage.getItem('darkMode') === 'true';
     if (isDarkModeSet) {
         document.body.classList.add('dark-mode');
+    };
+
+    $(document).ready(function () {
+        // Obtener la ruta actual
+        var currentPath = window.location.pathname;
+
+        // Obtener el nombre de la vista desde la ruta
+        var viewName = obtenerNombreDeVista(currentPath);
+
+        // Actualizar el elemento del encabezado con el nombre de la vista
+        $('#nombreVista').text(viewName);
+    });
+
+    function obtenerNombreDeVista(path) {
+        // Lógica para obtener el nombre de la vista desde la ruta
+        // Por ejemplo, puedes analizar la ruta para extraer el nombre de la vista
+        // o puedes tener un mapeo predefinido entre las rutas y los nombres de las vistas
+
+        // Por ejemplo, podrías tomar la parte final de la ruta como el nombre de la vista
+        var parts = path.split('/');
+        var viewName = parts[parts.length - 1];
+
+        // Si necesitas formatear el nombre de la vista de alguna manera específica, puedes hacerlo aquí
+
+        return viewName;
     }
+
+
 </script>

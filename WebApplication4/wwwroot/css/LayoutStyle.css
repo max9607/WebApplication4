@@ -398,6 +398,9 @@ a {
     text-shadow: 4px 4px 6px rgba(0,0,0,0.4);
 }
 
+/**/
+
+/**/
 
 
 .fa-codepen {
@@ -506,6 +509,10 @@ body, h1, h2, h3, h4, h5, h6, .page-container {
             color: #fff;
             background-color: #333;
         }
+        body.dark-mode th {
+            color: #fff;
+            background-color: #333;
+        }
         /*estilos para boton para cambiar tema*/
         .dark-mode .card {
             background-color: #333; /* Cambia el color de fondo de las tarjetas */
@@ -534,3 +541,12 @@ body, h1, h2, h3, h4, h5, h6, .page-container {
     background-color: #222;
 }
 
+body.dark-mode .btn.btn-outline-dark {
+    color: #fff; /* Color del texto en modo oscuro */
+    border-color: #fff; /* Color del borde en modo oscuro */
+}
+
+    /* Estilos para el icono del botón en modo oscuro */
+    body.dark-mode .btn.btn-outline-dark .bi {
+        color: #fff; /* Color del icono en modo oscuro */
+    }
