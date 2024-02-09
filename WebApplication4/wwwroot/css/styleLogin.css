@@ -260,3 +260,9 @@ a.ssolink {
         transform: translateX(0px);
     }
 }
+.custom-error-message {
+    /* Estilos personalizados para el mensaje de error flotante */
+    background-color: #f8d7da; /* Color de fondo rojo claro */
+    color: #721c24; /* Color del texto rojo oscuro */
+    border-color: #f5c6cb; /* Color del borde rojo */
+}
