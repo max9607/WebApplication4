@@ -16,8 +16,7 @@ namespace WebApplication4.Logica_Login
         }
         public TbAcceso ValidarAcceso(string _correo, string _clave)
         {
-         
-            var DatosAcceso = _context.TbAcceso.Where(t => t.Correo == _correo && t.Clave == _clave).FirstOrDefault();
+            var DatosAcceso = _context.TbAcceso.Where(t => t.Correo == _correo && t.Clave == _clave && t.Estado==true).FirstOrDefault();
             return DatosAcceso;
         }
         public TbUsuario ValidarUsuario(int id)

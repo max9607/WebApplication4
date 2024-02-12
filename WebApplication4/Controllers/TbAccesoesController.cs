@@ -247,6 +247,7 @@ namespace WebApplication4.Controllers
             tbAcceso.Estado = Estado;
             if (ModelState.IsValid)
             {
+                tbAcceso.ClaveHash = BCrypt.Net.BCrypt.HashPassword(tbAcceso.Clave);
                 try
                 {
                     _context.Update(tbAcceso);
