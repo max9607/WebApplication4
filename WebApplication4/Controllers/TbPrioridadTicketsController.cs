@@ -55,7 +55,7 @@ namespace WebApplication4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPrioridad,Prioridad")] TbPrioridadTicket tbPrioridadTicket)
+        public async Task<IActionResult> Create([Bind("IdPrioridad,Prioridad,TiempoRespuesta")] TbPrioridadTicket tbPrioridadTicket)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace WebApplication4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPrioridad,Prioridad")] TbPrioridadTicket tbPrioridadTicket)
+        public async Task<IActionResult> Edit(int id, [Bind("IdPrioridad,Prioridad,TiempoRespuesta")] TbPrioridadTicket tbPrioridadTicket)
         {
             if (id != tbPrioridadTicket.IdPrioridad)
             {
