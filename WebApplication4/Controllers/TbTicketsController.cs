@@ -176,10 +176,10 @@ namespace WebApplication4.Controllers
 
 
                 }
-                
+
                 mailLogica omail = new mailLogica();
 
-                var admins = _context.TbAcceso.Where(i => i.IdPermisoNavigation.Nombre == "Administrador").ToList();
+                var admins = _context.TbAcceso.Where(i => i.IdPermisoNavigation.Nombre == "Administrador"||i.Estado==true).ToList();
                 var idadmins = admins.Select(i => i.IdUsuario).ToList();
                 var correosadmins = _context.TbUsuario.Where(i => idadmins.Contains(i.IdUsuario));
                 var listacorreos = correosadmins.Select(i => i.Correo).ToList();

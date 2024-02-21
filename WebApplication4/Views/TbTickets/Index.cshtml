@@ -20,49 +20,44 @@
 
     <!-- Estilos personalizados -->
 </head>
+<body>
 <div class="text-center">
     <h1>Tickets</h1>
 </div>
-<div></div>
 
-<div class='project-tasks'>
-    <div class='project-column'>
-        <div class='project-column-heading'>
-            <h2 class='project-column-heading__title'>Nuevo</h2>
-        </div>
-        
-        @foreach (var item in Model)
-        {
-            if (item.IdEstado == 1)
+    <div class='project-tasks'>
+        <div class='project-column'>
+            <div class='project-column-heading'>
+                <h2 class='project-column-heading__title'>Nuevo</h2>
+            </div>
+
+            @foreach (var item in Model.Where(item => item.IdEstado == 1))
             {
                 var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
                 <a asp-action="Details" asp-route-id="@item.IdTicket">
-                <div class='task'>
-                    <div class='task__tags'>
-                        <span class='task__tag task__tag--design'>@Html.DisplayFor(modelItem => item.DespricionP)</span>
+                    <div class='task'>
+                        <div class='task__tags'>
+                            <span class='task__tag task__tag--design'>@Html.DisplayFor(modelItem => item.DespricionP)</span>
+                        </div>
+                        <p>@Html.DisplayFor(modelItem => item.DescripionDetallada)</p>
+                        <div class='task__stats'>
+                            <span><time datetime="@fecha"><i class="fas fa-flag"></i>@fecha</time></span>
+                        </div>
                     </div>
-                    <p>@Html.DisplayFor(modelItem => item.DescripionDetallada)</p>
-                    <div class='task__stats'>
-                        <span><time datetime="@fecha"><i class="fas fa-flag"></i>@fecha</time></span>
-                    </div>
-                </div>
                 </a>
             }
-        }
-
-    </div>
-    <div class='project-column'>
-        <div class='project-column-heading'>
-            <h2 class='project-column-heading__title'>Abierto</h2>
         </div>
 
-        @foreach (var item in Model)
-        {
-            if (item.IdEstado == 2)
+        <div class='project-column'>
+            <div class='project-column-heading'>
+                <h2 class='project-column-heading__title'>Abierto</h2>
+            </div>
+
+            @foreach (var item in Model.Where(item => item.IdEstado == 2))
             {
                 var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
                 <a asp-action="Details" asp-route-id="@item.IdTicket">
-                    <div class='task' >
+                    <div class='task'>
                         <div class='task__tags'>
                             <span class='task__tag task__tag--copyright'>@Html.DisplayFor(modelItem => item.DespricionP)</span>
                         </div>
@@ -73,59 +68,59 @@
                     </div>
                 </a>
             }
-        }
-    </div>
-    <div class='project-column'>
-        <div class='project-column-heading'>
-            <h2 class='project-column-heading__title'>Pendientes</h2>
         </div>
-        @foreach (var item in Model)
-        {
-            if (item.IdEstado == 3)
-            {
-                var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
-                <a asp-action="Details" asp-route-id="@item.IdTicket">
-                <div class='task'>
-                    <div class='task__tags'>
-                            <span class='task__tag task__tag--illustration'>@Html.DisplayFor(modelItem => item.DespricionP)</span>
-                    </div>
-                    <p>@Html.DisplayFor(modelItem => item.DescripionDetallada)</p>
-                    <div class='task__stats'>
-                        <span><time datetime="@fecha"><i class="fas fa-flag"></i>@fecha</time></span>
-                    </div>
-                </div>
-                </a>
-            }
-        }
-    </div>
-    <div class='project-column'>
-        <div class='project-column-heading'>
-            <h2 class='project-column-heading__title'>Cerrados</h2>
-        </div>
-        @foreach (var item in Model)
-        {
-            DateTime FechaFinal = DateTime.Now.AddDays(-3);
-            var fecha2 = item.IdFechaNavigation.FechaCerrado;
 
-            if (fecha2 >= FechaFinal && item.IdEstado == 4)
+        <div class='project-column'>
+            <div class='project-column-heading'>
+                <h2 class='project-column-heading__title'>Pendientes</h2>
+            </div>
+
+            @foreach (var item in Model.Where(item => item.IdEstado == 3))
             {
                 var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
                 <a asp-action="Details" asp-route-id="@item.IdTicket">
-                    <div class="task" draggable="true">
-                        <div class="task__tags">
-                            <span class="task__tag task__tag--red">@Html.DisplayFor(modelItem => item.DespricionP)</span>
+                    <div class='task'>
+                        <div class='task__tags'>
+                            <span class='task__tag task__tag--illustration'>@Html.DisplayFor(modelItem => item.DespricionP)</span>
                         </div>
                         <p>@Html.DisplayFor(modelItem => item.DescripionDetallada)</p>
-                        <div class="task__stats">
-                            <span><time datetime="@fecha2"><i class="fas fa-flag"></i>@fecha2</time></span>
+                        <div class='task__stats'>
+                            <span><time datetime="@fecha"><i class="fas fa-flag"></i>@fecha</time></span>
                         </div>
                     </div>
                 </a>
             }
-        }
+        </div>
 
+        <div class='project-column'>
+            <div class='project-column-heading'>
+                <h2 class='project-column-heading__title'>Cerrados</h2>
+            </div>
 
+            @foreach (var item in Model.Where(item => item.IdEstado == 4))
+            {
+                DateTime FechaFinal = DateTime.Now.AddDays(-3);
+                var fecha2 = item.IdFechaNavigation.FechaCerrado;
+
+                if (fecha2 >= FechaFinal)
+                {
+                    var fecha = item.IdFechaNavigation.FechaCreado.Value.ToShortDateString();
+                    <a asp-action="Details" asp-route-id="@item.IdTicket">
+                        <div class="task" draggable="true">
+                            <div class="task__tags">
+                                <span class="task__tag task__tag--red">@Html.DisplayFor(modelItem => item.DespricionP)</span>
+                            </div>
+                            <p>@Html.DisplayFor(modelItem => item.DescripionDetallada)</p>
+                            <div class="task__stats">
+                                <span><time datetime="@fecha2"><i class="fas fa-flag"></i>@fecha2</time></span>
+                            </div>
+                        </div>
+                    </a>
+                }
+            }
+        </div>
     </div>
+  </body>
 </html>
 
 

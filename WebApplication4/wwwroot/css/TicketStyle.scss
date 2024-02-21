@@ -327,7 +327,6 @@ h1 {
 
 
 
-
 @media only screen and (max-width: 1300px) {
 	.project {
 		max-width: 100%;
@@ -349,22 +348,20 @@ h1 {
 }
 
 @media only screen and (max-width: 1000px) {
-	.project-column:nth-child(2),
+	/*.project-column:nth-child(2),
 	.project-column:nth-child(3) {
 		display: none;
-	}
+	}*/
 
 	.project-tasks {
 		grid-template-columns: 1fr 1fr;
 	}
 }
 
-
-
 @media only screen and (max-width: 600px) {
-	.project-column:nth-child(4) {
+	/*.project-column:nth-child(4) {
 		display: none;
-	}
+	}*/
 
 	.project-tasks {
 		grid-template-columns: 1fr;
@@ -384,7 +381,7 @@ h1 {
 		font-size: 25px;
 	}
 }
-/* Estilos para pantallas pequeñas */
+
 @media only screen and (max-width: 767px) {
 	.project-column {
 		width: 100%;
