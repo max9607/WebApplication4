@@ -14,8 +14,8 @@ namespace WebApplication4.Models
         }
 
         public int IdUsuario { get; set; }
-        public string Nombre { get; set; } = null!;
-        public string Apellido1 { get; set; } = null!;
+        public string? Nombre { get; set; } = null!;
+        public string? Apellido1 { get; set; } = null!;
         public string? Apellido2 { get; set; }
         public string? Telefono { get; set; }
         public string? Correo { get; set; }
