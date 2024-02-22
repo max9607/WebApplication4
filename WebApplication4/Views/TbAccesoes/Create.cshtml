@@ -14,12 +14,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Correo de Acceso</label>
-                <input asp-for="Correo" class="form-control" />
+                <input asp-for="Correo" class="form-control" required/>
                 <span asp-validation-for="Correo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Contraseña</label>
-                <input asp-for="Clave" class="form-control" />
+                <input asp-for="Clave" class="form-control" required/>
                 <span asp-validation-for="Clave" class="text-danger"></span>
             </div>
             <div class="form-group">

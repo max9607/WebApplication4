@@ -11,7 +11,7 @@ namespace WebApplication4.Models
         }
 
         public int IdEmpresa { get; set; }
-        public string Nombre { get; set; } = null!;
+        public string? Nombre { get; set; } = null!;
         public string? Nit { get; set; }
         public string? Telefono { get; set; }
         public bool? Estado { get; set; }
