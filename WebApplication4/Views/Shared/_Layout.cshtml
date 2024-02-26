@@ -79,10 +79,30 @@
 
             <div class="menu">
                 <ul id="menu">
-                    <li id="menu-home">
-                        <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                       <i class="fa fa-home"></i><span>Inicio</span></a>
-                    </li>
+                    @if (User.IsInRole("Usuario"))
+                    {
+                        <li id="menu-home">
+                            <a class="navbar-brand" asp-controller="TbTickets" asp-action="UserTickets">
+                                <i class="fa fa-home"></i><span>Inicio</span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <li id="menu-home">
+                            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                                <i class="fa fa-home"></i><span>Inicio</span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Técnico"))
+                    {
+                        <li id="menu-home">
+                            <a class="navbar-brand" asp-controller="TbTickets" asp-action="Index">
+                                <i class="fa fa-home"></i><span>Inicio</span>
+                            </a>
+                        </li>
+                    }
                     @if (User.IsInRole("Usuario"))
                     {
                         <li id="menu-comunicacao">
@@ -111,6 +131,12 @@
                                     <a class="nav-link" asp-controller="TbTickets" asp-action="Create">
                                         <i class="icofont-plus text-light"></i>
                                         Nuevo
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" asp-controller="TbTickets" asp-action="BuscarTicket">
+                                        <i class="icofont-search-1 text-light"></i>
+                                        Buscar
                                     </a>
                                 </li>
                             </ul>
