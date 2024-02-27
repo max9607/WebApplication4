@@ -20,7 +20,12 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Contraseña</label>
-                <input asp-for="Clave" class="form-control" />
+                <div class="input-group">
+                    <input id="password" asp-for="Clave" class="form-control" type="password" minlength="8" required/>
+                    <span class="input-group-text" id="togglePassword">
+                        <i class="bi bi-eye"></i>
+                    </span>
+                </div>
                 <span asp-validation-for="Clave" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -40,13 +45,10 @@
             </div>
             <div>
                 <h5 style="padding-bottom:10px;">Opciones</h5>
-
                 <hr />
                 <dd>
                     <input type="submit" value="Guardar" class="btn btn-primary" />
-
-                     <a asp-action="Index" class="btn btn-secondary">Volver</a>
-
+                    <a asp-action="Index" class="btn btn-secondary">Volver</a>
                 </dd>
             </div>
         </form>
@@ -54,9 +56,24 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         $(document).ready(function () {
+            $('#togglePassword').click(function () {
+                var passwordInput = $('#password');
+                var icon = $(this).find('i');
+
+                if (passwordInput.attr('type') === 'password') {
+                    passwordInput.attr('type', 'text');
+                    icon.removeClass('bi-eye').addClass('bi-eye-slash');
+                } else {
+                    passwordInput.attr('type', 'password');
+                    icon.removeClass('bi-eye-slash').addClass('bi-eye');
+                }
+            });
+
             $('#flexSwitchCheckChecked').change(function () {
                 // Captura el nuevo estado del checkbox
                 var nuevoEstado = $(this).prop('checked');
@@ -70,4 +87,3 @@
         });
     </script>
 }
-
